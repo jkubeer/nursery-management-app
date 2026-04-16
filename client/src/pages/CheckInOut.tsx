@@ -79,64 +79,17 @@ export default function CheckInOut() {
             <Skeleton className="h-24" />
           </>
         ) : childrenList && childrenList.length > 0 ? (
-          childrenList.map((child) => {
-            // Get today's check-in/out record
-            const [todayRecord, setTodayRecord] = useState<any>(null);
-
-            // Fetch today's record
-            const { data: record } = trpc.checkInOut.today.useQuery({
-              childId: child.id,
-              date: selectedDate,
-            });
-
-            return (
-              <Card key={child.id} className="p-6 card-elegant">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-foreground">
-                      {child.firstName} {child.lastName}
-                    </h3>
-                    <div className="mt-3 space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Check-in:</span>
-                        <span className="font-semibold text-foreground">
-                          {formatTime(record?.checkInTime)}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Check-out:</span>
-                        <span className="font-semibold text-foreground">
-                          {formatTime(record?.checkOutTime)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleCheckIn(child.id)}
-                      disabled={checkInMutation.isPending || !!record?.checkInTime}
-                      className="gap-2"
-                    >
-                      <LogIn size={16} />
-                      Check In
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleCheckOut(child.id)}
-                      disabled={checkOutMutation.isPending || !record?.checkInTime || !!record?.checkOutTime}
-                      className="gap-2"
-                    >
-                      <LogOut size={16} />
-                      Check Out
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            );
-          })
+          childrenList.map((child) => (
+            <ChildCheckInCard
+              key={child.id}
+              child={child}
+              selectedDate={selectedDate}
+              onCheckIn={handleCheckIn}
+              onCheckOut={handleCheckOut}
+              checkInPending={checkInMutation.isPending}
+              checkOutPending={checkOutMutation.isPending}
+            />
+          ))
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">No children registered yet.</p>
@@ -144,5 +97,83 @@ export default function CheckInOut() {
         )}
       </div>
     </div>
+  );
+}
+
+interface ChildCheckInCardProps {
+  child: any;
+  selectedDate: string;
+  onCheckIn: (childId: number) => void;
+  onCheckOut: (childId: number) => void;
+  checkInPending: boolean;
+  checkOutPending: boolean;
+}
+
+function ChildCheckInCard({
+  child,
+  selectedDate,
+  onCheckIn,
+  onCheckOut,
+  checkInPending,
+  checkOutPending,
+}: ChildCheckInCardProps) {
+  // Fetch today's record - hook is now at component level, not in map
+  const { data: record } = trpc.checkInOut.today.useQuery({
+    childId: child.id,
+    date: selectedDate,
+  });
+
+  const formatTime = (date: Date | null | undefined) => {
+    if (!date) return "—";
+    const d = new Date(date);
+    return d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  };
+
+  return (
+    <Card className="p-6 card-elegant">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-foreground">
+            {child.firstName} {child.lastName}
+          </h3>
+          <div className="mt-3 space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Check-in:</span>
+              <span className="font-semibold text-foreground">
+                {formatTime(record?.checkInTime)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Check-out:</span>
+              <span className="font-semibold text-foreground">
+                {formatTime(record?.checkOutTime)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            onClick={() => onCheckIn(child.id)}
+            disabled={checkInPending || !!record?.checkInTime}
+            className="gap-2"
+          >
+            <LogIn size={16} />
+            Check In
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => onCheckOut(child.id)}
+            disabled={checkOutPending || !record?.checkInTime || !!record?.checkOutTime}
+            className="gap-2"
+          >
+            <LogOut size={16} />
+            Check Out
+          </Button>
+        </div>
+      </div>
+    </Card>
   );
 }
