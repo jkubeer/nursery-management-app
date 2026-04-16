@@ -301,11 +301,14 @@ export const photos = mysqlTable(
     photoKey: varchar("photoKey", { length: 255 }).notNull(), // S3 key
     caption: text("caption"),
     uploadedBy: int("uploadedBy"),
+    isPublic: boolean("isPublic").default(false).notNull(),
+    tags: text("tags"), // JSON array of tags
     uploadedAt: timestamp("uploadedAt").defaultNow().notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
   },
   (table) => ({
     activityIdIdx: index("photos_activityId_idx").on(table.activityId),
+    isPublicIdx: index("photos_isPublic_idx").on(table.isPublic),
   })
 );
 

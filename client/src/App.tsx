@@ -14,6 +14,8 @@ import Rooms from "./pages/Rooms";
 import Activities from "./pages/Activities";
 import CheckInOut from "./pages/CheckInOut";
 import Payments from "./pages/Payments";
+import Photos from "./pages/Photos";
+import Reports from "./pages/Reports";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
@@ -66,9 +68,11 @@ function Router() {
       <Route path={"/parents"} component={() => <ProtectedRoute component={Parents} />} />
       <Route path={"/rooms"} component={() => <ProtectedRoute component={Rooms} />} />
       <Route path={"/activities"} component={() => <ProtectedRoute component={Activities} />} />
-      <Route path={"/checkin"} component={() => <ProtectedRoute component={CheckInOut} />} />
-      <Route path={"/payments"} component={() => <ProtectedRoute component={Payments} />} />
-      <Route path={"/404"} component={NotFound} />
+       <Route path={"checkin"} component={() => <ProtectedRoute component={CheckInOut} />} />
+      <Route path={"photos"} component={() => <ProtectedRoute component={Photos} />} />
+      <Route path={"reports"} component={() => <ProtectedRoute component={Reports} />} />
+      <Route path={"payments"} component={() => <ProtectedRoute component={Payments} />} />
+      <Route path={"404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

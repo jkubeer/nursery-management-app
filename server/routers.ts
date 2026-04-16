@@ -4,6 +4,8 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb } from "./db";
+import { photosRouter } from "./routers/photos";
+import { reportsRouter } from "./routers/reports";
 import {
   staff,
   children,
@@ -577,43 +579,6 @@ export const appRouter = router({
       }),
   }),
 
-  // Photos
-  photos: router({
-    byActivity: protectedProcedure
-      .input(z.object({ activityId: z.number() }))
-      .query(async ({ input }) => {
-        return await db.getActivityPhotos(input.activityId);
-      }),
-
-    byChild: protectedProcedure.input(z.object({ childId: z.number() })).query(async ({ input }) => {
-      return await db.getChildPhotos(input.childId);
-    }),
-
-    create: protectedProcedure
-      .input(
-        z.object({
-          activityId: z.number().optional(),
-          childrenIds: z.array(z.number()),
-          photoUrl: z.string(),
-          photoKey: z.string(),
-          caption: z.string().optional(),
-        })
-      )
-      .mutation(async ({ input, ctx }) => {
-        const database = await getDb();
-        if (!database) throw new Error("Database not available");
-
-        return await database.insert(photos).values({
-          activityId: input.activityId,
-          childrenIds: JSON.stringify(input.childrenIds),
-          photoUrl: input.photoUrl,
-          photoKey: input.photoKey,
-          caption: input.caption,
-          uploadedBy: ctx.user.id,
-        });
-      }),
-  }),
-
   // Fees Management
   fees: router({
     byChild: protectedProcedure.input(z.object({ childId: z.number() })).query(async ({ input }) => {
@@ -853,6 +818,12 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // Photos Management
+  photos: photosRouter,
+
+  // Reports
+  reports: reportsRouter,
 });
 
 export type AppRouter = typeof appRouter;
