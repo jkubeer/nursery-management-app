@@ -132,7 +132,7 @@ export default function Children() {
                   required
                 />
                 <select
-                  value={formData.gender}
+                  value={formData.gender || "male"}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
                   className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
                 >
@@ -148,7 +148,7 @@ export default function Children() {
                   required
                 />
                 <select
-                  value={formData.roomId}
+                  value={formData.roomId || ""}
                   onChange={(e) => setFormData({ ...formData, roomId: e.target.value })}
                   className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
                 >
