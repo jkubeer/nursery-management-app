@@ -9,6 +9,7 @@ import { toast } from "sonner";
 
 export default function Rooms() {
   const { data: roomsList, isLoading, refetch } = trpc.rooms.list.useQuery();
+  const { data: childrenList } = trpc.children.list.useQuery();
   const createMutation = trpc.rooms.create.useMutation();
   const updateMutation = trpc.rooms.update.useMutation();
 
@@ -153,6 +154,19 @@ export default function Rooms() {
                   {room.description && (
                     <p className="text-sm text-muted-foreground mt-1">{room.description}</p>
                   )}
+                  {/* Children in Room Badges */}
+                  {childrenList && childrenList.length > 0 && (() => {
+                    const roomChildren = childrenList.filter((child: any) => child.roomId === room.id);
+                    return roomChildren.length > 0 ? (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {roomChildren.map((child: any) => (
+                          <span key={child.id} className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                            {child.firstName}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null;
+                  })()}
                 </div>
 
                 <div className="space-y-2">
