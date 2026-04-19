@@ -1,9 +1,18 @@
 import { trpc } from "@/lib/trpc";
+
+interface ChildData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string | null;
+  status?: string;
+  parentId?: number;
+}
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Mail, Phone, MapPin } from "lucide-react";
+import { Plus, Edit2, Mail, Phone, MapPin, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -260,6 +269,36 @@ export default function Parents() {
                     </div>
                   )}
                 </div>
+
+                {/* Linked Children Section */}
+                {childrenList && childrenList.length > 0 && (() => {
+                  const linkedChildren = childrenList.filter((child: any) => 
+                    child.parentId === parent.id
+                  );
+                  return linkedChildren.length > 0 ? (
+                    <div className="pt-4 border-t border-border">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Users size={16} className="text-primary" />
+                        <span className="text-sm font-semibold text-foreground">Linked Children ({linkedChildren.length})</span>
+                      </div>
+                      <div className="space-y-2">
+                        {linkedChildren.map((child: any) => (
+                          <div key={child.id} className="flex items-center justify-between bg-muted/50 rounded p-2">
+                            <div>
+                              <p className="text-sm font-medium text-foreground">
+                                {child.firstName} {child.lastName}
+                              </p>
+                              <p className="text-xs text-muted-foreground">Age {child.dateOfBirth ? new Date().getFullYear() - new Date(child.dateOfBirth).getFullYear() : 'N/A'}</p>
+                            </div>
+                            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                              {child.status || 'Active'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null;
+                })()}
 
                 <div className="flex gap-2 pt-4 border-t border-border">
                   <Button
