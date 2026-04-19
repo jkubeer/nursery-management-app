@@ -1,13 +1,4 @@
 import { trpc } from "@/lib/trpc";
-
-interface ChildData {
-  id: number;
-  firstName: string;
-  lastName: string;
-  dateOfBirth?: string | null;
-  status?: string;
-  parentId?: number;
-}
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,22 +7,37 @@ import { Plus, Edit2, Mail, Phone, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
+function ParentCardHeader({ parent }: { parent: any }) {
+  const { data: parentChildren } = trpc.parents.getChildren.useQuery({ parentId: parent.id });
+
+  return (
+    <div>
+      <h3 className="text-lg font-bold text-foreground">
+        {parent.firstName} {parent.lastName}
+      </h3>
+
+      {/* Linked Children Badges */}
+      {parentChildren && parentChildren.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-2">
+          {parentChildren.map((child: any) => (
+            <span key={child.id} className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+              {child.firstName}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Parents() {
   const { data: parentsList, isLoading, refetch } = trpc.parents.list.useQuery();
-  const { data: childrenList } = trpc.children.list.useQuery();
   const createMutation = trpc.parents.create.useMutation();
   const updateMutation = trpc.parents.update.useMutation();
-  const linkChildMutation = trpc.parents.linkChild.useMutation();
+  const utils = trpc.useUtils();
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [selectedParentId, setSelectedParentId] = useState<number | null>(null);
-  const [showLinkForm, setShowLinkForm] = useState(false);
-  const [linkData, setLinkData] = useState({
-    childId: "",
-    relationship: "",
-  });
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -51,38 +57,37 @@ export default function Parents() {
       if (editingId) {
         await updateMutation.mutateAsync({
           id: editingId,
-          ...formData,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          workPhone: formData.workPhone,
         });
-        toast.success("Parent profile updated successfully");
+        toast.success("Parent updated successfully");
+        await utils.parents.getChildren.invalidate();
       } else {
-        await createMutation.mutateAsync(formData);
-        toast.success("Parent added successfully");
+        await createMutation.mutateAsync({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          workPhone: formData.workPhone,
+        });
+        toast.success("Parent created successfully");
+        await utils.parents.getChildren.invalidate();
       }
       resetForm();
       refetch();
     } catch (error) {
       toast.error("Failed to save parent");
-    }
-  };
-
-  const handleLinkChild = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedParentId) {
-      toast.error("Please select a parent");
-      return;
-    }
-
-    try {
-      await linkChildMutation.mutateAsync({
-        parentId: selectedParentId,
-        childId: parseInt(linkData.childId),
-        relationship: linkData.relationship,
-      });
-      toast.success("Child linked successfully");
-      setLinkData({ childId: "", relationship: "" });
-      setShowLinkForm(false);
-    } catch (error) {
-      toast.error("Failed to link child");
     }
   };
 
@@ -106,7 +111,7 @@ export default function Parents() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-foreground">Parents & Guardians</h1>
+        <h1 className="text-3xl font-bold text-foreground">Parents</h1>
         <Button onClick={() => setShowForm(!showForm)} className="gap-2">
           <Plus size={20} />
           Add Parent
@@ -116,7 +121,7 @@ export default function Parents() {
       {showForm && (
         <Card className="p-6">
           <h2 className="text-xl font-bold mb-4 text-foreground">
-            {editingId ? "Edit Parent Profile" : "Add New Parent"}
+            {editingId ? "Edit Parent" : "Add New Parent"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -145,7 +150,7 @@ export default function Parents() {
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
               <Input
-                placeholder="Relationship (Mother, Father, Guardian, etc.)"
+                placeholder="Relationship"
                 value={formData.relationship}
                 onChange={(e) => setFormData({ ...formData, relationship: e.target.value })}
               />
@@ -176,47 +181,10 @@ export default function Parents() {
               />
             </div>
             <div className="flex gap-2">
-              <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
-                {editingId ? "Update" : "Add"} Parent
+              <Button type="submit">
+                {editingId ? "Update" : "Create"}
               </Button>
               <Button type="button" variant="outline" onClick={resetForm}>
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </Card>
-      )}
-
-      {showLinkForm && selectedParentId && (
-        <Card className="p-6">
-          <h2 className="text-xl font-bold mb-4 text-foreground">Link Child to Parent</h2>
-          <form onSubmit={handleLinkChild} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <select
-                value={linkData.childId}
-                onChange={(e) => setLinkData({ ...linkData, childId: e.target.value })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-                required
-              >
-                <option value="">Select Child</option>
-                {childrenList?.map((child) => (
-                  <option key={child.id} value={child.id}>
-                    {child.firstName} {child.lastName}
-                  </option>
-                ))}
-              </select>
-              <Input
-                placeholder="Relationship (Mother, Father, Guardian, etc.)"
-                value={linkData.relationship}
-                onChange={(e) => setLinkData({ ...linkData, relationship: e.target.value })}
-                required
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button type="submit" disabled={linkChildMutation.isPending}>
-                Link Child
-              </Button>
-              <Button type="button" variant="outline" onClick={() => setShowLinkForm(false)}>
                 Cancel
               </Button>
             </div>
@@ -235,27 +203,7 @@ export default function Parents() {
           parentsList.map((parent) => (
             <Card key={parent.id} className="p-6 card-elegant">
               <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-bold text-foreground">
-                    {parent.firstName} {parent.lastName}
-                  </h3>
-                  {parent.relationship && (
-                    <p className="text-sm text-muted-foreground">{parent.relationship}</p>
-                  )}
-                  {/* Linked Children Badges */}
-                  {childrenList && childrenList.length > 0 && (() => {
-                    const linkedChildren = childrenList.filter((child: any) => child.parentId === parent.id);
-                    return linkedChildren.length > 0 ? (
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {linkedChildren.map((child: any) => (
-                          <span key={child.id} className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                            {child.firstName}
-                          </span>
-                        ))}
-                      </div>
-                    ) : null;
-                  })()}
-                </div>
+                <ParentCardHeader parent={parent} />
 
                 <div className="space-y-2 text-sm">
                   {parent.email && (
@@ -294,7 +242,7 @@ export default function Parents() {
                         lastName: parent.lastName,
                         email: parent.email,
                         phone: parent.phone || "",
-                        relationship: parent.relationship || "",
+                        relationship: "",
                         address: parent.address || "",
                         city: parent.city || "",
                         state: parent.state || "",
@@ -308,25 +256,13 @@ export default function Parents() {
                     <Edit2 size={16} />
                     Edit
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedParentId(parent.id);
-                      setShowLinkForm(true);
-                    }}
-                    className="gap-1"
-                  >
-                    <Plus size={16} />
-                    Link Child
-                  </Button>
                 </div>
               </div>
             </Card>
           ))
         ) : (
           <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground text-lg">No parents added yet.</p>
+            <p className="text-muted-foreground">No parents found</p>
           </div>
         )}
       </div>
