@@ -41,10 +41,18 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
       <DashboardNav />
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Page Title Row */}
-        <div className="px-8 pt-6 pb-4 border-b border-border bg-background">
+        <div className="px-8 pt-6 pb-4 border-b border-border bg-background flex items-center justify-between">
           <h1 className="text-2xl font-bold text-foreground">
             {navigationItems.find((item) => item.href === location)?.label || "Dashboard"}
           </h1>
+          <div className="text-sm text-muted-foreground">
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
         </div>
         {/* Content Area */}
         <div className="flex-1 overflow-auto bg-background px-8 py-8">
