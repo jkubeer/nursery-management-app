@@ -121,18 +121,10 @@ export default function DashboardNav() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="h-16 bg-card border-b border-border px-8 flex items-center justify-between">
+        <div className="h-16 bg-card border-b border-border px-8 flex items-center">
           <h1 className="text-2xl font-bold text-foreground">
             {navigationItems.find((item) => item.href === location)?.label || "Dashboard"}
           </h1>
-          <div className="text-sm text-muted-foreground">
-            {new Date().toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </div>
         </div>
 
         {/* Content Area */}
