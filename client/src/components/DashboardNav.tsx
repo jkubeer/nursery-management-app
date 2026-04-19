@@ -118,20 +118,7 @@ export default function DashboardNav() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Bar */}
-        <div className="h-16 bg-card border-b border-border px-8 flex items-center">
-          <h1 className="text-2xl font-bold text-foreground">
-            {navigationItems.find((item) => item.href === location)?.label || "Dashboard"}
-          </h1>
-        </div>
-
-        {/* Content Area */}
-        <div className="flex-1 overflow-auto p-8 bg-background">
-          {/* Content will be rendered here by router */}
-        </div>
-      </div>
+      {/* Main Content - Handled by DashboardLayout in App.tsx */}
     </div>
   );
 }

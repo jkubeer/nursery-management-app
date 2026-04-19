@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -21,11 +21,33 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+  const navigationItems = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Staff", href: "/staff" },
+    { label: "Children", href: "/children" },
+    { label: "Parents", href: "/parents" },
+    { label: "Rooms", href: "/rooms" },
+    { label: "Activities", href: "/activities" },
+    { label: "Check-in/Out", href: "/checkin" },
+    { label: "Photos", href: "/photos" },
+    { label: "Reports", href: "/reports" },
+    { label: "Payments", href: "/payments" },
+    { label: "Settings", href: "/settings" },
+  ];
+
   return (
     <div className="flex h-screen bg-background">
       <DashboardNav />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-auto p-8 bg-background">
+        {/* Page Title Row */}
+        <div className="px-8 pt-6 pb-4 border-b border-border bg-background">
+          <h1 className="text-2xl font-bold text-foreground">
+            {navigationItems.find((item) => item.href === location)?.label || "Dashboard"}
+          </h1>
+        </div>
+        {/* Content Area */}
+        <div className="flex-1 overflow-auto bg-background px-8 py-8">
           {children}
         </div>
       </div>
