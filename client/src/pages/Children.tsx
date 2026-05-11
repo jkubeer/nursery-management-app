@@ -246,73 +246,82 @@ export default function Children() {
       )}
 
       <div className="overflow-x-auto border border-border rounded-lg">
-        <table className="w-full">
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '10%' }} />
+            <col style={{ width: '10%' }} />
+            <col style={{ width: '12%' }} />
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '14%' }} />
+          </colgroup>
           <thead className="bg-muted border-b border-border">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Age</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Gender</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Room</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Allergies</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Medical</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Name</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Age</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Gender</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Room</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Allergies</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Medical</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
             {childrenList && childrenList.length > 0 ? (
               childrenList.map((child: any) => (
                 <tr key={child.id} className="border-b border-border hover:bg-muted/50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                  <td className="px-4 py-2 text-xs text-foreground font-medium truncate">
                     {child.firstName} {child.lastName}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">
-                    {calculateAge(child.dateOfBirth)} years
+                  <td className="px-4 py-2 text-xs text-muted-foreground">
+                    {calculateAge(child.dateOfBirth)}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">
-                    {child.gender === "male" ? "👦 Male" : child.gender === "female" ? "👧 Female" : "Other"}
+                  <td className="px-4 py-2 text-xs text-muted-foreground">
+                    {child.gender === "male" ? "👦" : child.gender === "female" ? "👧" : "❓"}
                   </td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <td className="px-4 py-2 text-xs">
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap">
                       {getRoomName(child.roomId)}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 py-2 text-xs">
                     {child.allergies ? (
-                      <span className="flex items-center gap-1 text-orange-600">
-                        <AlertCircle className="w-4 h-4" />
-                        {child.allergies}
+                      <span className="flex items-center gap-1 text-orange-600 truncate">
+                        <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">{child.allergies}</span>
                       </span>
                     ) : (
                       "-"
                     )}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 py-2 text-xs">
                     {child.medicalConditions ? (
-                      <span className="flex items-center gap-1 text-red-600">
-                        <AlertCircle className="w-4 h-4" />
-                        {child.medicalConditions}
+                      <span className="flex items-center gap-1 text-red-600 truncate">
+                        <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">{child.medicalConditions}</span>
                       </span>
                     ) : (
                       "-"
                     )}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 py-2 text-xs">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => handleEdit(child)}
-                      className="gap-2"
+                      className="h-7 px-2 w-7 p-0"
+                      title="Edit child"
                     >
-                      <Edit2 className="w-4 h-4" />
-                      Edit
+                      <Edit2 className="w-3 h-3" />
                     </Button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={7} className="px-6 py-12 text-center text-muted-foreground">
-                  No children registered. Add one to get started.
+                <td colSpan={7} className="px-4 py-8 text-center text-xs text-muted-foreground">
+                  No children registered. Register one to get started.
                 </td>
               </tr>
             )}

@@ -234,19 +234,19 @@ export default function Staff() {
                       size="sm"
                       variant="outline"
                       onClick={() => handleEdit(staff)}
-                      className="gap-1 h-7 px-2"
+                      className="h-7 px-2 w-7 p-0"
+                      title="Edit staff"
                     >
                       <Edit2 className="w-3 h-3" />
-                      Edit
                     </Button>
                     <Button
                       size="sm"
                       variant="destructive"
                       onClick={() => handleDelete(staff.id)}
-                      className="gap-1 h-7 px-2"
+                      className="h-7 px-2 w-7 p-0"
+                      title="Delete staff"
                     >
                       <Trash2 className="w-3 h-3" />
-                      Delete
                     </Button>
                   </td>
                 </tr>

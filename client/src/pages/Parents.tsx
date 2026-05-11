@@ -263,10 +263,10 @@ export default function Parents() {
                       size="sm"
                       variant="outline"
                       onClick={() => handleEdit(parent)}
-                      className="gap-1 h-7 px-2"
+                      className="h-7 px-2 w-7 p-0"
+                      title="Edit parent"
                     >
                       <Edit2 className="w-3 h-3" />
-                      Edit
                     </Button>
                   </td>
                 </tr>
