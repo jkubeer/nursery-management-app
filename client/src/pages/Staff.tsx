@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Trash2, Phone, Mail, ChevronDown } from "lucide-react";
+import { Plus, Edit2, Trash2, Phone, Mail } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -14,7 +14,6 @@ export default function Staff() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -103,7 +102,7 @@ export default function Staff() {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+          <Skeleton key={i} className="h-12 w-full rounded-lg" />
         ))}
       </div>
     );
@@ -189,69 +188,42 @@ export default function Staff() {
         </div>
       )}
 
-      <div className="space-y-2">
-        {staffList && staffList.length > 0 ? (
-          staffList.map((staff: any) => (
-            <div
-              key={staff.id}
-              className="border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors"
-            >
-              <div
-                className="p-4 flex items-center justify-between cursor-pointer"
-                onClick={() => setExpandedId(expandedId === staff.id ? null : staff.id)}
-              >
-                <div className="flex-1 flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="font-semibold text-primary">
-                      {staff.firstName[0]}{staff.lastName[0]}
+      <div className="overflow-x-auto border border-border rounded-lg">
+        <table className="w-full">
+          <thead className="bg-muted border-b border-border">
+            <tr>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Role</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Email</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Phone</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Qualifications</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {staffList && staffList.length > 0 ? (
+              staffList.map((staff: any) => (
+                <tr key={staff.id} className="border-b border-border hover:bg-muted/50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                    {staff.firstName} {staff.lastName}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRoleColor(staff.staffRole)}`}>
+                      {staff.staffRole}
                     </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground">
-                      {staff.firstName} {staff.lastName}
-                    </div>
-                    <div className="text-sm text-muted-foreground flex items-center gap-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(staff.staffRole)}`}>
-                        {staff.staffRole}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Mail className="w-3 h-3" />
-                        {staff.email}
-                      </span>
-                      {staff.phone && (
-                        <span className="flex items-center gap-1">
-                          <Phone className="w-3 h-3" />
-                          {staff.phone}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <ChevronDown
-                  className={`w-5 h-5 text-muted-foreground transition-transform ${
-                    expandedId === staff.id ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
-
-              {expandedId === staff.id && (
-                <div className="border-t border-border px-4 py-4 bg-muted/30 space-y-3">
-                  {staff.qualifications && (
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Qualifications</div>
-                      <div className="text-foreground">{staff.qualifications}</div>
-                    </div>
-                  )}
-                  {staff.emergencyContact && (
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Emergency Contact</div>
-                      <div className="text-foreground">
-                        {staff.emergencyContact}
-                        {staff.emergencyPhone && ` - ${staff.emergencyPhone}`}
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex gap-2 pt-2">
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    {staff.email}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
+                    <Phone className="w-4 h-4" />
+                    {staff.phone || "-"}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">
+                    {staff.qualifications || "-"}
+                  </td>
+                  <td className="px-6 py-4 text-sm flex gap-2">
                     <Button
                       size="sm"
                       variant="outline"
@@ -270,16 +242,18 @@ export default function Staff() {
                       <Trash2 className="w-4 h-4" />
                       Delete
                     </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            No staff members found. Add one to get started.
-          </div>
-        )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                  No staff members found. Add one to get started.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

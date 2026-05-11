@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Trash2, Mail, Phone, ChevronDown } from "lucide-react";
+import { Plus, Edit2, Trash2, Mail, Phone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -10,11 +10,11 @@ function ParentChildrenBadges({ parentId }: { parentId: number }) {
   const { data: parentChildren } = trpc.parents.getChildren.useQuery({ parentId });
 
   if (!parentChildren || parentChildren.length === 0) {
-    return null;
+    return <span className="text-muted-foreground">-</span>;
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1">
       {parentChildren.map((child: any) => (
         <span
           key={child.id}
@@ -34,7 +34,6 @@ export default function Parents() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -120,15 +119,11 @@ export default function Parents() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id: number) => {
-    toast.info("Delete functionality coming soon");
-  };
-
   if (isLoading) {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+          <Skeleton key={i} className="h-12 w-full rounded-lg" />
         ))}
       </div>
     );
@@ -218,78 +213,46 @@ export default function Parents() {
         </div>
       )}
 
-      <div className="space-y-2">
-        {parentsList && parentsList.length > 0 ? (
-          parentsList.map((parent: any) => (
-            <div
-              key={parent.id}
-              className="border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors"
-            >
-              <div
-                className="p-4 flex items-center justify-between cursor-pointer"
-                onClick={() => setExpandedId(expandedId === parent.id ? null : parent.id)}
-              >
-                <div className="flex-1 flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="font-semibold text-primary">
-                      {parent.firstName[0]}{parent.lastName[0]}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground">
-                      {parent.firstName} {parent.lastName}
-                    </div>
-                    <div className="text-sm text-muted-foreground flex items-center gap-4">
-                      {parent.relationship && (
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                          {parent.relationship}
-                        </span>
-                      )}
-                      <span className="flex items-center gap-1">
-                        <Mail className="w-3 h-3" />
-                        {parent.email}
+      <div className="overflow-x-auto border border-border rounded-lg">
+        <table className="w-full">
+          <thead className="bg-muted border-b border-border">
+            <tr>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Relationship</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Email</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Phone</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Children</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {parentsList && parentsList.length > 0 ? (
+              parentsList.map((parent: any) => (
+                <tr key={parent.id} className="border-b border-border hover:bg-muted/50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                    {parent.firstName} {parent.lastName}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    {parent.relationship ? (
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        {parent.relationship}
                       </span>
-                      {parent.phone && (
-                        <span className="flex items-center gap-1">
-                          <Phone className="w-3 h-3" />
-                          {parent.phone}
-                        </span>
-                      )}
-                    </div>
-                    {/* Linked Children Badges */}
-                    <div className="mt-2">
-                      <ParentChildrenBadges parentId={parent.id} />
-                    </div>
-                  </div>
-                </div>
-                <ChevronDown
-                  className={`w-5 h-5 text-muted-foreground transition-transform ${
-                    expandedId === parent.id ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
-
-              {expandedId === parent.id && (
-                <div className="border-t border-border px-4 py-4 bg-muted/30 space-y-3">
-                  {parent.workPhone && (
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Work Phone</div>
-                      <div className="text-foreground">{parent.workPhone}</div>
-                    </div>
-                  )}
-                  {(parent.address || parent.city || parent.state || parent.zipCode) && (
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Address</div>
-                      <div className="text-foreground">
-                        {parent.address}
-                        {parent.city && `, ${parent.city}`}
-                        {parent.state && `, ${parent.state}`}
-                        {parent.zipCode && ` ${parent.zipCode}`}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex gap-2 pt-2">
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    {parent.email}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
+                    <Phone className="w-4 h-4" />
+                    {parent.phone || "-"}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <ParentChildrenBadges parentId={parent.id} />
+                  </td>
+                  <td className="px-6 py-4 text-sm flex gap-2">
                     <Button
                       size="sm"
                       variant="outline"
@@ -299,26 +262,18 @@ export default function Parents() {
                       <Edit2 className="w-4 h-4" />
                       Edit
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDelete(parent.id)}
-                      className="gap-2"
-                      disabled
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            No parents found. Add one to get started.
-          </div>
-        )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                  No parents found. Add one to get started.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

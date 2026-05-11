@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Trash2, AlertCircle, ChevronDown } from "lucide-react";
+import { Plus, Edit2, AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -14,7 +14,6 @@ export default function Children() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -103,10 +102,6 @@ export default function Children() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id: number) => {
-    toast.info("Delete functionality coming soon");
-  };
-
   const calculateAge = (dateOfBirth: string | Date) => {
     const dob = new Date(dateOfBirth);
     const today = new Date();
@@ -127,7 +122,7 @@ export default function Children() {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+          <Skeleton key={i} className="h-12 w-full rounded-lg" />
         ))}
       </div>
     );
@@ -250,124 +245,58 @@ export default function Children() {
         </div>
       )}
 
-      <div className="space-y-2">
-        {childrenList && childrenList.length > 0 ? (
-          childrenList.map((child: any) => (
-            <div
-              key={child.id}
-              className="border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors"
-            >
-              <div
-                className="p-4 flex items-center justify-between cursor-pointer"
-                onClick={() => setExpandedId(expandedId === child.id ? null : child.id)}
-              >
-                <div className="flex-1 flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="font-semibold text-primary">
-                      {child.firstName[0]}{child.lastName[0]}
+      <div className="overflow-x-auto border border-border rounded-lg">
+        <table className="w-full">
+          <thead className="bg-muted border-b border-border">
+            <tr>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Age</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Gender</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Room</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Allergies</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Medical</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {childrenList && childrenList.length > 0 ? (
+              childrenList.map((child: any) => (
+                <tr key={child.id} className="border-b border-border hover:bg-muted/50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                    {child.firstName} {child.lastName}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">
+                    {calculateAge(child.dateOfBirth)} years
+                  </td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">
+                    {child.gender === "male" ? "👦 Male" : child.gender === "female" ? "👧 Female" : "Other"}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {getRoomName(child.roomId)}
                     </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground">
-                      {child.firstName} {child.lastName}
-                    </div>
-                    <div className="text-sm text-muted-foreground flex items-center gap-4">
-                      <span>{calculateAge(child.dateOfBirth)} years old</span>
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {getRoomName(child.roomId)}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    {child.allergies ? (
+                      <span className="flex items-center gap-1 text-orange-600">
+                        <AlertCircle className="w-4 h-4" />
+                        {child.allergies}
                       </span>
-                      {(child.allergies || child.medicalConditions) && (
-                        <span className="flex items-center gap-1 text-amber-600">
-                          <AlertCircle className="w-3 h-3" />
-                          Medical Info
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <ChevronDown
-                  className={`w-5 h-5 text-muted-foreground transition-transform ${
-                    expandedId === child.id ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
-
-              {expandedId === child.id && (
-                <div className="border-t border-border px-4 py-4 bg-muted/30 space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Date of Birth</div>
-                      <div className="text-foreground">{new Date(child.dateOfBirth).toLocaleDateString()}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Gender</div>
-                      <div className="text-foreground capitalize">{child.gender}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Enrollment Date</div>
-                      <div className="text-foreground">{new Date(child.enrollmentDate).toLocaleDateString()}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-muted-foreground">Room</div>
-                      <div className="text-foreground">{getRoomName(child.roomId)}</div>
-                    </div>
-                  </div>
-
-                  {(child.allergies || child.medicalConditions || child.medications || child.dietaryRestrictions) && (
-                    <div className="border-t border-border pt-3">
-                      <div className="font-medium text-foreground mb-2">Medical Information</div>
-                      {child.allergies && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Allergies</div>
-                          <div className="text-foreground">{child.allergies}</div>
-                        </div>
-                      )}
-                      {child.medicalConditions && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Medical Conditions</div>
-                          <div className="text-foreground">{child.medicalConditions}</div>
-                        </div>
-                      )}
-                      {child.medications && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Medications</div>
-                          <div className="text-foreground">{child.medications}</div>
-                        </div>
-                      )}
-                      {child.dietaryRestrictions && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Dietary Restrictions</div>
-                          <div className="text-foreground">{child.dietaryRestrictions}</div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {(child.emergencyContact1 || child.emergencyContact2) && (
-                    <div className="border-t border-border pt-3">
-                      <div className="font-medium text-foreground mb-2">Emergency Contacts</div>
-                      {child.emergencyContact1 && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Contact 1</div>
-                          <div className="text-foreground">
-                            {child.emergencyContact1}
-                            {child.emergencyPhone1 && ` - ${child.emergencyPhone1}`}
-                          </div>
-                        </div>
-                      )}
-                      {child.emergencyContact2 && (
-                        <div>
-                          <div className="text-sm font-medium text-muted-foreground">Contact 2</div>
-                          <div className="text-foreground">
-                            {child.emergencyContact2}
-                            {child.emergencyPhone2 && ` - ${child.emergencyPhone2}`}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex gap-2 pt-2">
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    {child.medicalConditions ? (
+                      <span className="flex items-center gap-1 text-red-600">
+                        <AlertCircle className="w-4 h-4" />
+                        {child.medicalConditions}
+                      </span>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
                     <Button
                       size="sm"
                       variant="outline"
@@ -377,26 +306,18 @@ export default function Children() {
                       <Edit2 className="w-4 h-4" />
                       Edit
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDelete(child.id)}
-                      className="gap-2"
-                      disabled
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            No children registered. Add one to get started.
-          </div>
-        )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="px-6 py-12 text-center text-muted-foreground">
+                  No children registered. Add one to get started.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
