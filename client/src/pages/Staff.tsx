@@ -189,57 +189,63 @@ export default function Staff() {
       )}
 
       <div className="overflow-x-auto border border-border rounded-lg">
-        <table className="w-full">
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '12%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '15%' }} />
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '15%' }} />
+          </colgroup>
           <thead className="bg-muted border-b border-border">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Role</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Email</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Phone</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Qualifications</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Name</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Role</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Email</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Phone</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Qualifications</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
             {staffList && staffList.length > 0 ? (
               staffList.map((staff: any) => (
                 <tr key={staff.id} className="border-b border-border hover:bg-muted/50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                  <td className="px-4 py-2 text-xs text-foreground font-medium truncate">
                     {staff.firstName} {staff.lastName}
                   </td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRoleColor(staff.staffRole)}`}>
+                  <td className="px-4 py-2 text-xs">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getRoleColor(staff.staffRole)}`}>
                       {staff.staffRole}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
+                  <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                     {staff.email}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
+                  <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                     {staff.phone || "-"}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">
+                  <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                     {staff.qualifications || "-"}
                   </td>
-                  <td className="px-6 py-4 text-sm flex gap-2">
+                  <td className="px-4 py-2 text-xs flex gap-1">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => handleEdit(staff)}
-                      className="gap-2"
+                      className="gap-1 h-7 px-2"
                     >
-                      <Edit2 className="w-4 h-4" />
+                      <Edit2 className="w-3 h-3" />
                       Edit
                     </Button>
                     <Button
                       size="sm"
                       variant="destructive"
                       onClick={() => handleDelete(staff.id)}
-                      className="gap-2"
+                      className="gap-1 h-7 px-2"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-3 h-3" />
                       Delete
                     </Button>
                   </td>
@@ -247,7 +253,7 @@ export default function Staff() {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                <td colSpan={6} className="px-4 py-8 text-center text-xs text-muted-foreground">
                   No staff members found. Add one to get started.
                 </td>
               </tr>

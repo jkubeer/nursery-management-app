@@ -214,52 +214,58 @@ export default function Parents() {
       )}
 
       <div className="overflow-x-auto border border-border rounded-lg">
-        <table className="w-full">
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '14%' }} />
+            <col style={{ width: '22%' }} />
+            <col style={{ width: '14%' }} />
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '14%' }} />
+          </colgroup>
           <thead className="bg-muted border-b border-border">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Name</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Relationship</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Email</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Phone</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Children</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Actions</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Name</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Relationship</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Email</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Phone</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Children</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
             {parentsList && parentsList.length > 0 ? (
               parentsList.map((parent: any) => (
                 <tr key={parent.id} className="border-b border-border hover:bg-muted/50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                  <td className="px-4 py-2 text-xs text-foreground font-medium truncate">
                     {parent.firstName} {parent.lastName}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 py-2 text-xs">
                     {parent.relationship ? (
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 whitespace-nowrap">
                         {parent.relationship}
                       </span>
                     ) : (
                       "-"
                     )}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
+                  <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                     {parent.email}
                   </td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
+                  <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                     {parent.phone || "-"}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 py-2 text-xs">
                     <ParentChildrenBadges parentId={parent.id} />
                   </td>
-                  <td className="px-6 py-4 text-sm flex gap-2">
+                  <td className="px-4 py-2 text-xs flex gap-1">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => handleEdit(parent)}
-                      className="gap-2"
+                      className="gap-1 h-7 px-2"
                     >
-                      <Edit2 className="w-4 h-4" />
+                      <Edit2 className="w-3 h-3" />
                       Edit
                     </Button>
                   </td>
@@ -267,7 +273,7 @@ export default function Parents() {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                <td colSpan={6} className="px-4 py-8 text-center text-xs text-muted-foreground">
                   No parents found. Add one to get started.
                 </td>
               </tr>
