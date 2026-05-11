@@ -1,31 +1,28 @@
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Mail, Phone, MapPin } from "lucide-react";
+import { Plus, Edit2, Trash2, Mail, Phone, ChevronDown } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-function ParentCardHeader({ parent }: { parent: any }) {
-  const { data: parentChildren } = trpc.parents.getChildren.useQuery({ parentId: parent.id });
+function ParentChildrenBadges({ parentId }: { parentId: number }) {
+  const { data: parentChildren } = trpc.parents.getChildren.useQuery({ parentId });
+
+  if (!parentChildren || parentChildren.length === 0) {
+    return null;
+  }
 
   return (
-    <div>
-      <h3 className="text-lg font-bold text-foreground">
-        {parent.firstName} {parent.lastName}
-      </h3>
-
-      {/* Linked Children Badges */}
-      {parentChildren && parentChildren.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
-          {parentChildren.map((child: any) => (
-            <span key={child.id} className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-              {child.firstName}
-            </span>
-          ))}
-        </div>
-      )}
+    <div className="flex flex-wrap gap-2">
+      {parentChildren.map((child: any) => (
+        <span
+          key={child.id}
+          className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium"
+        >
+          {child.firstName}
+        </span>
+      ))}
     </div>
   );
 }
@@ -34,10 +31,10 @@ export default function Parents() {
   const { data: parentsList, isLoading, refetch } = trpc.parents.list.useQuery();
   const createMutation = trpc.parents.create.useMutation();
   const updateMutation = trpc.parents.update.useMutation();
-  const utils = trpc.useUtils();
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -68,7 +65,6 @@ export default function Parents() {
           workPhone: formData.workPhone,
         });
         toast.success("Parent updated successfully");
-        await utils.parents.getChildren.invalidate();
       } else {
         await createMutation.mutateAsync({
           firstName: formData.firstName,
@@ -82,7 +78,6 @@ export default function Parents() {
           workPhone: formData.workPhone,
         });
         toast.success("Parent created successfully");
-        await utils.parents.getChildren.invalidate();
       }
       resetForm();
       refetch();
@@ -108,19 +103,50 @@ export default function Parents() {
     setEditingId(null);
   };
 
+  const handleEdit = (parent: any) => {
+    setFormData({
+      firstName: parent.firstName,
+      lastName: parent.lastName,
+      email: parent.email,
+      phone: parent.phone || "",
+      relationship: parent.relationship || "",
+      address: parent.address || "",
+      city: parent.city || "",
+      state: parent.state || "",
+      zipCode: parent.zipCode || "",
+      workPhone: parent.workPhone || "",
+    });
+    setEditingId(parent.id);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    toast.info("Delete functionality coming soon");
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-foreground">Parents</h1>
+        <h1 className="text-3xl font-bold text-foreground">Parents Management</h1>
         <Button onClick={() => setShowForm(!showForm)} className="gap-2">
-          <Plus size={20} />
+          <Plus className="w-4 h-4" />
           Add Parent
         </Button>
       </div>
 
       {showForm && (
-        <Card className="p-6">
-          <h2 className="text-xl font-bold mb-4 text-foreground">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">
             {editingId ? "Edit Parent" : "Add New Parent"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -181,88 +207,116 @@ export default function Parents() {
               />
             </div>
             <div className="flex gap-2">
-              <Button type="submit">
-                {editingId ? "Update" : "Create"}
+              <Button type="submit" className="flex-1">
+                {editingId ? "Update" : "Create"} Parent
               </Button>
-              <Button type="button" variant="outline" onClick={resetForm}>
+              <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                 Cancel
               </Button>
             </div>
           </form>
-        </Card>
+        </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {isLoading ? (
-          <>
-            <Skeleton className="h-80" />
-            <Skeleton className="h-80" />
-            <Skeleton className="h-80" />
-          </>
-        ) : parentsList && parentsList.length > 0 ? (
-          parentsList.map((parent) => (
-            <Card key={parent.id} className="p-6 card-elegant">
-              <div className="space-y-4">
-                <ParentCardHeader parent={parent} />
+      <div className="space-y-2">
+        {parentsList && parentsList.length > 0 ? (
+          parentsList.map((parent: any) => (
+            <div
+              key={parent.id}
+              className="border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors"
+            >
+              <div
+                className="p-4 flex items-center justify-between cursor-pointer"
+                onClick={() => setExpandedId(expandedId === parent.id ? null : parent.id)}
+              >
+                <div className="flex-1 flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="font-semibold text-primary">
+                      {parent.firstName[0]}{parent.lastName[0]}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-foreground">
+                      {parent.firstName} {parent.lastName}
+                    </div>
+                    <div className="text-sm text-muted-foreground flex items-center gap-4">
+                      {parent.relationship && (
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                          {parent.relationship}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Mail className="w-3 h-3" />
+                        {parent.email}
+                      </span>
+                      {parent.phone && (
+                        <span className="flex items-center gap-1">
+                          <Phone className="w-3 h-3" />
+                          {parent.phone}
+                        </span>
+                      )}
+                    </div>
+                    {/* Linked Children Badges */}
+                    <div className="mt-2">
+                      <ParentChildrenBadges parentId={parent.id} />
+                    </div>
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-muted-foreground transition-transform ${
+                    expandedId === parent.id ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
 
-                <div className="space-y-2 text-sm">
-                  {parent.email && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Mail size={16} />
-                      <span>{parent.email}</span>
+              {expandedId === parent.id && (
+                <div className="border-t border-border px-4 py-4 bg-muted/30 space-y-3">
+                  {parent.workPhone && (
+                    <div>
+                      <div className="text-sm font-medium text-muted-foreground">Work Phone</div>
+                      <div className="text-foreground">{parent.workPhone}</div>
                     </div>
                   )}
-                  {parent.phone && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Phone size={16} />
-                      <span>{parent.phone}</span>
-                    </div>
-                  )}
-                  {parent.address && (
-                    <div className="flex items-start gap-2 text-muted-foreground">
-                      <MapPin size={16} className="mt-0.5" />
-                      <span>
+                  {(parent.address || parent.city || parent.state || parent.zipCode) && (
+                    <div>
+                      <div className="text-sm font-medium text-muted-foreground">Address</div>
+                      <div className="text-foreground">
                         {parent.address}
                         {parent.city && `, ${parent.city}`}
                         {parent.state && `, ${parent.state}`}
                         {parent.zipCode && ` ${parent.zipCode}`}
-                      </span>
+                      </div>
                     </div>
                   )}
-                </div>
 
-                <div className="flex gap-2 pt-4 border-t border-border">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      setEditingId(parent.id);
-                      setFormData({
-                        firstName: parent.firstName,
-                        lastName: parent.lastName,
-                        email: parent.email,
-                        phone: parent.phone || "",
-                        relationship: "",
-                        address: parent.address || "",
-                        city: parent.city || "",
-                        state: parent.state || "",
-                        zipCode: parent.zipCode || "",
-                        workPhone: parent.workPhone || "",
-                      });
-                      setShowForm(true);
-                    }}
-                    className="gap-1"
-                  >
-                    <Edit2 size={16} />
-                    Edit
-                  </Button>
+                  <div className="flex gap-2 pt-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleEdit(parent)}
+                      className="gap-2"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleDelete(parent.id)}
+                      className="gap-2"
+                      disabled
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              )}
+            </div>
           ))
         ) : (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground">No parents found</p>
+          <div className="text-center py-12 text-muted-foreground">
+            No parents found. Add one to get started.
           </div>
         )}
       </div>

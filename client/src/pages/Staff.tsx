@@ -1,9 +1,8 @@
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Trash2, Phone, Mail } from "lucide-react";
+import { Plus, Edit2, Trash2, Phone, Mail, ChevronDown } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -15,6 +14,7 @@ export default function Staff() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -39,22 +39,41 @@ export default function Staff() {
         await createMutation.mutateAsync(formData);
         toast.success("Staff member added successfully");
       }
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        staffRole: "teacher",
-        qualifications: "",
-        emergencyContact: "",
-        emergencyPhone: "",
-      });
-      setShowForm(false);
-      setEditingId(null);
+      resetForm();
       refetch();
     } catch (error) {
       toast.error("Failed to save staff member");
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      staffRole: "teacher",
+      qualifications: "",
+      emergencyContact: "",
+      emergencyPhone: "",
+    });
+    setShowForm(false);
+    setEditingId(null);
+  };
+
+  const handleEdit = (staff: any) => {
+    setFormData({
+      firstName: staff.firstName,
+      lastName: staff.lastName,
+      email: staff.email,
+      phone: staff.phone,
+      staffRole: staff.staffRole,
+      qualifications: staff.qualifications || "",
+      emergencyContact: staff.emergencyContact || "",
+      emergencyPhone: staff.emergencyPhone || "",
+    });
+    setEditingId(staff.id);
+    setShowForm(true);
   };
 
   const handleDelete = async (id: number) => {
@@ -80,19 +99,29 @@ export default function Staff() {
     return colors[role] || "bg-gray-100 text-gray-800";
   };
 
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-foreground">Staff Management</h1>
         <Button onClick={() => setShowForm(!showForm)} className="gap-2">
-          <Plus size={20} />
+          <Plus className="w-4 h-4" />
           Add Staff Member
         </Button>
       </div>
 
       {showForm && (
-        <Card className="p-6">
-          <h2 className="text-xl font-bold mb-4 text-foreground">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">
             {editingId ? "Edit Staff Member" : "Add New Staff Member"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -122,7 +151,7 @@ export default function Staff() {
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
               <select
-                value={formData.staffRole}
+                value={formData.staffRole || "teacher"}
                 onChange={(e) => setFormData({ ...formData, staffRole: e.target.value as any })}
                 className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
               >
@@ -138,7 +167,7 @@ export default function Staff() {
                 onChange={(e) => setFormData({ ...formData, qualifications: e.target.value })}
               />
               <Input
-                placeholder="Emergency Contact"
+                placeholder="Emergency Contact Name"
                 value={formData.emergencyContact}
                 onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
               />
@@ -149,103 +178,106 @@ export default function Staff() {
               />
             </div>
             <div className="flex gap-2">
-              <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
+              <Button type="submit" className="flex-1">
                 {editingId ? "Update" : "Add"} Staff Member
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setShowForm(false);
-                  setEditingId(null);
-                }}
-              >
+              <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                 Cancel
               </Button>
             </div>
           </form>
-        </Card>
+        </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {isLoading ? (
-          <>
-            <Skeleton className="h-64" />
-            <Skeleton className="h-64" />
-            <Skeleton className="h-64" />
-          </>
-        ) : staffList && staffList.length > 0 ? (
-          staffList.map((member) => (
-            <Card key={member.id} className="p-6 card-elegant">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-bold text-foreground">
-                    {member.firstName} {member.lastName}
-                  </h3>
-                  <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-2 ${getRoleColor(member.staffRole)}`}>
-                    {member.staffRole.charAt(0).toUpperCase() + member.staffRole.slice(1)}
-                  </span>
-                </div>
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Mail size={16} />
-                    <span>{member.email}</span>
+      <div className="space-y-2">
+        {staffList && staffList.length > 0 ? (
+          staffList.map((staff: any) => (
+            <div
+              key={staff.id}
+              className="border border-border rounded-lg bg-card hover:bg-accent/50 transition-colors"
+            >
+              <div
+                className="p-4 flex items-center justify-between cursor-pointer"
+                onClick={() => setExpandedId(expandedId === staff.id ? null : staff.id)}
+              >
+                <div className="flex-1 flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="font-semibold text-primary">
+                      {staff.firstName[0]}{staff.lastName[0]}
+                    </span>
                   </div>
-                  {member.phone && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Phone size={16} />
-                      <span>{member.phone}</span>
+                  <div className="flex-1">
+                    <div className="font-semibold text-foreground">
+                      {staff.firstName} {staff.lastName}
+                    </div>
+                    <div className="text-sm text-muted-foreground flex items-center gap-4">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(staff.staffRole)}`}>
+                        {staff.staffRole}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Mail className="w-3 h-3" />
+                        {staff.email}
+                      </span>
+                      {staff.phone && (
+                        <span className="flex items-center gap-1">
+                          <Phone className="w-3 h-3" />
+                          {staff.phone}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-muted-foreground transition-transform ${
+                    expandedId === staff.id ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+
+              {expandedId === staff.id && (
+                <div className="border-t border-border px-4 py-4 bg-muted/30 space-y-3">
+                  {staff.qualifications && (
+                    <div>
+                      <div className="text-sm font-medium text-muted-foreground">Qualifications</div>
+                      <div className="text-foreground">{staff.qualifications}</div>
                     </div>
                   )}
-                </div>
-
-                {member.qualifications && (
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground mb-1">Qualifications</p>
-                    <p className="text-sm text-foreground">{member.qualifications}</p>
+                  {staff.emergencyContact && (
+                    <div>
+                      <div className="text-sm font-medium text-muted-foreground">Emergency Contact</div>
+                      <div className="text-foreground">
+                        {staff.emergencyContact}
+                        {staff.emergencyPhone && ` - ${staff.emergencyPhone}`}
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex gap-2 pt-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleEdit(staff)}
+                      className="gap-2"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleDelete(staff.id)}
+                      className="gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete
+                    </Button>
                   </div>
-                )}
-
-                <div className="flex gap-2 pt-4 border-t border-border">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      setEditingId(member.id);
-                      setFormData({
-                        firstName: member.firstName,
-                        lastName: member.lastName,
-                        email: member.email,
-                        phone: member.phone || "",
-                        staffRole: member.staffRole as any,
-                        qualifications: member.qualifications || "",
-                        emergencyContact: member.emergencyContact || "",
-                        emergencyPhone: member.emergencyPhone || "",
-                      });
-                      setShowForm(true);
-                    }}
-                    className="gap-1"
-                  >
-                    <Edit2 size={16} />
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleDelete(member.id)}
-                    className="gap-1"
-                  >
-                    <Trash2 size={16} />
-                    Delete
-                  </Button>
                 </div>
-              </div>
-            </Card>
+              )}
+            </div>
           ))
         ) : (
-          <div className="col-span-full text-center py-12">
-            <p className="text-muted-foreground text-lg">No staff members yet. Add your first staff member!</p>
+          <div className="text-center py-12 text-muted-foreground">
+            No staff members found. Add one to get started.
           </div>
         )}
       </div>
