@@ -146,3 +146,20 @@
 - [ ] Create API documentation
 - [ ] Final testing and quality assurance
 - [ ] Deploy to production
+
+
+## Metronic Template Integration
+- [ ] Install Metronic Free template dependencies
+- [ ] Setup Metronic layout structure (Header, Sidebar, Footer)
+- [ ] Convert Dashboard to Metronic design
+- [ ] Convert Staff table to Metronic table component
+- [ ] Convert Children table to Metronic table component
+- [ ] Convert Parents table to Metronic table component
+- [ ] Convert Rooms table to Metronic table component
+- [ ] Convert all forms to Metronic form components
+- [ ] Convert Reports page to Metronic charts and analytics
+- [ ] Convert Photos page to Metronic gallery
+- [ ] Convert Settings page to Metronic tabs
+- [ ] Customize Metronic theme colors and branding
+- [ ] Test all functionality with Metronic UI
+- [ ] Fix any bugs or styling issues

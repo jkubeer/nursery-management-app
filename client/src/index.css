@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Metronic-inspired design system */
+* {
+  @apply transition-colors duration-200;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -44,74 +49,83 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* Metronic primary color scheme */
+  --primary: #3f45ef;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #3f45ef;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #3f45ef;
+  --chart-2: #7928ca;
+  --chart-3: #06b6d4;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --radius: 0.5rem;
+  /* Metronic-inspired spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --background: #ffffff;
+  --foreground: #3f4254;
+  --card: #ffffff;
+  --card-foreground: #3f4254;
+  --popover: #ffffff;
+  --popover-foreground: #3f4254;
+  --secondary: #f5f7f9;
+  --secondary-foreground: #3f4254;
+  --muted: #e4e6eb;
+  --muted-foreground: #7e8fa3;
+  --accent: #f5f7f9;
+  --accent-foreground: #3f45ef;
+  --destructive: #f64e60;
+  --destructive-foreground: #ffffff;
+  --border: #e4e6eb;
+  --input: #f5f7f9;
+  --ring: #3f45ef;
+  --sidebar: #f5f7f9;
+  --sidebar-foreground: #3f4254;
+  --sidebar-accent: #e8eaed;
+  --sidebar-accent-foreground: #3f45ef;
+  --sidebar-border: #e4e6eb;
+  --sidebar-ring: #3f45ef;
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  /* Metronic dark mode */
+  --primary: #3f45ef;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #3f45ef;
+  --sidebar-primary-foreground: #ffffff;
+  --background: #1a1a2e;
+  --foreground: #e4e6eb;
+  --card: #252d38;
+  --card-foreground: #e4e6eb;
+  --popover: #252d38;
+  --popover-foreground: #e4e6eb;
+  --secondary: #3f4254;
+  --secondary-foreground: #b5bcc7;
+  --muted: #3f4254;
+  --muted-foreground: #b5bcc7;
+  --accent: #3f4254;
+  --accent-foreground: #3f45ef;
+  --destructive: #f64e60;
+  --destructive-foreground: #ffffff;
+  --border: #3f4254;
+  --input: #3f4254;
+  --ring: #3f45ef;
+  --chart-1: #3f45ef;
+  --chart-2: #7928ca;
+  --chart-3: #06b6d4;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --sidebar: #1a1a2e;
+  --sidebar-foreground: #e4e6eb;
+  --sidebar-accent: #3f4254;
+  --sidebar-accent-foreground: #3f45ef;
+  --sidebar-border: #3f4254;
+  --sidebar-ring: #3f45ef;
 }
 
 @layer base {
@@ -141,104 +155,273 @@
     @apply text-2xl font-bold tracking-tight;
   }
   h4 {
-    @apply text-xl font-bold;
+    @apply text-xl font-bold tracking-tight;
   }
   h5 {
-    @apply text-lg font-semibold;
+    @apply text-lg font-bold tracking-tight;
   }
   h6 {
-    @apply text-base font-semibold;
+    @apply text-base font-bold tracking-tight;
   }
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
+  p {
+    @apply leading-relaxed;
   }
 }
 
 @layer components {
-  /* Elegant card with subtle shadow */
-  .card-elegant {
-    @apply rounded-lg border border-border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md;
+  /* Metronic card styling */
+  .card {
+    @apply bg-card text-card-foreground rounded-lg border border-border shadow-sm hover:shadow-md transition-shadow;
   }
 
-  /* Gradient text */
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  .card-header {
+    @apply px-6 py-4 border-b border-border;
   }
 
-  /* Section spacing */
-  .section-spacing {
-    @apply py-12 md:py-16 lg:py-20;
+  .card-body {
+    @apply px-6 py-4;
   }
 
-  /* Badge styles */
+  .card-footer {
+    @apply px-6 py-4 border-t border-border;
+  }
+
+  /* Metronic button styling */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .btn-outline {
+    @apply border border-border text-foreground hover:bg-muted px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .btn-danger {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  /* Metronic input styling */
+  .input-field {
+    @apply w-full px-4 py-2 rounded-lg border border-border bg-input text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring;
+  }
+
+  /* Metronic table styling */
+  .table-container {
+    @apply overflow-x-auto border border-border rounded-lg;
+  }
+
+  .table-header {
+    @apply bg-muted border-b border-border;
+  }
+
+  .table-row {
+    @apply border-b border-border hover:bg-muted/50 transition-colors;
+  }
+
+  .table-cell {
+    @apply px-4 py-3 text-sm;
+  }
+
+  /* Metronic badge styling */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+
   .badge-primary {
-    @apply inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary;
+    @apply bg-primary/10 text-primary;
   }
 
-  .badge-destructive {
-    @apply inline-flex items-center rounded-full bg-destructive/10 px-3 py-1 text-sm font-medium text-destructive;
+  .badge-secondary {
+    @apply bg-secondary/10 text-secondary-foreground;
   }
 
-  /* Smooth fade animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-danger {
+    @apply bg-destructive/10 text-destructive;
+  }
+
+  /* Metronic alert styling */
+  .alert {
+    @apply px-4 py-3 rounded-lg border;
+  }
+
+  .alert-info {
+    @apply bg-blue-50 border-blue-200 text-blue-800;
+  }
+
+  .alert-success {
+    @apply bg-green-50 border-green-200 text-green-800;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 border-yellow-200 text-yellow-800;
+  }
+
+  .alert-danger {
+    @apply bg-red-50 border-red-200 text-red-800;
+  }
+
+  /* Metronic form group */
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-foreground mb-2;
+  }
+
+  /* Metronic divider */
+  .divider {
+    @apply border-t border-border my-4;
+  }
+
+  /* Metronic shadow */
+  .shadow-metronic {
+    @apply shadow-sm;
+  }
+
+  .shadow-metronic-lg {
+    @apply shadow-md;
+  }
+
+  /* Metronic spacing utilities */
+  .gap-metronic {
+    @apply gap-4;
+  }
+
+  .p-metronic {
+    @apply p-6;
+  }
+
+  .px-metronic {
+    @apply px-6;
+  }
+
+  .py-metronic {
+    @apply py-4;
+  }
+
+  /* Metronic text utilities */
+  .text-muted {
+    @apply text-muted-foreground;
+  }
+
+  .text-light {
+    @apply text-muted-foreground;
+  }
+
+  /* Metronic link styling */
+  a {
+    @apply text-primary hover:text-primary/80 transition-colors;
+  }
+
+  a.text-inherit {
+    @apply text-inherit hover:text-inherit;
+  }
+
+  /* Metronic container */
+  .container-metronic {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Metronic flex utilities */
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-start {
+    @apply flex items-center justify-start;
+  }
+
+  .flex-end {
+    @apply flex items-center justify-end;
+  }
+
+  /* Metronic grid utilities */
+  .grid-metronic {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  /* Metronic hover effects */
+  .hover-lift {
+    @apply hover:shadow-lg hover:-translate-y-1 transition-all;
+  }
+
+  .hover-shadow {
+    @apply hover:shadow-md transition-shadow;
+  }
+}
+
+@layer utilities {
+  /* Metronic utility classes */
+  .truncate-line {
+    @apply truncate;
+  }
+
+  .line-clamp-2 {
+    @apply line-clamp-2;
+  }
+
+  .line-clamp-3 {
+    @apply line-clamp-3;
+  }
+
+  .fade-in {
+    @apply opacity-100 transition-opacity duration-300;
+  }
+
+  .slide-in {
+    @apply translate-x-0 transition-transform duration-300;
+  }
+
+  .bg-gradient-metronic {
+    @apply bg-gradient-to-r from-primary to-primary/80;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent;
+  }
+
+  .border-metronic {
+    @apply border-border;
+  }
+
+  .rounded-metronic {
+    @apply rounded-lg;
+  }
+
+  .rounded-metronic-sm {
+    @apply rounded;
+  }
+
+  .rounded-metronic-lg {
+    @apply rounded-xl;
+  }
+
+  /* Responsive utilities */
+  @media (max-width: 768px) {
+    .hide-mobile {
+      @apply hidden;
     }
-    to {
-      opacity: 1;
-    }
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+  @media (min-width: 769px) {
+    .show-mobile {
+      @apply hidden;
     }
   }
 }
