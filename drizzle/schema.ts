@@ -450,3 +450,126 @@ export const emailNotifications = mysqlTable(
 
 export type EmailNotification = typeof emailNotifications.$inferSelect;
 export type InsertEmailNotification = typeof emailNotifications.$inferInsert;
+
+
+/**
+ * Roles table for role-based access control
+ */
+export const roles = mysqlTable(
+  "roles",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    name: varchar("name", { length: 100 }).notNull().unique(),
+    description: text("description"),
+    isSystem: boolean("isSystem").default(false).notNull(), // System roles cannot be deleted
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  }
+);
+
+export type Role = typeof roles.$inferSelect;
+export type InsertRole = typeof roles.$inferInsert;
+
+/**
+ * Permissions table
+ */
+export const permissions = mysqlTable(
+  "permissions",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    name: varchar("name", { length: 100 }).notNull().unique(),
+    description: text("description"),
+    category: varchar("category", { length: 50 }).notNull(), // e.g., "staff", "children", "payments"
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  }
+);
+
+export type Permission = typeof permissions.$inferSelect;
+export type InsertPermission = typeof permissions.$inferInsert;
+
+/**
+ * Role-Permission mapping table
+ */
+export const rolePermissions = mysqlTable(
+  "role_permissions",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    roleId: int("roleId").notNull(),
+    permissionId: int("permissionId").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    roleIdIdx: index("role_permissions_roleId_idx").on(table.roleId),
+    permissionIdIdx: index("role_permissions_permissionId_idx").on(table.permissionId),
+  })
+);
+
+export type RolePermission = typeof rolePermissions.$inferSelect;
+export type InsertRolePermission = typeof rolePermissions.$inferInsert;
+
+/**
+ * User-Role mapping table (many-to-many)
+ */
+export const userRoles = mysqlTable(
+  "user_roles",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    roleId: int("roleId").notNull(),
+    assignedAt: timestamp("assignedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdIdx: index("user_roles_userId_idx").on(table.userId),
+    roleIdIdx: index("user_roles_roleId_idx").on(table.roleId),
+  })
+);
+
+export type UserRole = typeof userRoles.$inferSelect;
+export type InsertUserRole = typeof userRoles.$inferInsert;
+
+/**
+ * User activity log table for audit trail
+ */
+export const userActivityLogs = mysqlTable(
+  "user_activity_logs",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    action: varchar("action", { length: 100 }).notNull(), // e.g., "created_child", "updated_payment"
+    entityType: varchar("entityType", { length: 50 }).notNull(), // e.g., "child", "payment", "staff"
+    entityId: int("entityId"),
+    details: json("details"), // Additional details about the action
+    ipAddress: varchar("ipAddress", { length: 45 }),
+    userAgent: text("userAgent"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdIdx: index("user_activity_logs_userId_idx").on(table.userId),
+    createdAtIdx: index("user_activity_logs_createdAt_idx").on(table.createdAt),
+  })
+);
+
+export type UserActivityLog = typeof userActivityLogs.$inferSelect;
+export type InsertUserActivityLog = typeof userActivityLogs.$inferInsert;
+
+/**
+ * User privileges table (direct privileges assigned to users)
+ */
+export const userPrivileges = mysqlTable(
+  "user_privileges",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    permissionId: int("permissionId").notNull(),
+    grantedBy: int("grantedBy"), // User ID who granted this privilege
+    grantedAt: timestamp("grantedAt").defaultNow().notNull(),
+    expiresAt: timestamp("expiresAt"), // Optional expiration date
+  },
+  (table) => ({
+    userIdIdx: index("user_privileges_userId_idx").on(table.userId),
+    permissionIdIdx: index("user_privileges_permissionId_idx").on(table.permissionId),
+  })
+);
+
+export type UserPrivilege = typeof userPrivileges.$inferSelect;
+export type InsertUserPrivilege = typeof userPrivileges.$inferInsert;

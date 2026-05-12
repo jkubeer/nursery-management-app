@@ -149,17 +149,41 @@
 
 
 ## Metronic Template Integration
-- [ ] Install Metronic Free template dependencies
-- [ ] Setup Metronic layout structure (Header, Sidebar, Footer)
-- [ ] Convert Dashboard to Metronic design
-- [ ] Convert Staff table to Metronic table component
-- [ ] Convert Children table to Metronic table component
-- [ ] Convert Parents table to Metronic table component
-- [ ] Convert Rooms table to Metronic table component
-- [ ] Convert all forms to Metronic form components
-- [ ] Convert Reports page to Metronic charts and analytics
-- [ ] Convert Photos page to Metronic gallery
-- [ ] Convert Settings page to Metronic tabs
-- [ ] Customize Metronic theme colors and branding
-- [ ] Test all functionality with Metronic UI
-- [ ] Fix any bugs or styling issues
+- [x] Install Metronic Free template dependencies
+- [x] Setup Metronic layout structure (Header, Sidebar, Footer)
+- [x] Convert Dashboard to Metronic design
+- [x] Convert Staff table to Metronic table component
+- [x] Convert Children table to Metronic table component
+- [x] Convert Parents table to Metronic table component
+- [x] Convert Rooms table to Metronic table component
+- [x] Convert all forms to Metronic form components
+- [x] Convert Reports page to Metronic charts and analytics
+- [x] Convert Photos page to Metronic gallery
+- [x] Convert Settings page to Metronic tabs
+- [x] Customize Metronic theme colors and branding
+- [x] Test all functionality with Metronic UI
+- [x] Fix any bugs or styling issues
+
+
+## Bilingual Support (Arabic/English)
+- [ ] Install i18n library (react-i18next)
+- [ ] Create translation files (en.json, ar.json)
+- [ ] Implement language switcher component
+- [ ] Add RTL support for Arabic
+- [ ] Translate all UI components
+- [ ] Translate dashboard and all pages
+- [ ] Translate forms and modals
+- [ ] Translate error messages and notifications
+
+## User Management System
+- [ ] Create users table in database
+- [ ] Create user_privileges table
+- [ ] Create roles table with predefined roles
+- [ ] Add user CRUD procedures in backend
+- [ ] Build Users Management page (admin only)
+- [ ] Implement user creation/edit/delete forms
+- [ ] Add privilege assignment interface
+- [ ] Create role management page
+- [ ] Implement permission checking in UI
+- [ ] Add audit logging for user actions
+- [ ] Create user activity report

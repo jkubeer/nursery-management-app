@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const navigationItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -103,6 +104,11 @@ export default function DashboardNav() {
             <LogOut size={16} />
             {sidebarOpen && "Logout"}
           </Button>
+        </div>
+
+        {/* Language Switcher */}
+        <div className="p-4 border-t border-border">
+          {sidebarOpen && <LanguageSwitcher />}
         </div>
 
         {/* Toggle Button */}

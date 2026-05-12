@@ -7,6 +7,7 @@ import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
+import './i18n/config';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,10 @@ const trpcClient = trpc.createClient({
     }),
   ],
 });
+
+const savedLang = localStorage.getItem('i18nextLng') || 'en';
+document.documentElement.lang = savedLang;
+document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
 
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
