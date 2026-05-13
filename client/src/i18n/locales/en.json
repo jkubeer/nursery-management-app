@@ -42,7 +42,8 @@
     "reports": "Reports",
     "settings": "Settings",
     "users": "Users",
-    "roles": "Roles"
+    "roles": "Roles",
+    "privileges": "Privileges"
   },
   "dashboard": {
     "title": "Dashboard",

@@ -15,29 +15,39 @@ import {
   FileText,
   Image,
   Clock,
+  Lock,
 } from "lucide-react";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
-const navigationItems = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Staff", href: "/staff", icon: Users },
-  { label: "Children", href: "/children", icon: Baby },
-  { label: "Parents", href: "/parents", icon: Users },
-  { label: "Rooms", href: "/rooms", icon: Home },
-  { label: "Activities", href: "/activities", icon: Calendar },
-  { label: "Check-in/Out", href: "/checkin", icon: Clock },
-  { label: "Photos", href: "/photos", icon: Image },
-  { label: "Reports", href: "/reports", icon: FileText },
-  { label: "Payments", href: "/payments", icon: CreditCard },
-  { label: "Settings", href: "/settings", icon: Settings },
+const navigationItemsConfig = [
+  { labelKey: "navigation.dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { labelKey: "navigation.staff", href: "/staff", icon: Users },
+  { labelKey: "navigation.children", href: "/children", icon: Baby },
+  { labelKey: "navigation.parents", href: "/parents", icon: Users },
+  { labelKey: "navigation.rooms", href: "/rooms", icon: Home },
+  { labelKey: "navigation.activities", href: "/activities", icon: Calendar },
+  { labelKey: "navigation.checkin", href: "/checkin", icon: Clock },
+  { labelKey: "navigation.photos", href: "/photos", icon: Image },
+  { labelKey: "navigation.reports", href: "/reports", icon: FileText },
+  { labelKey: "navigation.payments", href: "/payments", icon: CreditCard },
+  { labelKey: "navigation.settings", href: "/settings", icon: Settings },
+  { labelKey: "navigation.users", href: "/users", icon: Users },
+  { labelKey: "navigation.privileges", href: "/privileges", icon: Lock },
 ];
 
 export default function DashboardNav() {
   const [location] = useLocation();
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { t, i18n } = useTranslation();
+
+  const navigationItems = navigationItemsConfig.map((item) => ({
+    ...item,
+    label: t(item.labelKey),
+  }));
 
   const handleLogout = async () => {
     const logoutMutation = trpc.auth.logout.useMutation();
@@ -46,20 +56,20 @@ export default function DashboardNav() {
   };
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className={`flex h-screen bg-background ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
       {/* Sidebar */}
       <div
         className={`${
           sidebarOpen ? "w-64" : "w-20"
-        } bg-card border-r border-border transition-all duration-300 flex flex-col`}
+        } bg-card border-r border-border transition-all duration-300 flex flex-col ${i18n.language === 'ar' ? 'border-r-0 border-l' : ''}`}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-border flex items-center justify-between">
+        <div className={`p-6 border-b border-border flex items-center ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
           <div className={`flex items-center gap-3 ${!sidebarOpen && "justify-center w-full"}`}>
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
               NC
             </div>
-            {sidebarOpen && <span className="font-bold text-lg">NurseCare</span>}
+            {sidebarOpen && <span className="font-bold text-lg">{t("common.appName")}</span>}
           </div>
         </div>
 
@@ -76,7 +86,7 @@ export default function DashboardNav() {
                   isActive
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "text-foreground hover:bg-muted"
-                } ${!sidebarOpen && "justify-center"}`}
+                } ${!sidebarOpen && "justify-center"} ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}
                 title={!sidebarOpen ? item.label : ""}
               >
                 <Icon size={20} />
@@ -87,9 +97,9 @@ export default function DashboardNav() {
         </nav>
 
         {/* User Profile & Logout */}
-        <div className="p-4 border-t border-border space-y-3">
+        <div className={`p-4 border-t border-border space-y-3 ${i18n.language === 'ar' ? 'text-right' : ''}`}>
           {sidebarOpen && user && (
-            <div className="px-4 py-3 rounded-lg bg-muted">
+            <div className={`px-4 py-3 rounded-lg bg-muted ${i18n.language === 'ar' ? 'text-right' : ''}`}>
               <p className="text-sm font-semibold text-foreground">{user.name}</p>
               <p className="text-xs text-muted-foreground">{user.email}</p>
               <p className="text-xs text-muted-foreground capitalize mt-1">{user.role}</p>
@@ -99,10 +109,10 @@ export default function DashboardNav() {
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full"
+            className={`w-full ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}
           >
             <LogOut size={16} />
-            {sidebarOpen && "Logout"}
+            {sidebarOpen && t("common.logout")}
           </Button>
         </div>
 

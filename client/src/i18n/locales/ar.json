@@ -42,7 +42,8 @@
     "reports": "التقارير",
     "settings": "الإعدادات",
     "users": "المستخدمون",
-    "roles": "الأدوار"
+    "roles": "الأدوار",
+    "privileges": "الصلاحيات"
   },
   "dashboard": {
     "title": "لوحة التحكم",

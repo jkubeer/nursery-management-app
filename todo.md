@@ -169,9 +169,11 @@
 - [x] Install i18n library (react-i18next)
 - [x] Create translation files (en.json, ar.json)
 - [x] Implement language switcher component
-- [ ] Fix Arabic translation display when switching language
-- [ ] Add RTL support for Arabic
-- [ ] Translate all UI components
+- [x] Fix Arabic translation display when switching language
+- [x] Add RTL support for Arabic
+- [x] Translate DashboardNav component with i18n
+- [x] Add RTL layout support in DashboardNav
+- [ ] Translate all UI components (Staff, Children, Parents, Rooms, etc.)
 - [ ] Translate dashboard and all pages
 - [ ] Translate forms and modals
 - [ ] Translate error messages and notifications
