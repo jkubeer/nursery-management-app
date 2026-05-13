@@ -166,9 +166,10 @@
 
 
 ## Bilingual Support (Arabic/English)
-- [ ] Install i18n library (react-i18next)
-- [ ] Create translation files (en.json, ar.json)
-- [ ] Implement language switcher component
+- [x] Install i18n library (react-i18next)
+- [x] Create translation files (en.json, ar.json)
+- [x] Implement language switcher component
+- [ ] Fix Arabic translation display when switching language
 - [ ] Add RTL support for Arabic
 - [ ] Translate all UI components
 - [ ] Translate dashboard and all pages
@@ -176,14 +177,23 @@
 - [ ] Translate error messages and notifications
 
 ## User Management System
-- [ ] Create users table in database
-- [ ] Create user_privileges table
-- [ ] Create roles table with predefined roles
-- [ ] Add user CRUD procedures in backend
-- [ ] Build Users Management page (admin only)
-- [ ] Implement user creation/edit/delete forms
-- [ ] Add privilege assignment interface
+- [x] Create users table in database
+- [x] Create user_privileges table
+- [x] Create roles table with predefined roles
+- [x] Add user CRUD procedures in backend
+- [x] Build Users Management page (admin only)
+- [x] Implement user creation/edit/delete forms
+- [x] Create Privileges management page
+- [x] Add privilege assignment interface in Privileges page
 - [ ] Create role management page
 - [ ] Implement permission checking in UI
 - [ ] Add audit logging for user actions
 - [ ] Create user activity report
+
+## Dashboard Redesign
+- [x] Redesign dashboard with nursery care theme
+- [x] Add professional background and colors
+- [x] Enhance stat cards with better styling
+- [x] Add welcome section with nursery branding
+- [x] Improve quick actions layout
+- [x] Add visual indicators for system status

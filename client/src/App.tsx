@@ -18,6 +18,7 @@ import Photos from "./pages/Photos";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
+import Privileges from "./pages/Privileges";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
@@ -35,6 +36,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
     { label: "Reports", href: "/reports" },
     { label: "Payments", href: "/payments" },
     { label: "Users", href: "/users" },
+    { label: "Privileges", href: "/privileges" },
     { label: "Settings", href: "/settings" },
   ];
 
@@ -106,6 +108,7 @@ function Router() {
       <Route path={"/reports"} component={() => <ProtectedRoute component={Reports} />} />
       <Route path={"/payments"} component={() => <ProtectedRoute component={Payments} />} />
       <Route path={"/users"} component={() => <ProtectedRoute component={Users} />} />
+      <Route path={"/privileges"} component={() => <ProtectedRoute component={Privileges} />} />
       <Route path={"/settings"} component={() => <ProtectedRoute component={Settings} />} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
