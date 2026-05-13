@@ -465,3 +465,75 @@ export async function getDashboardStats() {
     };
   }
 }
+
+// Password-based authentication queries
+export async function getUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createPasswordUser(email: string, name: string, passwordHash: string, role: "admin" | "staff" | "parent" = "parent") {
+  const db = await getDb();
+  if (!db) {
+    console.error("[Database] Cannot create user: database not available");
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db.insert(users).values({
+      email,
+      name,
+      passwordHash,
+      role,
+      loginMethod: "password",
+      lastSignedIn: new Date(),
+    });
+
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to create password user:", error);
+    throw error;
+  }
+}
+
+export async function updateUserLastSignedIn(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.error("[Database] Cannot update user: database not available");
+    throw new Error("Database not available");
+  }
+
+  try {
+    await db.update(users).set({ lastSignedIn: new Date() }).where(eq(users.id, userId));
+  } catch (error) {
+    console.error("[Database] Failed to update user last signed in:", error);
+    throw error;
+  }
+}
+
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, id))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}

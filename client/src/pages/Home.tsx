@@ -41,9 +41,14 @@ export default function Home() {
             </div>
             <span className="font-bold text-lg text-foreground">NurseCare</span>
           </div>
-          <Button asChild>
-            <a href={getLoginUrl()}>Sign In</a>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline">
+              <a href="/login">Sign In</a>
+            </Button>
+            <Button asChild>
+              <a href="/register">Sign Up</a>
+            </Button>
+          </div>
         </div>
       </nav>
 
@@ -62,7 +67,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild className="text-base">
-                <a href={getLoginUrl()}>
+                <a href="/register">
                   Get Started <ArrowRight size={20} />
                 </a>
               </Button>
@@ -197,7 +202,7 @@ export default function Home() {
           </div>
 
           <Button size="lg" asChild className="text-base">
-            <a href={getLoginUrl()}>
+            <a href="/register">
               Get Started Now <ArrowRight size={20} />
             </a>
           </Button>

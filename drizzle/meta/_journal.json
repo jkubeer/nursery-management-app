@@ -29,6 +29,13 @@
       "when": 1778598238192,
       "tag": "0003_worried_ego",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1778672267391,
+      "tag": "0004_rapid_bushwacker",
+      "breakpoints": true
     }
   ]
 }

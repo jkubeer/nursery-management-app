@@ -1,4 +1,3 @@
-import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
@@ -7,6 +6,7 @@ import { getDb } from "./db";
 import { photosRouter } from "./routers/photos";
 import { reportsRouter } from "./routers/reports";
 import { usersRouter } from "./routers/users";
+import { authRouter } from "./routers/auth";
 import {
   staff,
   children,
@@ -30,16 +30,7 @@ import { eq, and, desc } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
-  auth: router({
-    me: publicProcedure.query((opts) => opts.ctx.user),
-    logout: publicProcedure.mutation(({ ctx }) => {
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
-    }),
-  }),
+  auth: authRouter,
 
   // Dashboard
   dashboard: router({

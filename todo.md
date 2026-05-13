@@ -199,3 +199,25 @@
 - [x] Add welcome section with nursery branding
 - [x] Improve quick actions layout
 - [x] Add visual indicators for system status
+
+## Password-Based Authentication
+- [x] Add passwordHash field to users table
+- [x] Make openId optional for password users
+- [x] Make email unique for password users
+- [x] Install bcryptjs for password hashing
+- [x] Create password authentication utility functions
+- [x] Add password validation (8+ chars, uppercase, lowercase, number)
+- [x] Add email validation
+- [x] Implement register procedure (validation, hashing, user creation)
+- [x] Implement login procedure (email lookup, password verification, session creation)
+- [x] Fix logout functionality (clear session cookie)
+- [x] Create Login page with email/password form
+- [x] Create Register page with password requirements display
+- [x] Add login/register routes to App.tsx
+- [x] Update Home page with login/register buttons
+- [x] Write comprehensive authentication tests
+- [ ] Test registration workflow end-to-end
+- [ ] Test login workflow end-to-end
+- [ ] Test logout functionality
+- [ ] Test session persistence
+- [ ] Test mixed OAuth and password authentication
