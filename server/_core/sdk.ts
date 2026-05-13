@@ -268,7 +268,17 @@ class SDKServer {
 
     const sessionUserId = session.openId;
     const signedInAt = new Date();
+    
+    // Try to find user by openId (OAuth) first
     let user = await db.getUserByOpenId(sessionUserId);
+
+    // If not found by openId, try to find by userId (password-based users store ID as openId in JWT)
+    if (!user) {
+      const userId = parseInt(sessionUserId, 10);
+      if (!isNaN(userId)) {
+        user = await db.getUserById(userId);
+      }
+    }
 
     // If user not in DB, sync from OAuth server automatically
     if (!user) {
@@ -292,10 +302,15 @@ class SDKServer {
       throw ForbiddenError("User not found");
     }
 
-    await db.upsertUser({
-      openId: user.openId,
-      lastSignedIn: signedInAt,
-    });
+    // Update last signed in for both OAuth and password users
+    if (user.openId) {
+      await db.upsertUser({
+        openId: user.openId,
+        lastSignedIn: signedInAt,
+      });
+    } else {
+      await db.updateUserLastSignedIn(user.id);
+    }
 
     return user;
   }

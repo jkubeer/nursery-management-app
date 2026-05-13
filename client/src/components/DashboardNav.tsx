@@ -49,10 +49,16 @@ export default function DashboardNav() {
     label: t(item.labelKey),
   }));
 
+  const logoutMutation = trpc.auth.logout.useMutation();
+
   const handleLogout = async () => {
-    const logoutMutation = trpc.auth.logout.useMutation();
-    await logoutMutation.mutateAsync();
-    window.location.href = "/";
+    try {
+      await logoutMutation.mutateAsync();
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout failed:", error);
+      window.location.href = "/";
+    }
   };
 
   return (

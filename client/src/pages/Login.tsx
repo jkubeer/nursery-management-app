@@ -14,6 +14,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginMutation = trpc.auth.login.useMutation();
+  const utils = trpc.useUtils();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +32,12 @@ export default function Login() {
         email,
         password,
       });
+
+      // Invalidate auth cache to refetch user info
+      await utils.auth.me.invalidate();
+      
+      // Wait a moment for session to be established
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // Redirect to dashboard on successful login
       setLocation("/dashboard");

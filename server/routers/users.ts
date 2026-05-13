@@ -27,20 +27,42 @@ export const usersRouter = router({
   create: adminProcedure
     .input(
       z.object({
-        openId: z.string(),
+        openId: z.string().optional(),
         name: z.string().optional(),
         email: z.string().email().optional(),
+        password: z.string().optional(),
         loginMethod: z.string().optional(),
         role: z.enum(["admin", "staff", "parent"]).optional(),
       })
     )
     .mutation(async ({ input }) => {
       try {
-        await createUser(input);
+        if (input.password && input.email) {
+          const { hashPassword, validatePassword } = await import("../passwordAuth");
+          const passwordValidation = validatePassword(input.password);
+          if (!passwordValidation.valid) {
+            throw new Error(passwordValidation.errors.join(", "));
+          }
+          const { getUserByEmail } = await import("../db");
+          const existingUser = await getUserByEmail(input.email);
+          if (existingUser) {
+            throw new Error("User with this email already exists");
+          }
+          const passwordHash = await hashPassword(input.password);
+          await createUser({
+            name: input.name,
+            email: input.email,
+            passwordHash,
+            loginMethod: "password",
+            role: input.role,
+          });
+        } else {
+          await createUser(input);
+        }
         return { success: true };
       } catch (error) {
         console.error("Error creating user:", error);
-        throw new Error("Failed to create user");
+        throw new Error(error instanceof Error ? error.message : "Failed to create user");
       }
     }),
 

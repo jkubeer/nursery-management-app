@@ -216,8 +216,11 @@
 - [x] Add login/register routes to App.tsx
 - [x] Update Home page with login/register buttons
 - [x] Write comprehensive authentication tests
-- [ ] Test registration workflow end-to-end
-- [ ] Test login workflow end-to-end
-- [ ] Test logout functionality
-- [ ] Test session persistence
-- [ ] Test mixed OAuth and password authentication
+- [x] Add password field to Users management form
+- [x] Update user creation to accept password
+- [x] Fix authentication context to handle password-based users
+- [x] Test registration workflow end-to-end
+- [x] Test login workflow end-to-end
+- [x] Test logout functionality
+- [x] Test session persistence
+- [x] Test mixed OAuth and password authentication

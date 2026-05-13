@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trash2, Edit2, Plus } from "lucide-react";
-
+import { Trash2, Edit2, Plus, Eye, EyeOff } from "lucide-react";
 
 type UserRole = "admin" | "staff" | "parent";
 
 interface FormData {
   name: string;
   email: string;
+  password?: string;
   role: UserRole;
 }
 
@@ -20,7 +20,8 @@ export default function Users() {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [formData, setFormData] = useState<FormData>({ name: "", email: "", role: "staff" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "", password: "", role: "staff" });
 
   const { data: users, isLoading, refetch } = trpc.users.list.useQuery();
 
@@ -50,17 +51,23 @@ export default function Users() {
   const handleOpenDialog = (userData?: any) => {
     if (userData) {
       setEditingId(userData.id);
-      setFormData({ name: userData.name || "", email: userData.email || "", role: userData.role || "staff" });
+      setFormData({ name: userData.name || "", email: userData.email || "", password: "", role: userData.role || "staff" });
     } else {
       setEditingId(null);
-      setFormData({ name: "", email: "", role: "staff" });
+      setFormData({ name: "", email: "", password: "", role: "staff" });
     }
+    setShowPassword(false);
     setIsOpen(true);
   };
 
   const handleSave = async () => {
     if (!formData.name || !formData.email) {
       alert("Name and email are required");
+      return;
+    }
+
+    if (!editingId && !formData.password) {
+      alert("Password is required for new users");
       return;
     }
 
@@ -183,6 +190,30 @@ export default function Users() {
                 type="email"
                 className="mt-1"
               />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground">Password {!editingId && <span className="text-red-500">*</span>}</label>
+              <div className="relative mt-1">
+                <Input
+                  value={formData.password || ""}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  placeholder="Enter password"
+                  type={showPassword ? "text" : "password"}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              {!editingId && formData.password && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Password must be 8+ characters with uppercase, lowercase, and number
+                </p>
+              )}
             </div>
             <div>
               <label className="text-sm font-medium text-foreground">Role</label>

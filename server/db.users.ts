@@ -54,9 +54,10 @@ export async function getUserById(userId: number) {
  * Create a new user
  */
 export async function createUser(data: {
-  openId: string;
+  openId?: string;
   name?: string;
   email?: string;
+  passwordHash?: string;
   loginMethod?: string;
   role?: "admin" | "staff" | "parent";
 }) {
