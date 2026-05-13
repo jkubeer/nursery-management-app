@@ -66,7 +66,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {statCards.map((stat, index) => (
           <div key={index} className="card-elegant">
-            <div className="flex items-start justify-between">
+            <div className="flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-muted-foreground mb-2">{stat.label}</p>
                 {isLoading ? (
@@ -75,7 +75,7 @@ export default function Dashboard() {
                   <p className="text-4xl font-bold text-foreground">{stat.value}</p>
                 )}
               </div>
-              <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color} text-white`}>
+              <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color} text-white flex-shrink-0 ml-4`}>
                 {stat.icon}
               </div>
             </div>

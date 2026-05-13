@@ -6,6 +6,7 @@ import { z } from "zod";
 import { getDb } from "./db";
 import { photosRouter } from "./routers/photos";
 import { reportsRouter } from "./routers/reports";
+import { usersRouter } from "./routers/users";
 import {
   staff,
   children,
@@ -824,6 +825,9 @@ export const appRouter = router({
 
   // Reports
   reports: reportsRouter,
+
+  // Users Management
+  users: usersRouter,
 });
 
 export type AppRouter = typeof appRouter;
