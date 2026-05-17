@@ -239,3 +239,16 @@
 - [x] Add password reset token validation and expiry checks
 - [x] Write tests for password recovery procedures
 - [ ] Test complete password recovery workflow end-to-end
+
+
+## Form Labels & Accessibility
+- [x] Add labels to Staff edit form fields
+- [x] Add labels to Children edit form fields
+- [x] Add labels to Parents edit form fields
+- [x] Add labels to Rooms edit form fields
+- [x] Add labels to Activities edit form fields
+- [x] Add labels to Payments edit form fields
+- [x] Add labels to Users edit form fields
+- [x] Add labels to all other edit forms
+- [ ] Test form accessibility with screen readers
+- [x] Verify all form fields have associated labels

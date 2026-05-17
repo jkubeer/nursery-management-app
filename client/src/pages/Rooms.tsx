@@ -86,46 +86,64 @@ export default function Rooms() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                placeholder="Room Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Capacity"
-                type="number"
-                value={formData.capacity}
-                onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Minimum Age (months)"
-                type="number"
-                value={formData.ageGroupMin}
-                onChange={(e) => setFormData({ ...formData, ageGroupMin: e.target.value })}
-              />
-              <Input
-                placeholder="Maximum Age (months)"
-                type="number"
-                value={formData.ageGroupMax}
-                onChange={(e) => setFormData({ ...formData, ageGroupMax: e.target.value })}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Room Name *</label>
+                <Input
+                  placeholder="Enter room name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Capacity *</label>
+                <Input
+                  placeholder="Enter maximum capacity"
+                  type="number"
+                  value={formData.capacity}
+                  onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Minimum Age (months)</label>
+                <Input
+                  placeholder="Enter minimum age"
+                  type="number"
+                  value={formData.ageGroupMin}
+                  onChange={(e) => setFormData({ ...formData, ageGroupMin: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Maximum Age (months)</label>
+                <Input
+                  placeholder="Enter maximum age"
+                  type="number"
+                  value={formData.ageGroupMax}
+                  onChange={(e) => setFormData({ ...formData, ageGroupMax: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Description</label>
+              <textarea
+                placeholder="Enter room description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
+                rows={3}
               />
             </div>
-            <textarea
-              placeholder="Description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              rows={3}
-            />
-            <textarea
-              placeholder="Resources (e.g., toys, books, equipment)"
-              value={formData.resources}
-              onChange={(e) => setFormData({ ...formData, resources: e.target.value })}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              rows={3}
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Resources</label>
+              <textarea
+                placeholder="Enter available resources (e.g., toys, books, equipment)"
+                value={formData.resources}
+                onChange={(e) => setFormData({ ...formData, resources: e.target.value })}
+                className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
+                rows={3}
+              />
+            </div>
             <div className="flex gap-2">
               <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                 {editingId ? "Update" : "Create"} Room

@@ -118,30 +118,36 @@ export default function Payments() {
       {/* Parent and Child Selection */}
       <Card className="p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <select
-            value={selectedParentId || ""}
-            onChange={(e) => setSelectedParentId(e.target.value ? parseInt(e.target.value) : null)}
-            className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-          >
-            <option value="">Select Parent</option>
-            {parentsList?.map((parent) => (
-              <option key={parent.id} value={parent.id}>
-                {parent.firstName} {parent.lastName}
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedChildId || ""}
-            onChange={(e) => setSelectedChildId(e.target.value ? parseInt(e.target.value) : null)}
-            className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-          >
-            <option value="">Select Child</option>
-            {childrenList?.map((child) => (
-              <option key={child.id} value={child.id}>
-                {child.firstName} {child.lastName}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Select Parent</label>
+            <select
+              value={selectedParentId || ""}
+              onChange={(e) => setSelectedParentId(e.target.value ? parseInt(e.target.value) : null)}
+              className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+            >
+              <option value="">Choose a parent</option>
+              {parentsList?.map((parent) => (
+                <option key={parent.id} value={parent.id}>
+                  {parent.firstName} {parent.lastName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Select Child</label>
+            <select
+              value={selectedChildId || ""}
+              onChange={(e) => setSelectedChildId(e.target.value ? parseInt(e.target.value) : null)}
+              className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+            >
+              <option value="">Choose a child</option>
+              {childrenList?.map((child) => (
+                <option key={child.id} value={child.id}>
+                  {child.firstName} {child.lastName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </Card>
 
@@ -151,39 +157,51 @@ export default function Payments() {
           <h2 className="text-xl font-bold mb-4 text-foreground">Create Fee</h2>
           <form onSubmit={handleCreateFee} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <select
-                value={feeData.feeType}
-                onChange={(e) => setFeeData({ ...feeData, feeType: e.target.value as any })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                <option value="tuition">Tuition</option>
-                <option value="registration">Registration</option>
-                <option value="activity">Activity</option>
-                <option value="other">Other</option>
-              </select>
-              <Input
-                placeholder="Amount"
-                type="number"
-                step="0.01"
-                value={feeData.amount}
-                onChange={(e) => setFeeData({ ...feeData, amount: e.target.value })}
-                required
-              />
-              <select
-                value={feeData.frequency}
-                onChange={(e) => setFeeData({ ...feeData, frequency: e.target.value as any })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                <option value="one_time">One Time</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
-              <Input
-                placeholder="Description"
-                value={feeData.description}
-                onChange={(e) => setFeeData({ ...feeData, description: e.target.value })}
-              />
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Fee Type</label>
+                <select
+                  value={feeData.feeType}
+                  onChange={(e) => setFeeData({ ...feeData, feeType: e.target.value as any })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                >
+                  <option value="tuition">Tuition</option>
+                  <option value="registration">Registration</option>
+                  <option value="activity">Activity</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Amount *</label>
+                <Input
+                  placeholder="Enter amount"
+                  type="number"
+                  step="0.01"
+                  value={feeData.amount}
+                  onChange={(e) => setFeeData({ ...feeData, amount: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Frequency</label>
+                <select
+                  value={feeData.frequency}
+                  onChange={(e) => setFeeData({ ...feeData, frequency: e.target.value as any })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                >
+                  <option value="one_time">One Time</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Description</label>
+                <Input
+                  placeholder="Enter description"
+                  value={feeData.description}
+                  onChange={(e) => setFeeData({ ...feeData, description: e.target.value })}
+                />
+              </div>
             </div>
             <div className="flex gap-2">
               <Button type="submit" disabled={createFeeMutation.isPending}>
@@ -203,32 +221,41 @@ export default function Payments() {
           <h2 className="text-xl font-bold mb-4 text-foreground">Record Payment</h2>
           <form onSubmit={handleCreatePayment} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                placeholder="Amount"
-                type="number"
-                step="0.01"
-                value={paymentData.amount}
-                onChange={(e) => setPaymentData({ ...paymentData, amount: e.target.value })}
-                required
-              />
-              <select
-                value={paymentData.paymentMethod}
-                onChange={(e) => setPaymentData({ ...paymentData, paymentMethod: e.target.value as any })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                <option value="stripe">Stripe</option>
-                <option value="bank_transfer">Bank Transfer</option>
-                <option value="cash">Cash</option>
-                <option value="check">Check</option>
-              </select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Amount *</label>
+                <Input
+                  placeholder="Enter payment amount"
+                  type="number"
+                  step="0.01"
+                  value={paymentData.amount}
+                  onChange={(e) => setPaymentData({ ...paymentData, amount: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Payment Method</label>
+                <select
+                  value={paymentData.paymentMethod}
+                  onChange={(e) => setPaymentData({ ...paymentData, paymentMethod: e.target.value as any })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                >
+                  <option value="stripe">Stripe</option>
+                  <option value="bank_transfer">Bank Transfer</option>
+                  <option value="cash">Cash</option>
+                  <option value="check">Check</option>
+                </select>
+              </div>
             </div>
-            <textarea
-              placeholder="Notes"
-              value={paymentData.notes}
-              onChange={(e) => setPaymentData({ ...paymentData, notes: e.target.value })}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              rows={2}
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Notes</label>
+              <textarea
+                placeholder="Enter payment notes"
+                value={paymentData.notes}
+                onChange={(e) => setPaymentData({ ...paymentData, notes: e.target.value })}
+                className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
+                rows={2}
+              />
+            </div>
             <div className="flex gap-2">
               <Button type="submit" disabled={createPaymentMutation.isPending}>
                 Record Payment

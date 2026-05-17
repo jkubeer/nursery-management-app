@@ -125,56 +125,80 @@ export default function Staff() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-              <Input
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              />
-              <select
-                value={formData.staffRole || "teacher"}
-                onChange={(e) => setFormData({ ...formData, staffRole: e.target.value as any })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                <option value="director">Director</option>
-                <option value="teacher">Teacher</option>
-                <option value="assistant">Assistant</option>
-                <option value="nurse">Nurse</option>
-                <option value="admin">Admin</option>
-              </select>
-              <Input
-                placeholder="Qualifications"
-                value={formData.qualifications}
-                onChange={(e) => setFormData({ ...formData, qualifications: e.target.value })}
-              />
-              <Input
-                placeholder="Emergency Contact Name"
-                value={formData.emergencyContact}
-                onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
-              />
-              <Input
-                placeholder="Emergency Phone"
-                value={formData.emergencyPhone}
-                onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
-              />
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">First Name *</label>
+                <Input
+                  placeholder="Enter first name"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Last Name *</label>
+                <Input
+                  placeholder="Enter last name"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Email *</label>
+                <Input
+                  placeholder="Enter email address"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Phone</label>
+                <Input
+                  placeholder="Enter phone number"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Staff Role</label>
+                <select
+                  value={formData.staffRole || "teacher"}
+                  onChange={(e) => setFormData({ ...formData, staffRole: e.target.value as any })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                >
+                  <option value="director">Director</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="assistant">Assistant</option>
+                  <option value="nurse">Nurse</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Qualifications</label>
+                <Input
+                  placeholder="Enter qualifications"
+                  value={formData.qualifications}
+                  onChange={(e) => setFormData({ ...formData, qualifications: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Emergency Contact Name</label>
+                <Input
+                  placeholder="Enter emergency contact name"
+                  value={formData.emergencyContact}
+                  onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Emergency Phone</label>
+                <Input
+                  placeholder="Enter emergency phone number"
+                  value={formData.emergencyPhone}
+                  onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
+                />
+              </div>
             </div>
             <div className="flex gap-2">
               <Button type="submit" className="flex-1">

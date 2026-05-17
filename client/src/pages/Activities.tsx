@@ -117,57 +117,75 @@ export default function Activities() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                placeholder="Activity Title"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                required
-              />
-              <select
-                value={formData.roomId}
-                onChange={(e) => setFormData({ ...formData, roomId: e.target.value })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-                required
-              >
-                <option value="">Select Room</option>
-                {roomsList?.map((room) => (
-                  <option key={room.id} value={room.id}>
-                    {room.name}
-                  </option>
-                ))}
-              </select>
-              <Input
-                placeholder="Start Time"
-                type="time"
-                value={formData.startTime}
-                onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-              />
-              <Input
-                placeholder="End Time"
-                type="time"
-                value={formData.endTime}
-                onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-              />
-              <select
-                value={formData.staffId}
-                onChange={(e) => setFormData({ ...formData, staffId: e.target.value })}
-                className="px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                <option value="">Assign Staff (Optional)</option>
-                {staffList?.map((staff) => (
-                  <option key={staff.id} value={staff.id}>
-                    {staff.firstName} {staff.lastName}
-                  </option>
-                ))}
-              </select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Activity Title *</label>
+                <Input
+                  placeholder="Enter activity title"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Room *</label>
+                <select
+                  value={formData.roomId}
+                  onChange={(e) => setFormData({ ...formData, roomId: e.target.value })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                  required
+                >
+                  <option value="">Select Room</option>
+                  {roomsList?.map((room) => (
+                    <option key={room.id} value={room.id}>
+                      {room.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Start Time</label>
+                <Input
+                  placeholder="Select start time"
+                  type="time"
+                  value={formData.startTime}
+                  onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">End Time</label>
+                <Input
+                  placeholder="Select end time"
+                  type="time"
+                  value={formData.endTime}
+                  onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-foreground">Assign Staff</label>
+                <select
+                  value={formData.staffId}
+                  onChange={(e) => setFormData({ ...formData, staffId: e.target.value })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                >
+                  <option value="">Select staff member (Optional)</option>
+                  {staffList?.map((staff) => (
+                    <option key={staff.id} value={staff.id}>
+                      {staff.firstName} {staff.lastName}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <textarea
-              placeholder="Description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
-              rows={3}
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Description</label>
+              <textarea
+                placeholder="Enter activity description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground"
+                rows={3}
+              />
+            </div>
             <div className="flex gap-2">
               <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                 {editingId ? "Update" : "Schedule"} Activity
