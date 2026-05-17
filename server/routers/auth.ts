@@ -111,4 +111,87 @@ export const authRouter = router({
         },
       };
     }),
+
+  requestPasswordReset: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email("Invalid email address"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const user = await db.getUserByEmail(input.email);
+      if (!user || !user.passwordHash) {
+        return {
+          success: true,
+          message: "If an account exists with this email, a password reset link has been sent.",
+        };
+      }
+
+      const token = await db.createPasswordResetToken(input.email);
+      if (!token) {
+        throw new Error("Failed to generate password reset token");
+      }
+
+      return {
+        success: true,
+        message: "Password reset link has been sent to your email",
+        token: token,
+      };
+    }),
+
+  verifyResetToken: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const user = await db.verifyPasswordResetToken(input.token);
+      if (!user) {
+        return {
+          valid: false,
+          message: "Password reset link is invalid or has expired",
+        };
+      }
+
+      return {
+        valid: true,
+        email: user.email,
+      };
+    }),
+
+  resetPassword: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+        newPassword: z.string().min(8, "Password must be at least 8 characters"),
+        confirmPassword: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      if (input.newPassword !== input.confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+
+      const passwordValidation = validatePassword(input.newPassword);
+      if (!passwordValidation.valid) {
+        throw new Error(passwordValidation.errors.join(", "));
+      }
+
+      const user = await db.verifyPasswordResetToken(input.token);
+      if (!user) {
+        throw new Error("Password reset link is invalid or has expired");
+      }
+
+      const passwordHash = await hashPassword(input.newPassword);
+      const success = await db.resetPasswordWithToken(input.token, passwordHash);
+      if (!success) {
+        throw new Error("Failed to reset password");
+      }
+
+      return {
+        success: true,
+        message: "Password has been reset successfully",
+      };
+    }),
 });

@@ -94,9 +94,18 @@ export default function Login() {
 
             {/* Password */}
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-foreground">
-                Password
-              </label>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="text-sm font-medium text-foreground">
+                  Password
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setLocation("/forgot-password")}
+                  className="text-sm text-primary hover:text-primary/80 font-medium"
+                >
+                  Forgot?
+                </button>
+              </div>
               <div className="relative">
                 <Input
                   id="password"

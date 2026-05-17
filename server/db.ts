@@ -1,4 +1,4 @@
-import { eq, and, gte, lte, like, desc, asc, inArray } from "drizzle-orm";
+import { eq, and, gte, lte, like, desc, asc, inArray, gt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -536,4 +536,123 @@ export async function getUserById(id: number) {
     .limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+
+/**
+ * Generate and store password reset token for user
+ */
+export async function createPasswordResetToken(email: string): Promise<string | null> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create password reset token: database not available");
+    return null;
+  }
+
+  try {
+    // Generate a random token
+    const token = require("crypto").randomBytes(32).toString("hex");
+    
+    // Token expires in 1 hour
+    const expiryTime = new Date(Date.now() + 60 * 60 * 1000);
+
+    await db
+      .update(users)
+      .set({
+        passwordResetToken: token,
+        passwordResetExpiry: expiryTime,
+      })
+      .where(eq(users.email, email));
+
+    return token;
+  } catch (error) {
+    console.error("[Database] Failed to create password reset token:", error);
+    return null;
+  }
+}
+
+/**
+ * Verify password reset token and get user
+ */
+export async function verifyPasswordResetToken(token: string): Promise<any | null> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot verify password reset token: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(users)
+      .where(
+        and(
+          eq(users.passwordResetToken, token),
+          gt(users.passwordResetExpiry, new Date())
+        )
+      )
+      .limit(1);
+
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to verify password reset token:", error);
+    return null;
+  }
+}
+
+/**
+ * Reset password with token
+ */
+export async function resetPasswordWithToken(token: string, newPasswordHash: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot reset password: database not available");
+    return false;
+  }
+
+  try {
+    // Verify token is valid
+    const user = await verifyPasswordResetToken(token);
+    if (!user) {
+      return false;
+    }
+
+    // Update password and clear reset token
+    await db
+      .update(users)
+      .set({
+        passwordHash: newPasswordHash,
+        passwordResetToken: null,
+        passwordResetExpiry: null,
+      })
+      .where(eq(users.id, user.id));
+
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to reset password:", error);
+    return false;
+  }
+}
+
+/**
+ * Clear password reset token for user
+ */
+export async function clearPasswordResetToken(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot clear password reset token: database not available");
+    return;
+  }
+
+  try {
+    await db
+      .update(users)
+      .set({
+        passwordResetToken: null,
+        passwordResetExpiry: null,
+      })
+      .where(eq(users.id, userId));
+  } catch (error) {
+    console.error("[Database] Failed to clear password reset token:", error);
+  }
 }

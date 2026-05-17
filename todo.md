@@ -224,3 +224,18 @@
 - [x] Test logout functionality
 - [x] Test session persistence
 - [x] Test mixed OAuth and password authentication
+
+
+## Password Recovery (Forgot Password)
+- [x] Add passwordResetToken and passwordResetExpiry fields to users table
+- [x] Create backend procedure for requesting password reset
+- [x] Create backend procedure for verifying reset token
+- [x] Create backend procedure for resetting password with token
+- [x] Add 'Forgot Password' link to Home page login form
+- [x] Add 'Forgot Password' link to Login page
+- [x] Create ForgotPassword page with email input
+- [x] Create ResetPassword page with token validation and new password form
+- [ ] Implement email sending for password reset links
+- [x] Add password reset token validation and expiry checks
+- [x] Write tests for password recovery procedures
+- [ ] Test complete password recovery workflow end-to-end

@@ -1,13 +1,53 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
-import { useEffect } from "react";
-import { Loader2, ArrowRight, Shield, Users, BarChart3, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Loader2, ArrowRight, Shield, Users, BarChart3, Zap, Eye, EyeOff } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 export default function Home() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const loginMutation = trpc.auth.login.useMutation();
+  const utils = trpc.useUtils();
+  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+    
+    try {
+      if (!email || !password) {
+        setError("Please fill in all fields");
+        setIsLoading(false);
+        return;
+      }
+      
+      await loginMutation.mutateAsync({
+        email,
+        password,
+      });
+      
+      // Invalidate auth cache to refetch user info
+      await utils.auth.me.invalidate();
+      
+      // Wait a moment for session to be established
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Redirect to dashboard
+      setLocation("/dashboard");
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Login failed. Please try again.";
+      setError(errorMessage);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -85,35 +125,91 @@ export default function Home() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-3xl"></div>
             <div className="relative bg-card rounded-2xl border border-border p-8 shadow-xl">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Users className="text-primary" size={24} />
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Sign In</h3>
+                  <p className="text-sm text-muted-foreground">Login to your account</p>
+                </div>
+                
+                {error && (
+                  <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3">
+                    <p className="text-sm text-destructive">{error}</p>
                   </div>
-                  <div>
-                    <p className="font-semibold text-foreground">Staff Management</p>
-                    <p className="text-sm text-muted-foreground">Schedules & profiles</p>
+                )}
+                
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+                
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium text-foreground">Password</label>
+                    <button
+                      type="button"
+                      onClick={() => setLocation("/forgot-password")}
+                      className="text-sm text-primary hover:text-primary/80 font-medium"
+                    >
+                      Forgot?
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center">
-                    <BarChart3 className="text-secondary" size={24} />
+                
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2" size={18} />
+                      Signing in...
+                    </>
+                  ) : (
+                    "Sign In"
+                  )}
+                </Button>
+                
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-border"></div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-foreground">Analytics & Reports</p>
-                    <p className="text-sm text-muted-foreground">Insights at a glance</p>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-card text-muted-foreground">Or</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                    <Zap className="text-accent" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">Automated Workflows</p>
-                    <p className="text-sm text-muted-foreground">Notifications & billing</p>
-                  </div>
-                </div>
-              </div>
+                
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setLocation("/register")}
+                >
+                  Create Account
+                </Button>
+              </form>
             </div>
           </div>
         </div>
