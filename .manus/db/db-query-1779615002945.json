@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO roles (name, description, isSystem, createdAt, updatedAt) VALUES\n('admin', 'Administrator with full system access', true, NOW(), NOW()),\n('director', 'Nursery director with management access', true, NOW(), NOW()),\n('teacher', 'Teacher with classroom management access', true, NOW(), NOW()),\n('assistant', 'Teaching assistant with limited classroom access', true, NOW(), NOW()),\n('nurse', 'Nurse with health and medical access', true, NOW(), NOW()),\n('parent', 'Parent/Guardian with child-specific access', true, NOW(), NOW()),\n('staff', 'General staff member with basic access', false, NOW(), NOW()),\n('accountant', 'Accountant with financial access', false, NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute INSERT INTO roles (name, description, isSystem, createdAt, updatedAt) VALUES\n('admin', 'Administrator with full system access', true, NOW(), NOW()),\n('director', 'Nursery director with management access', true, NOW(), NOW()),\n('teacher', 'Teacher with classroom management access', true, NOW(), NOW()),\n('assistant', 'Teaching assistant with limited classroom access', true, NOW(), NOW()),\n('nurse', 'Nurse with health and medical access', true, NOW(), NOW()),\n('parent', 'Parent/Guardian with child-specific access', true, NOW(), NOW()),\n('staff', 'General staff member with basic access', false, NOW(), NOW()),\n('accountant', 'Accountant with financial access', false, NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2477
+}

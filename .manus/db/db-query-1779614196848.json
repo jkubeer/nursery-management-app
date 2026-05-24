@@ -1,0 +1,91 @@
+{
+  "query": "SELECT id, firstName, lastName, email, phone, staffRole, status FROM staff ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, firstName, lastName, email, phone, staffRole, status FROM staff ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "30001",
+      "firstName": "Jamal",
+      "lastName": "Kubeer",
+      "email": "kubeerja@yahoo.com",
+      "phone": "96628323",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "60001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "60002",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "90001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "90002",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "120001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    },
+    {
+      "id": "120002",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "1234567890",
+      "staffRole": "teacher",
+      "status": "active"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\tlastName\temail\tphone\tstaffRole\tstatus\n1\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n2\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n30001\tJamal\tKubeer\tkubeerja@yahoo.com\t96628323\tteacher\tactive\n60001\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n60002\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n90001\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n90002\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n120001\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n120002\tJohn\tDoe\tjohn@example.com\t1234567890\tteacher\tactive\n",
+  "stderr": "",
+  "execution_time_ms": 1752
+}

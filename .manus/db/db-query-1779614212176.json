@@ -1,0 +1,73 @@
+{
+  "query": "SELECT id, name, capacity, ageGroupMin, ageGroupMax FROM rooms ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name, capacity, ageGroupMin, ageGroupMax FROM rooms ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "2",
+      "name": "Activity Room",
+      "capacity": "15",
+      "ageGroupMin": "1",
+      "ageGroupMax": "2"
+    },
+    {
+      "id": "3",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "30001",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "30002",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "60001",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "60002",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "90001",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    },
+    {
+      "id": "90002",
+      "name": "Toddlers Room",
+      "capacity": "10",
+      "ageGroupMin": "12",
+      "ageGroupMax": "24"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tcapacity\tageGroupMin\tageGroupMax\n1\tToddlers Room\t10\t12\t24\n2\tActivity Room\t15\t1\t2\n3\tToddlers Room\t10\t12\t24\n30001\tToddlers Room\t10\t12\t24\n30002\tToddlers Room\t10\t12\t24\n60001\tToddlers Room\t10\t12\t24\n60002\tToddlers Room\t10\t12\t24\n90001\tToddlers Room\t10\t12\t24\n90002\tToddlers Room\t10\t12\t24\n",
+  "stderr": "",
+  "execution_time_ms": 1773
+}

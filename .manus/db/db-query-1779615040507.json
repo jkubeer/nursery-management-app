@@ -1,0 +1,30 @@
+{
+  "query": "SELECT 'roles' as table_name, COUNT(*) as count FROM roles UNION ALL SELECT 'permissions', COUNT(*) FROM permissions UNION ALL SELECT 'role_permissions', COUNT(*) FROM role_permissions UNION ALL SELECT 'user_roles', COUNT(*) FROM user_roles UNION ALL SELECT 'user_privileges', COUNT(*) FROM user_privileges;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT 'roles' as table_name, COUNT(*) as count FROM roles UNION ALL SELECT 'permissions', COUNT(*) FROM permissions UNION ALL SELECT 'role_permissions', COUNT(*) FROM role_permissions UNION ALL SELECT 'user_roles', COUNT(*) FROM user_roles UNION ALL SELECT 'user_privileges', COUNT(*) FROM user_privileges;",
+  "rows": [
+    {
+      "table_name": "permissions",
+      "count": "46"
+    },
+    {
+      "table_name": "user_privileges",
+      "count": "9"
+    },
+    {
+      "table_name": "user_roles",
+      "count": "4"
+    },
+    {
+      "table_name": "roles",
+      "count": "8"
+    },
+    {
+      "table_name": "role_permissions",
+      "count": "136"
+    }
+  ],
+  "messages": [],
+  "stdout": "table_name\tcount\npermissions\t46\nuser_privileges\t9\nuser_roles\t4\nroles\t8\nrole_permissions\t136\n",
+  "stderr": "",
+  "execution_time_ms": 1820
+}

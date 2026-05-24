@@ -1,0 +1,38 @@
+{
+  "query": "SELECT 'activities' as table_name, COUNT(*) as count FROM activities UNION ALL SELECT 'daily_reports', COUNT(*) FROM daily_reports UNION ALL SELECT 'check_in_out', COUNT(*) FROM check_in_out UNION ALL SELECT 'photos', COUNT(*) FROM photos UNION ALL SELECT 'fees', COUNT(*) FROM fees UNION ALL SELECT 'payments', COUNT(*) FROM payments UNION ALL SELECT 'invoices', COUNT(*) FROM invoices;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT 'activities' as table_name, COUNT(*) as count FROM activities UNION ALL SELECT 'daily_reports', COUNT(*) FROM daily_reports UNION ALL SELECT 'check_in_out', COUNT(*) FROM check_in_out UNION ALL SELECT 'photos', COUNT(*) FROM photos UNION ALL SELECT 'fees', COUNT(*) FROM fees UNION ALL SELECT 'payments', COUNT(*) FROM payments UNION ALL SELECT 'invoices', COUNT(*) FROM invoices;",
+  "rows": [
+    {
+      "table_name": "activities",
+      "count": "10"
+    },
+    {
+      "table_name": "check_in_out",
+      "count": "10"
+    },
+    {
+      "table_name": "daily_reports",
+      "count": "10"
+    },
+    {
+      "table_name": "fees",
+      "count": "7"
+    },
+    {
+      "table_name": "photos",
+      "count": "10"
+    },
+    {
+      "table_name": "payments",
+      "count": "10"
+    },
+    {
+      "table_name": "invoices",
+      "count": "10"
+    }
+  ],
+  "messages": [],
+  "stdout": "table_name\tcount\nactivities\t10\ncheck_in_out\t10\ndaily_reports\t10\nfees\t7\nphotos\t10\npayments\t10\ninvoices\t10\n",
+  "stderr": "",
+  "execution_time_ms": 1710
+}

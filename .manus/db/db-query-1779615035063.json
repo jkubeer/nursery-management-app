@@ -1,0 +1,9 @@
+{
+  "query": "-- Grant admin user additional system privileges\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1, id, 1, NOW(), NULL FROM permissions WHERE category = 'system';\n\n-- Grant teacher additional report editing privileges\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1290058, id, 1, NOW(), NULL FROM permissions WHERE name IN ('edit_daily_reports', 'create_checkin_out', 'edit_checkin_out');\n\n-- Grant assistant temporary photo upload privilege (expires in 90 days)\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1470020, id, 1, NOW(), DATE_ADD(NOW(), INTERVAL 90 DAY) FROM permissions WHERE name = 'upload_photos';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute -- Grant admin user additional system privileges\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1, id, 1, NOW(), NULL FROM permissions WHERE category = 'system';\n\n-- Grant teacher additional report editing privileges\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1290058, id, 1, NOW(), NULL FROM permissions WHERE name IN ('edit_daily_reports', 'create_checkin_out', 'edit_checkin_out');\n\n-- Grant assistant temporary photo upload privilege (expires in 90 days)\nINSERT INTO user_privileges (userId, permissionId, grantedBy, grantedAt, expiresAt)\nSELECT 1470020, id, 1, NOW(), DATE_ADD(NOW(), INTERVAL 90 DAY) FROM permissions WHERE name = 'upload_photos';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2227
+}

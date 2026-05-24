@@ -1,0 +1,90 @@
+{
+  "query": "SELECT id, firstName, lastName, email, phone, relationship FROM parents ORDER BY id LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, firstName, lastName, email, phone, relationship FROM parents ORDER BY id LIMIT 10;",
+  "rows": [
+    {
+      "id": "1",
+      "firstName": "Suzan",
+      "lastName": "Marri",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "2",
+      "firstName": "Lamees",
+      "lastName": "Mohammed",
+      "email": "payment@test.com",
+      "phone": "",
+      "relationship": "NULL"
+    },
+    {
+      "id": "3",
+      "firstName": "Fathi",
+      "lastName": "Jameel",
+      "email": "email@test.com",
+      "phone": "",
+      "relationship": "NULL"
+    },
+    {
+      "id": "4",
+      "firstName": "Baker",
+      "lastName": "Mahmoud",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "30001",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "30002",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "60001",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "60002",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "90001",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    },
+    {
+      "id": "90002",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "9876543210",
+      "relationship": "Mother"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\tlastName\temail\tphone\trelationship\n1\tSuzan\tMarri\tjane@example.com\t9876543210\tMother\n2\tLamees\tMohammed\tpayment@test.com\t\tNULL\n3\tFathi\tJameel\temail@test.com\t\tNULL\n4\tBaker\tMahmoud\tjane@example.com\t9876543210\tMother\n30001\tJane\tSmith\tjane@example.com\t9876543210\tMother\n30002\tJane\tSmith\tjane@example.com\t9876543210\tMother\n60001\tJane\tSmith\tjane@example.com\t9876543210\tMother\n60002\tJane\tSmith\tjane@example.com\t9876543210\tMother\n90001\tJane\tSmith\tjane@example.com\t9876543210\tMother\n90002\tJane\tSmith\tjane@example.com\t9876543210\tMother\n",
+  "stderr": "",
+  "execution_time_ms": 1761
+}

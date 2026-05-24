@@ -39,10 +39,12 @@ export function getSessionCookieOptions(
   //       ? hostname
   //       : undefined;
 
+  // For password-based auth, we don't need to set domain
+  // This allows cookies to work across different deployment environments
   return {
     httpOnly: true,
     path: "/",
-    sameSite: "none",
+    sameSite: "lax",  // Changed from 'none' for better security with password auth
     secure: isSecureRequest(req),
   };
 }

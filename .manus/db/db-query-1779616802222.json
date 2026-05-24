@@ -1,0 +1,25 @@
+{
+  "query": "SELECT \n  role,\n  COUNT(*) as user_count,\n  GROUP_CONCAT(email SEPARATOR ', ') as emails\nFROM users\nGROUP BY role\nORDER BY role;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT \n  role,\n  COUNT(*) as user_count,\n  GROUP_CONCAT(email SEPARATOR ', ') as emails\nFROM users\nGROUP BY role\nORDER BY role;",
+  "rows": [
+    {
+      "role": "admin",
+      "user_count": "3",
+      "emails": "j.kubeer@e.net.kw, admin@nursery.com, director@nursery.com"
+    },
+    {
+      "role": "staff",
+      "user_count": "13",
+      "emails": "john@example.com, testuser@example.com, kubeerja@yahoo.com, teacher1@nursery.com, teacher2@nursery.com, teacher3@nursery.com, teacher4@nursery.com, teacher5@nursery.com, assistant1@nursery.com, assistant2@nursery.com, assistant3@nursery.com, nurse1@nursery.com, nurse2@nursery.com"
+    },
+    {
+      "role": "parent",
+      "user_count": "3",
+      "emails": "parent1@example.com, parent2@example.com, parent3@example.com"
+    }
+  ],
+  "messages": [],
+  "stdout": "role\tuser_count\temails\nadmin\t3\tj.kubeer@e.net.kw, admin@nursery.com, director@nursery.com\nstaff\t13\tjohn@example.com, testuser@example.com, kubeerja@yahoo.com, teacher1@nursery.com, teacher2@nursery.com, teacher3@nursery.com, teacher4@nursery.com, teacher5@nursery.com, assistant1@nursery.com, assistant2@nursery.com, assistant3@nursery.com, nurse1@nursery.com, nurse2@nursery.com\nparent\t3\tparent1@example.com, parent2@example.com, parent3@example.com\n",
+  "stderr": "",
+  "execution_time_ms": 1743
+}

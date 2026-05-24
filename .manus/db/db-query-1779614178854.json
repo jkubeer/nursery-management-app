@@ -1,0 +1,114 @@
+{
+  "query": "SELECT TABLE_NAME, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT TABLE_NAME, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME;",
+  "rows": [
+    {
+      "TABLE_NAME": "__drizzle_migrations",
+      "TABLE_ROWS": "6"
+    },
+    {
+      "TABLE_NAME": "activities",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "activity_attendance",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "check_in_out",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "children",
+      "TABLE_ROWS": "12"
+    },
+    {
+      "TABLE_NAME": "daily_reports",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "email_notifications",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "fees",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "invoices",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "nurseries",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "parent_child_relationships",
+      "TABLE_ROWS": "3"
+    },
+    {
+      "TABLE_NAME": "parents",
+      "TABLE_ROWS": "10"
+    },
+    {
+      "TABLE_NAME": "payments",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "permissions",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "photos",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "recurring_billings",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "role_permissions",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "roles",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "rooms",
+      "TABLE_ROWS": "9"
+    },
+    {
+      "TABLE_NAME": "staff",
+      "TABLE_ROWS": "9"
+    },
+    {
+      "TABLE_NAME": "staff_schedules",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "user_activity_logs",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "user_nursery_assignments",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "user_privileges",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "user_roles",
+      "TABLE_ROWS": "0"
+    },
+    {
+      "TABLE_NAME": "users",
+      "TABLE_ROWS": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "TABLE_NAME\tTABLE_ROWS\n__drizzle_migrations\t6\nactivities\t0\nactivity_attendance\t0\ncheck_in_out\t0\nchildren\t12\ndaily_reports\t0\nemail_notifications\t0\nfees\t0\ninvoices\t0\nnurseries\t0\nparent_child_relationships\t3\nparents\t10\npayments\t0\npermissions\t0\nphotos\t0\nrecurring_billings\t0\nrole_permissions\t0\nroles\t0\nrooms\t9\nstaff\t9\nstaff_schedules\t0\nuser_activity_logs\t0\nuser_nursery_assignments\t0\nuser_privileges\t0\nuser_roles\t0\nusers\t4\n",
+  "stderr": "",
+  "execution_time_ms": 2593
+}

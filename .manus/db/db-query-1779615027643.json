@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO user_roles (userId, roleId, assignedAt) VALUES\n-- User 1 (Jamal Kubeer) - Admin\n(1, 1, NOW()),\n\n-- User 1290058 (John Doe) - Teacher\n(1290058, 3, NOW()),\n\n-- User 1440016 (Test User) - Staff\n(1440016, 7, NOW()),\n\n-- User 1470020 (Dana Hmoud) - Assistant\n(1470020, 4, NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute INSERT INTO user_roles (userId, roleId, assignedAt) VALUES\n-- User 1 (Jamal Kubeer) - Admin\n(1, 1, NOW()),\n\n-- User 1290058 (John Doe) - Teacher\n(1290058, 3, NOW()),\n\n-- User 1440016 (Test User) - Staff\n(1440016, 7, NOW()),\n\n-- User 1470020 (Dana Hmoud) - Assistant\n(1470020, 4, NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1794
+}

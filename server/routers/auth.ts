@@ -72,13 +72,8 @@ export const authRouter = router({
     .mutation(async ({ input, ctx }) => {
       // Find user by email
       const user = await db.getUserByEmail(input.email);
-      if (!user) {
+      if (!user || !user.passwordHash) {
         throw new Error("Invalid email or password");
-      }
-
-      // Check if user has password set
-      if (!user.passwordHash) {
-        throw new Error("This account uses OAuth login. Please use the OAuth login option.");
       }
 
       // Verify password

@@ -1,0 +1,106 @@
+{
+  "query": "SELECT id, firstName, lastName, dateOfBirth, gender, roomId FROM children ORDER BY id LIMIT 12;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, firstName, lastName, dateOfBirth, gender, roomId FROM children ORDER BY id LIMIT 12;",
+  "rows": [
+    {
+      "id": "1",
+      "firstName": "Rula",
+      "lastName": "Fathi",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "2"
+    },
+    {
+      "id": "2",
+      "firstName": "Salma Ali",
+      "lastName": "Bali",
+      "dateOfBirth": "2021-12-31",
+      "gender": "NULL",
+      "roomId": "2"
+    },
+    {
+      "id": "3",
+      "firstName": "Mamdouh",
+      "lastName": "Ibrahim",
+      "dateOfBirth": "2021-12-31",
+      "gender": "NULL",
+      "roomId": "3"
+    },
+    {
+      "id": "4",
+      "firstName": "Ahmed",
+      "lastName": "Salem",
+      "dateOfBirth": "2021-12-31",
+      "gender": "NULL",
+      "roomId": "2"
+    },
+    {
+      "id": "5",
+      "firstName": "Mona",
+      "lastName": "Ali",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "1"
+    },
+    {
+      "id": "30001",
+      "firstName": "سالم ",
+      "lastName": "السعيد",
+      "dateOfBirth": "2024-06-11",
+      "gender": "male",
+      "roomId": "1"
+    },
+    {
+      "id": "60001",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    },
+    {
+      "id": "60002",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    },
+    {
+      "id": "90001",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    },
+    {
+      "id": "90002",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    },
+    {
+      "id": "120001",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    },
+    {
+      "id": "120002",
+      "firstName": "Emma",
+      "lastName": "Smith",
+      "dateOfBirth": "2022-01-14",
+      "gender": "female",
+      "roomId": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\tlastName\tdateOfBirth\tgender\troomId\n1\tRula\tFathi\t2022-01-14\tfemale\t2\n2\tSalma Ali\tBali\t2021-12-31\tNULL\t2\n3\tMamdouh\tIbrahim\t2021-12-31\tNULL\t3\n4\tAhmed\tSalem\t2021-12-31\tNULL\t2\n5\tMona\tAli\t2022-01-14\tfemale\t1\n30001\tسالم \tالسعيد\t2024-06-11\tmale\t1\n60001\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n60002\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n90001\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n90002\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n120001\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n120002\tEmma\tSmith\t2022-01-14\tfemale\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 1718
+}
