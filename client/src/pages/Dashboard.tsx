@@ -2,6 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { Users, Baby, Home, CreditCard, Calendar, Clock, TrendingUp, AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "wouter";
 
 interface StatCard {
   label: string;
@@ -9,6 +10,7 @@ interface StatCard {
   icon: React.ReactNode;
   color: string;
   bgColor: string;
+  href: string;
 }
 
 export default function Dashboard() {
@@ -21,6 +23,7 @@ export default function Dashboard() {
       icon: <Baby size={28} />,
       color: "text-sky-600",
       bgColor: "bg-sky-50",
+      href: "/children",
     },
     {
       label: "Total Staff",
@@ -28,6 +31,7 @@ export default function Dashboard() {
       icon: <Users size={28} />,
       color: "text-rose-600",
       bgColor: "bg-rose-50",
+      href: "/staff",
     },
     {
       label: "Total Rooms",
@@ -35,6 +39,7 @@ export default function Dashboard() {
       icon: <Home size={28} />,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
+      href: "/rooms",
     },
     {
       label: "Total Parents",
@@ -42,6 +47,7 @@ export default function Dashboard() {
       icon: <Users size={28} />,
       color: "text-amber-600",
       bgColor: "bg-amber-50",
+      href: "/parents",
     },
     {
       label: "Pending Payments",
@@ -49,6 +55,7 @@ export default function Dashboard() {
       icon: <CreditCard size={28} />,
       color: "text-red-600",
       bgColor: "bg-red-50",
+      href: "/payments",
     },
     {
       label: "Activities This Week",
@@ -56,6 +63,7 @@ export default function Dashboard() {
       icon: <Calendar size={28} />,
       color: "text-indigo-600",
       bgColor: "bg-indigo-50",
+      href: "/activities",
     },
   ];
 
@@ -95,28 +103,30 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold text-foreground mb-6">Quick Overview</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {statCards.map((stat, index) => (
-            <div key={index} className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-all duration-300">
-              {/* Gradient background overlay */}
-              <div className={`absolute inset-0 ${stat.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-              
-              {/* Content */}
-              <div className="relative p-6 z-10">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
-                  <div className={`p-2.5 rounded-lg ${stat.bgColor}`}>
-                    <div className={stat.color}>{stat.icon}</div>
+            <Link key={index} href={stat.href} className="block">
+              <div className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+                {/* Gradient background overlay */}
+                <div className={`absolute inset-0 ${stat.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                
+                {/* Content */}
+                <div className="relative p-6 z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+                    <div className={`p-2.5 rounded-lg ${stat.bgColor}`}>
+                      <div className={stat.color}>{stat.icon}</div>
+                    </div>
                   </div>
+                  {isLoading ? (
+                    <Skeleton className="h-10 w-20" />
+                  ) : (
+                    <div className="flex items-baseline gap-2">
+                      <p className="text-4xl font-bold text-foreground">{stat.value}</p>
+                      <span className="text-xs text-muted-foreground">total</span>
+                    </div>
+                  )}
                 </div>
-                {isLoading ? (
-                  <Skeleton className="h-10 w-20" />
-                ) : (
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-4xl font-bold text-foreground">{stat.value}</p>
-                    <span className="text-xs text-muted-foreground">total</span>
-                  </div>
-                )}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
