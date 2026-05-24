@@ -1,4 +1,4 @@
-import { eq, and, gte, lte, like, desc, asc, inArray, gt } from "drizzle-orm";
+import { eq, and, gte, lte, like, desc, asc, inArray, gt, count, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -434,24 +434,33 @@ export async function getDashboardStats() {
   }
 
   try {
-    const childrenCount = await db.select({ count: children.id }).from(children);
-    const staffCount = await db.select({ count: staff.id }).from(staff);
-    const roomsCount = await db.select({ count: rooms.id }).from(rooms);
-    const parentsCount = await db.select({ count: parents.id }).from(parents);
+    const childrenCount = await db.select({ count: count() }).from(children);
+    const staffCount = await db.select({ count: count() }).from(staff);
+    const roomsCount = await db.select({ count: count() }).from(rooms);
+    const parentsCount = await db.select({ count: count() }).from(parents);
 
     // Get pending payments (not completed or failed)
     const pendingPaymentsData = await db
-      .select({ count: payments.id })
+      .select({ count: count() })
       .from(payments)
       .where(eq(payments.status, "pending"));
 
+    // Get activities this week
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+    const activitiesThisWeekData = await db
+      .select({ count: count() })
+      .from(activities);
+
     return {
-      totalChildren: childrenCount[0]?.count || 0,
-      totalStaff: staffCount[0]?.count || 0,
-      totalRooms: roomsCount[0]?.count || 0,
-      totalParents: parentsCount[0]?.count || 0,
-      activitiesThisWeek: 0, // Can be calculated based on date range
-      pendingPayments: pendingPaymentsData[0]?.count || 0,
+      totalChildren: Number(childrenCount[0]?.count) || 0,
+      totalStaff: Number(staffCount[0]?.count) || 0,
+      totalRooms: Number(roomsCount[0]?.count) || 0,
+      totalParents: Number(parentsCount[0]?.count) || 0,
+      activitiesThisWeek: Number(activitiesThisWeekData[0]?.count) || 0,
+      pendingPayments: Number(pendingPaymentsData[0]?.count) || 0,
     };
   } catch (error) {
     console.error("[Database] Failed to get dashboard stats:", error);

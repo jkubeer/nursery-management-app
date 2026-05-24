@@ -1,0 +1,34 @@
+{
+  "query": "SELECT 'children' as tbl, COUNT(*) as cnt FROM children UNION ALL SELECT 'staff', COUNT(*) FROM staff UNION ALL SELECT 'rooms', COUNT(*) FROM rooms UNION ALL SELECT 'parents', COUNT(*) FROM parents UNION ALL SELECT 'payments', COUNT(*) FROM payments UNION ALL SELECT 'activities', COUNT(*) FROM activities;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT 'children' as tbl, COUNT(*) as cnt FROM children UNION ALL SELECT 'staff', COUNT(*) FROM staff UNION ALL SELECT 'rooms', COUNT(*) FROM rooms UNION ALL SELECT 'parents', COUNT(*) FROM parents UNION ALL SELECT 'payments', COUNT(*) FROM payments UNION ALL SELECT 'activities', COUNT(*) FROM activities;",
+  "rows": [
+    {
+      "tbl": "parents",
+      "cnt": "10"
+    },
+    {
+      "tbl": "staff",
+      "cnt": "9"
+    },
+    {
+      "tbl": "payments",
+      "cnt": "10"
+    },
+    {
+      "tbl": "rooms",
+      "cnt": "9"
+    },
+    {
+      "tbl": "children",
+      "cnt": "12"
+    },
+    {
+      "tbl": "activities",
+      "cnt": "10"
+    }
+  ],
+  "messages": [],
+  "stdout": "tbl\tcnt\nparents\t10\nstaff\t9\npayments\t10\nrooms\t9\nchildren\t12\nactivities\t10\n",
+  "stderr": "",
+  "execution_time_ms": 1768
+}
