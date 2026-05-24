@@ -53,7 +53,7 @@ export default function Login() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <img src="/manus-storage/nursecare-logo-v2_dc90fb84.png" alt="NurseCare" className="w-14 h-14 object-contain" />
+          <img src="/logo.png" alt="NurseCare" className="w-14 h-14 object-contain" />
           <span className="font-bold text-2xl text-foreground">NurseCare</span>
         </div>
 
