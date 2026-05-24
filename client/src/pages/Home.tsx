@@ -40,8 +40,13 @@ export default function Home() {
       // Wait a moment for session to be established
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Redirect to dashboard
-      setLocation("/dashboard");
+      // Redirect based on role
+      const meData = await utils.auth.me.fetch();
+      if (meData?.role === "super_admin") {
+        setLocation("/super-admin");
+      } else {
+        setLocation("/dashboard");
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Login failed. Please try again.";
       setError(errorMessage);
@@ -49,10 +54,14 @@ export default function Home() {
     }
   };
 
-  // Redirect authenticated users to dashboard
+  // Redirect authenticated users based on role
   useEffect(() => {
     if (isAuthenticated && user) {
-      setLocation("/dashboard");
+      if (user.role === "super_admin") {
+        setLocation("/super-admin");
+      } else {
+        setLocation("/dashboard");
+      }
     }
   }, [isAuthenticated, user, setLocation]);
 

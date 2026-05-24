@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE nurseries ADD COLUMN contactName varchar(200) DEFAULT 'Admin', ADD COLUMN contactEmail varchar(320), ADD COLUMN contactPhone varchar(20), ADD COLUMN logo text, ADD COLUMN address text, ADD COLUMN city varchar(100), ADD COLUMN country varchar(100), ADD COLUMN latitude decimal(10,7), ADD COLUMN longitude decimal(10,7), ADD COLUMN adminId int, MODIFY COLUMN status enum('active','inactive','suspended') NOT NULL DEFAULT 'active';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute ALTER TABLE nurseries ADD COLUMN contactName varchar(200) DEFAULT 'Admin', ADD COLUMN contactEmail varchar(320), ADD COLUMN contactPhone varchar(20), ADD COLUMN logo text, ADD COLUMN address text, ADD COLUMN city varchar(100), ADD COLUMN country varchar(100), ADD COLUMN latitude decimal(10,7), ADD COLUMN longitude decimal(10,7), ADD COLUMN adminId int, MODIFY COLUMN status enum('active','inactive','suspended') NOT NULL DEFAULT 'active';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 3637
+}

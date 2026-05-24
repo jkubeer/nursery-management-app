@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE staff ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE rooms ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE parents ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE children ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE activities ADD COLUMN nurseryId int DEFAULT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute ALTER TABLE staff ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE rooms ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE parents ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE children ADD COLUMN nurseryId int DEFAULT 1; ALTER TABLE activities ADD COLUMN nurseryId int DEFAULT 1;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 4157
+}

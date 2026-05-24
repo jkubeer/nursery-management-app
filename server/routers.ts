@@ -7,6 +7,7 @@ import { photosRouter } from "./routers/photos";
 import { reportsRouter } from "./routers/reports";
 import { usersRouter } from "./routers/users";
 import { authRouter } from "./routers/auth";
+import { superAdminRouter } from "./routers/superAdmin";
 import {
   staff,
   children,
@@ -31,6 +32,7 @@ import { eq, and, desc } from "drizzle-orm";
 export const appRouter = router({
   system: systemRouter,
   auth: authRouter,
+  superAdmin: superAdminRouter,
 
   // Dashboard
   dashboard: router({
@@ -68,6 +70,7 @@ export const appRouter = router({
         if (!database) throw new Error("Database not available");
 
         const result = await database.insert(staff).values({
+          nurseryId: ctx.user.nurseryId || 1,
           userId: ctx.user.id,
           firstName: input.firstName,
           lastName: input.lastName,
@@ -175,11 +178,12 @@ export const appRouter = router({
           emergencyPhone2: z.string().optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
         return await database.insert(children).values({
+          nurseryId: ctx.user.nurseryId || 1,
           firstName: input.firstName,
           lastName: input.lastName,
           dateOfBirth: new Date(input.dateOfBirth),
@@ -256,6 +260,7 @@ export const appRouter = router({
         if (!database) throw new Error("Database not available");
 
         return await database.insert(parents).values({
+          nurseryId: ctx.user.nurseryId || 1,
           userId: ctx.user.id,
           firstName: input.firstName,
           lastName: input.lastName,
@@ -342,11 +347,12 @@ export const appRouter = router({
           resources: z.string().optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
         return await database.insert(rooms).values({
+          nurseryId: ctx.user.nurseryId || 1,
           name: input.name,
           description: input.description,
           capacity: input.capacity,
@@ -406,11 +412,12 @@ export const appRouter = router({
           staffId: z.number().optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
         return await database.insert(activities).values({
+          nurseryId: ctx.user.nurseryId || 1,
           title: input.title,
           description: input.description,
           roomId: input.roomId,

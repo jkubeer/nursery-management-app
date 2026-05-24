@@ -23,6 +23,8 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
 import Privileges from "./pages/Privileges";
+import SuperAdminDashboard from "./pages/SuperAdminDashboard";
+import CreateNursery from "./pages/CreateNursery";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
@@ -71,6 +73,33 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function SuperAdminProtectedRoute({ component: Component }: { component: React.ComponentType }) {
+  const { user, loading, isAuthenticated } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="animate-spin text-primary" size={40} />
+          <p className="text-foreground font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    window.location.href = "/";
+    return null;
+  }
+
+  if (user?.role !== "super_admin") {
+    window.location.href = "/dashboard";
+    return null;
+  }
+
+  return <Component />;
+}
+
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { user, loading, isAuthenticated } = useAuth();
 
@@ -105,6 +134,8 @@ function Router() {
       <Route path={"/register"} component={Register} />
       <Route path={"/forgot-password"} component={ForgotPassword} />
       <Route path={"/reset-password"} component={ResetPassword} />
+      <Route path={"/super-admin"} component={() => <SuperAdminProtectedRoute component={SuperAdminDashboard} />} />
+      <Route path={"/super-admin/create-nursery"} component={() => <SuperAdminProtectedRoute component={CreateNursery} />} />
       <Route path={"/dashboard"} component={() => <ProtectedRoute component={Dashboard} />} />
       <Route path={"/staff"} component={() => <ProtectedRoute component={Staff} />} />
       <Route path={"/children"} component={() => <ProtectedRoute component={Children} />} />

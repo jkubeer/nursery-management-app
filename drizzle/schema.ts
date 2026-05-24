@@ -14,6 +14,33 @@ import {
 } from "drizzle-orm/mysql-core";
 
 /**
+ * Nurseries table - each nursery is a separate tenant
+ */
+export const nurseries = mysqlTable(
+  "nurseries",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    name: varchar("name", { length: 200 }).notNull(),
+    contactName: varchar("contactName", { length: 200 }).notNull(),
+    contactEmail: varchar("contactEmail", { length: 320 }),
+    contactPhone: varchar("contactPhone", { length: 20 }),
+    logo: text("logo"), // URL to logo image
+    address: text("address"),
+    city: varchar("city", { length: 100 }),
+    country: varchar("country", { length: 100 }),
+    latitude: decimal("latitude", { precision: 10, scale: 7 }),
+    longitude: decimal("longitude", { precision: 10, scale: 7 }),
+    adminId: int("adminId"), // The nursery admin user ID
+    status: mysqlEnum("status", ["active", "inactive", "suspended"]).default("active").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  }
+);
+
+export type Nursery = typeof nurseries.$inferSelect;
+export type InsertNursery = typeof nurseries.$inferInsert;
+
+/**
  * Core user table backing auth flow.
  */
 export const users = mysqlTable("users", {
@@ -23,7 +50,8 @@ export const users = mysqlTable("users", {
   name: text("name"),
   passwordHash: varchar("passwordHash", { length: 255 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["admin", "staff", "parent"]).default("parent").notNull(),
+  role: mysqlEnum("role", ["super_admin", "admin", "staff", "parent"]).default("parent").notNull(),
+  nurseryId: int("nurseryId"), // null for super_admin
   passwordResetToken: varchar("passwordResetToken", { length: 255 }),
   passwordResetExpiry: timestamp("passwordResetExpiry"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -41,6 +69,7 @@ export const staff = mysqlTable(
   "staff",
   {
     id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
     userId: int("userId").notNull(),
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
@@ -92,6 +121,7 @@ export const rooms = mysqlTable(
   "rooms",
   {
     id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
     name: varchar("name", { length: 100 }).notNull(),
     description: text("description"),
     capacity: int("capacity").notNull(),
@@ -114,6 +144,7 @@ export const parents = mysqlTable(
   "parents",
   {
     id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
     userId: int("userId").notNull(),
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
@@ -143,6 +174,7 @@ export const children = mysqlTable(
   "children",
   {
     id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
     dateOfBirth: date("dateOfBirth").notNull(),
@@ -198,6 +230,7 @@ export const activities = mysqlTable(
   "activities",
   {
     id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
     title: varchar("title", { length: 200 }).notNull(),
     description: text("description"),
     roomId: int("roomId").notNull(),
