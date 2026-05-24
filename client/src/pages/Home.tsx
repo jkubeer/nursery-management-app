@@ -76,7 +76,7 @@ export default function Home() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663311172838/iGKDS7QDaKgyWXUmAPU3aB/nursecare-logo-v2-dAMWvdPjfFHLJkXFJFBBfU.png" alt="NurseCare" className="w-14 h-14 object-contain" />
+          <img src="/manus-storage/nursecare-logo-v2_dc90fb84.png" alt="NurseCare" className="w-14 h-14 object-contain" />
           <span className="font-bold text-2xl text-foreground">NurseCare</span>
         </div>
 

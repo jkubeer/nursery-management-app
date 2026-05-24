@@ -72,7 +72,7 @@ export default function DashboardNav() {
         {/* Logo */}
         <div className={`p-6 border-b border-border flex items-center ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
           <div className={`flex items-center gap-3 ${!sidebarOpen && "justify-center w-full"}`}>
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663311172838/iGKDS7QDaKgyWXUmAPU3aB/nursecare-logo-v2-dAMWvdPjfFHLJkXFJFBBfU.png" alt="NurseCare" className="w-10 h-10 object-contain" />
+            <img src="/manus-storage/nursecare-logo-v2_dc90fb84.png" alt="NurseCare" className="w-10 h-10 object-contain" />
             {sidebarOpen && <span className="font-bold text-lg">{t("common.appName")}</span>}
           </div>
         </div>
