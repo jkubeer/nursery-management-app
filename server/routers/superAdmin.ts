@@ -75,14 +75,14 @@ export const superAdminRouter = router({
       z.object({
         name: z.string().min(2, "Nursery name is required"),
         contactName: z.string().min(2, "Contact name is required"),
-        contactEmail: z.string().email().optional(),
-        contactPhone: z.string().optional(),
-        logo: z.string().optional(),
-        address: z.string().optional(),
-        city: z.string().optional(),
-        country: z.string().optional(),
-        latitude: z.string().optional(),
-        longitude: z.string().optional(),
+        contactEmail: z.string().optional().default(""),
+        contactPhone: z.string().optional().default(""),
+        logo: z.string().optional().default(""),
+        address: z.string().optional().default(""),
+        city: z.string().optional().default(""),
+        country: z.string().optional().default(""),
+        latitude: z.string().optional().default(""),
+        longitude: z.string().optional().default(""),
         adminEmail: z.string().email("Admin email is required"),
         adminName: z.string().min(2, "Admin name is required"),
         adminPassword: z.string().min(6, "Password must be at least 6 characters"),
@@ -117,20 +117,23 @@ export const superAdminRouter = router({
 
       const adminId = (adminResult as any)[0]?.insertId;
 
-      // Create the nursery
-      const nurseryResult = await database.insert(nurseries).values({
+      // Create the nursery - handle empty strings for optional fields
+      const nurseryValues: any = {
         name: input.name,
         contactName: input.contactName,
-        contactEmail: input.contactEmail,
-        contactPhone: input.contactPhone,
-        logo: input.logo,
-        address: input.address,
-        city: input.city,
-        country: input.country,
-        latitude: input.latitude,
-        longitude: input.longitude,
         adminId: adminId,
-      });
+      };
+
+      if (input.contactEmail) nurseryValues.contactEmail = input.contactEmail;
+      if (input.contactPhone) nurseryValues.contactPhone = input.contactPhone;
+      if (input.logo) nurseryValues.logo = input.logo;
+      if (input.address) nurseryValues.address = input.address;
+      if (input.city) nurseryValues.city = input.city;
+      if (input.country) nurseryValues.country = input.country;
+      if (input.latitude && input.latitude.trim() !== "") nurseryValues.latitude = input.latitude;
+      if (input.longitude && input.longitude.trim() !== "") nurseryValues.longitude = input.longitude;
+
+      const nurseryResult = await database.insert(nurseries).values(nurseryValues);
 
       const nurseryId = (nurseryResult as any)[0]?.insertId;
 
