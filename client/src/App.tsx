@@ -25,6 +25,8 @@ import Users from "./pages/Users";
 import Privileges from "./pages/Privileges";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import CreateNursery from "./pages/CreateNursery";
+import EditNursery from "./pages/EditNursery";
+import ViewNursery from "./pages/ViewNursery";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
@@ -136,6 +138,8 @@ function Router() {
       <Route path={"/reset-password"} component={ResetPassword} />
       <Route path={"/super-admin"} component={() => <SuperAdminProtectedRoute component={SuperAdminDashboard} />} />
       <Route path={"/super-admin/create-nursery"} component={() => <SuperAdminProtectedRoute component={CreateNursery} />} />
+      <Route path={"/super-admin/edit-nursery/:id"} component={() => <SuperAdminProtectedRoute component={EditNursery} />} />
+      <Route path={"/super-admin/nursery/:id"} component={() => <SuperAdminProtectedRoute component={ViewNursery} />} />
       <Route path={"/dashboard"} component={() => <ProtectedRoute component={Dashboard} />} />
       <Route path={"/staff"} component={() => <ProtectedRoute component={Staff} />} />
       <Route path={"/children"} component={() => <ProtectedRoute component={Children} />} />

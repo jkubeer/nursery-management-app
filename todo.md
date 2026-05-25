@@ -255,13 +255,15 @@
 
 
 ## Super Admin Multi-Tenancy Layer
-- [ ] Create nurseries table in database schema (name, contact_name, contact_email, contact_phone, logo, address, latitude, longitude, admin_id)
-- [ ] Add nursery_id (tenant) column to all existing tables for data isolation
-- [ ] Add super_admin role to users table
-- [ ] Build Super Admin dashboard with nursery list and stats
-- [ ] Build Create Nursery form (name, contact details, logo, address, Google Maps location, admin credentials)
-- [ ] Build Edit/Delete nursery functionality
+- [x] Create nurseries table in database schema (name, contact_name, contact_email, contact_phone, logo, address, latitude, longitude, admin_id)
+- [x] Add nursery_id (tenant) column to all existing tables for data isolation
+- [x] Add super_admin role to users table
+- [x] Build Super Admin dashboard with nursery list and stats
+- [x] Build Create Nursery form (name, contact details, logo, address, Google Maps location, admin credentials)
+- [x] Build Edit Nursery page
+- [x] Build View Nursery page
 - [ ] Add tenant isolation to all existing queries (filter by nursery_id)
-- [ ] Super Admin can view/manage all nurseries
+- [x] Super Admin can view/manage all nurseries
 - [ ] Each nursery admin only sees their own nursery data
-- [ ] Separate login routing (super_admin goes to super dashboard, nursery admin goes to nursery dashboard)
+- [x] Separate login routing (super_admin goes to super dashboard, nursery admin goes to nursery dashboard)
+- [x] Assign existing data to Kuwait Sunshine Nursery

@@ -1,0 +1,14 @@
+{
+  "query": "SELECT id, name FROM nurseries WHERE name = 'Kuwait Sunshine Nursery';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name FROM nurseries WHERE name = 'Kuwait Sunshine Nursery';",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Kuwait Sunshine Nursery"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\n1\tKuwait Sunshine Nursery\n",
+  "stderr": "",
+  "execution_time_ms": 1730
+}

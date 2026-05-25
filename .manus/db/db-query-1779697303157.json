@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO nurseries (name, contactName, contactEmail, contactPhone, address, city, country, status, createdAt, updatedAt) VALUES ('Kuwait Sunshine Nursery', 'Jamal Kubeer', 'j.kubeer@e.net.kw', '+965-9999-0000', 'Block 5, Street 10, Salmiya', 'Salmiya', 'Kuwait', 'active', NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute INSERT INTO nurseries (name, contactName, contactEmail, contactPhone, address, city, country, status, createdAt, updatedAt) VALUES ('Kuwait Sunshine Nursery', 'Jamal Kubeer', 'j.kubeer@e.net.kw', '+965-9999-0000', 'Block 5, Street 10, Salmiya', 'Salmiya', 'Kuwait', 'active', NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2836
+}

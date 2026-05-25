@@ -1,0 +1,38 @@
+{
+  "query": "SELECT 'nurseries' as tbl, COUNT(*) as cnt FROM nurseries UNION ALL SELECT 'users (nursery 1)', COUNT(*) FROM users WHERE nurseryId = 1 UNION ALL SELECT 'staff (nursery 1)', COUNT(*) FROM staff WHERE nurseryId = 1 UNION ALL SELECT 'children (nursery 1)', COUNT(*) FROM children WHERE nurseryId = 1 UNION ALL SELECT 'parents (nursery 1)', COUNT(*) FROM parents WHERE nurseryId = 1 UNION ALL SELECT 'rooms (nursery 1)', COUNT(*) FROM rooms WHERE nurseryId = 1 UNION ALL SELECT 'activities (nursery 1)', COUNT(*) FROM activities WHERE nurseryId = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT 'nurseries' as tbl, COUNT(*) as cnt FROM nurseries UNION ALL SELECT 'users (nursery 1)', COUNT(*) FROM users WHERE nurseryId = 1 UNION ALL SELECT 'staff (nursery 1)', COUNT(*) FROM staff WHERE nurseryId = 1 UNION ALL SELECT 'children (nursery 1)', COUNT(*) FROM children WHERE nurseryId = 1 UNION ALL SELECT 'parents (nursery 1)', COUNT(*) FROM parents WHERE nurseryId = 1 UNION ALL SELECT 'rooms (nursery 1)', COUNT(*) FROM rooms WHERE nurseryId = 1 UNION ALL SELECT 'activities (nursery 1)', COUNT(*) FROM activities WHERE nurseryId = 1;",
+  "rows": [
+    {
+      "tbl": "children (nursery 1)",
+      "cnt": "12"
+    },
+    {
+      "tbl": "parents (nursery 1)",
+      "cnt": "10"
+    },
+    {
+      "tbl": "users (nursery 1)",
+      "cnt": "20"
+    },
+    {
+      "tbl": "staff (nursery 1)",
+      "cnt": "9"
+    },
+    {
+      "tbl": "nurseries",
+      "cnt": "1"
+    },
+    {
+      "tbl": "rooms (nursery 1)",
+      "cnt": "9"
+    },
+    {
+      "tbl": "activities (nursery 1)",
+      "cnt": "10"
+    }
+  ],
+  "messages": [],
+  "stdout": "tbl\tcnt\nchildren (nursery 1)\t12\nparents (nursery 1)\t10\nusers (nursery 1)\t20\nstaff (nursery 1)\t9\nnurseries\t1\nrooms (nursery 1)\t9\nactivities (nursery 1)\t10\n",
+  "stderr": "",
+  "execution_time_ms": 1762
+}
