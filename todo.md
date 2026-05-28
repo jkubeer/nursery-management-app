@@ -262,8 +262,8 @@
 - [x] Build Create Nursery form (name, contact details, logo, address, Google Maps location, admin credentials)
 - [x] Build Edit Nursery page
 - [x] Build View Nursery page
-- [ ] Add tenant isolation to all existing queries (filter by nursery_id)
+- [x] Add tenant isolation to all existing queries (filter by nursery_id)
 - [x] Super Admin can view/manage all nurseries
-- [ ] Each nursery admin only sees their own nursery data
+- [x] Each nursery admin only sees their own nursery data
 - [x] Separate login routing (super_admin goes to super dashboard, nursery admin goes to nursery dashboard)
 - [x] Assign existing data to Kuwait Sunshine Nursery

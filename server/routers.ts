@@ -36,15 +36,15 @@ export const appRouter = router({
 
   // Dashboard
   dashboard: router({
-    stats: protectedProcedure.query(async () => {
-      return await db.getDashboardStats();
+    stats: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getDashboardStats(ctx.user?.nurseryId || undefined);
     }),
   }),
 
   // Staff Management
   staff: router({
-    list: protectedProcedure.query(async () => {
-      return await db.getAllStaff();
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAllStaff(ctx.user?.nurseryId || undefined);
     }),
 
     getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
@@ -147,8 +147,8 @@ export const appRouter = router({
 
   // Children Management
   children: router({
-    list: protectedProcedure.query(async () => {
-      return await db.getAllChildren();
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAllChildren(ctx.user?.nurseryId || undefined);
     }),
 
     getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
@@ -228,8 +228,8 @@ export const appRouter = router({
 
   // Parents Management
   parents: router({
-    list: protectedProcedure.query(async () => {
-      return await db.getAllParents();
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAllParents(ctx.user?.nurseryId || undefined);
     }),
 
     getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
@@ -328,8 +328,8 @@ export const appRouter = router({
 
   // Rooms Management
   rooms: router({
-    list: protectedProcedure.query(async () => {
-      return await db.getAllRooms();
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAllRooms(ctx.user?.nurseryId || undefined);
     }),
 
     getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
@@ -388,15 +388,15 @@ export const appRouter = router({
 
   // Activities Management
   activities: router({
-    byRoom: protectedProcedure.input(z.object({ roomId: z.number() })).query(async ({ input }) => {
+    byRoom: protectedProcedure.input(z.object({ roomId: z.number() })).query(async ({ input, ctx }) => {
       return await db.getActivitiesByRoom(input.roomId);
     }),
 
-    byDate: protectedProcedure.input(z.object({ date: z.string() })).query(async ({ input }) => {
-      return await db.getActivitiesByDate(new Date(input.date));
+    byDate: protectedProcedure.input(z.object({ date: z.string() })).query(async ({ input, ctx }) => {
+      return await db.getActivitiesByDate(new Date(input.date), ctx.user?.nurseryId || undefined);
     }),
 
-    getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
+    getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input, ctx }) => {
       return await db.getActivityById(input.id);
     }),
 
@@ -764,11 +764,11 @@ export const appRouter = router({
   emailNotifications: router({
     byParent: protectedProcedure
       .input(z.object({ parentId: z.number(), limit: z.number().optional() }))
-      .query(async ({ input }) => {
+      .query(async ({ input, ctx }) => {
         return await db.getEmailNotificationsByParent(input.parentId, input.limit);
       }),
 
-    pending: protectedProcedure.query(async () => {
+    pending: protectedProcedure.query(async ({ ctx }) => {
       return await db.getPendingEmailNotifications();
     }),
 

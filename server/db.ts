@@ -119,9 +119,12 @@ export async function getStaffById(id: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getAllStaff() {
+export async function getAllStaff(nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
+  if (nurseryId) {
+    return await db.select().from(staff).where(eq(staff.nurseryId, nurseryId)).orderBy(asc(staff.firstName));
+  }
   return await db.select().from(staff).orderBy(asc(staff.firstName));
 }
 
@@ -139,9 +142,12 @@ export async function getChildrenById(id: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getAllChildren() {
+export async function getAllChildren(nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
+  if (nurseryId) {
+    return await db.select().from(children).where(eq(children.nurseryId, nurseryId)).orderBy(asc(children.firstName));
+  }
   return await db.select().from(children).orderBy(asc(children.firstName));
 }
 
@@ -166,9 +172,12 @@ export async function getParentByUserId(userId: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getAllParents() {
+export async function getAllParents(nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
+  if (nurseryId) {
+    return await db.select().from(parents).where(eq(parents.nurseryId, nurseryId)).orderBy(asc(parents.firstName));
+  }
   return await db.select().from(parents).orderBy(asc(parents.firstName));
 }
 
@@ -194,9 +203,12 @@ export async function getRoomById(id: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getAllRooms() {
+export async function getAllRooms(nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
+  if (nurseryId) {
+    return await db.select().from(rooms).where(eq(rooms.nurseryId, nurseryId)).orderBy(asc(rooms.name));
+  }
   return await db.select().from(rooms).orderBy(asc(rooms.name));
 }
 
@@ -218,10 +230,17 @@ export async function getActivitiesByRoom(roomId: number) {
     .orderBy(desc(activities.scheduledDate));
 }
 
-export async function getActivitiesByDate(date: Date) {
+export async function getActivitiesByDate(date: Date, nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
   const dateStr = date.toISOString().split("T")[0];
+  if (nurseryId) {
+    return await db
+      .select()
+      .from(activities)
+      .where(and(eq(activities.nurseryId, nurseryId), eq(activities.scheduledDate, new Date(dateStr))))
+      .orderBy(asc(activities.startTime));
+  }
   return await db
     .select()
     .from(activities)
@@ -420,7 +439,7 @@ export async function getPendingEmailNotifications() {
 }
 
 // Dashboard statistics
-export async function getDashboardStats() {
+export async function getDashboardStats(nurseryId?: number) {
   const db = await getDb();
   if (!db) {
     return {
@@ -434,6 +453,38 @@ export async function getDashboardStats() {
   }
 
   try {
+    if (nurseryId) {
+      const childrenCount = await db.select({ count: count() }).from(children).where(eq(children.nurseryId, nurseryId));
+      const staffCount = await db.select({ count: count() }).from(staff).where(eq(staff.nurseryId, nurseryId));
+      const roomsCount = await db.select({ count: count() }).from(rooms).where(eq(rooms.nurseryId, nurseryId));
+      const parentsCount = await db.select({ count: count() }).from(parents).where(eq(parents.nurseryId, nurseryId));
+
+      // Get pending payments (not completed or failed)
+      const pendingPaymentsData = await db
+        .select({ count: count() })
+        .from(payments)
+        .where(eq(payments.status, "pending"));
+
+      // Get activities this week
+      const now = new Date();
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+      const activitiesThisWeekData = await db
+        .select({ count: count() })
+        .from(activities)
+        .where(eq(activities.nurseryId, nurseryId));
+
+      return {
+        totalChildren: Number(childrenCount[0]?.count) || 0,
+        totalStaff: Number(staffCount[0]?.count) || 0,
+        totalRooms: Number(roomsCount[0]?.count) || 0,
+        totalParents: Number(parentsCount[0]?.count) || 0,
+        activitiesThisWeek: Number(activitiesThisWeekData[0]?.count) || 0,
+        pendingPayments: Number(pendingPaymentsData[0]?.count) || 0,
+      };
+    }
+
     const childrenCount = await db.select({ count: count() }).from(children);
     const staffCount = await db.select({ count: count() }).from(staff);
     const roomsCount = await db.select({ count: count() }).from(rooms);
