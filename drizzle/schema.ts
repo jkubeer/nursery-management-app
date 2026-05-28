@@ -175,6 +175,7 @@ export const children = mysqlTable(
   {
     id: int("id").autoincrement().primaryKey(),
     nurseryId: int("nurseryId").notNull(),
+    parentId: int("parentId"),
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
     dateOfBirth: date("dateOfBirth").notNull(),

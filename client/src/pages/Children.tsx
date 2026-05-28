@@ -9,6 +9,7 @@ import { toast } from "sonner";
 export default function Children() {
   const { data: childrenList, isLoading, refetch } = trpc.children.list.useQuery();
   const { data: roomsList } = trpc.rooms.list.useQuery();
+  const { data: parentsList } = trpc.parents.list.useQuery();
   const createMutation = trpc.children.create.useMutation();
   const updateMutation = trpc.children.update.useMutation();
 
@@ -21,6 +22,7 @@ export default function Children() {
     gender: "male" as const,
     enrollmentDate: new Date().toISOString().split("T")[0],
     roomId: "",
+    parentId: "",
     allergies: "",
     medicalConditions: "",
     medications: "",
@@ -33,6 +35,10 @@ export default function Children() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.parentId) {
+      toast.error("Please select a parent for this child");
+      return;
+    }
     try {
       if (editingId) {
         await updateMutation.mutateAsync({
@@ -50,13 +56,14 @@ export default function Children() {
         await createMutation.mutateAsync({
           ...formData,
           roomId: formData.roomId ? parseInt(formData.roomId) : undefined,
+          parentId: parseInt(formData.parentId),
         });
         toast.success("Child registered successfully");
       }
       resetForm();
       refetch();
-    } catch (error) {
-      toast.error("Failed to save child information");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to save child information");
     }
   };
 
@@ -68,6 +75,7 @@ export default function Children() {
       gender: "male",
       enrollmentDate: new Date().toISOString().split("T")[0],
       roomId: "",
+      parentId: "",
       allergies: "",
       medicalConditions: "",
       medications: "",
@@ -89,6 +97,7 @@ export default function Children() {
       gender: child.gender,
       enrollmentDate: child.enrollmentDate,
       roomId: child.roomId ? child.roomId.toString() : "",
+      parentId: child.parentId ? child.parentId.toString() : "",
       allergies: child.allergies || "",
       medicalConditions: child.medicalConditions || "",
       medications: child.medications || "",
@@ -178,6 +187,22 @@ export default function Children() {
                   onChange={(e) => setFormData({ ...formData, enrollmentDate: e.target.value })}
                   required
                 />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Parent/Guardian *</label>
+                <select
+                  value={formData.parentId || ""}
+                  onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                  className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
+                  required
+                >
+                  <option value="">Select Parent/Guardian</option>
+                  {parentsList?.map((parent) => (
+                    <option key={parent.id} value={parent.id}>
+                      {parent.firstName} {parent.lastName}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Room</label>

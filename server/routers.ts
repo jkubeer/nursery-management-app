@@ -2,6 +2,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { getDb } from "./db";
 import { photosRouter } from "./routers/photos";
 import { reportsRouter } from "./routers/reports";
@@ -167,6 +168,7 @@ export const appRouter = router({
           dateOfBirth: z.string(),
           gender: z.enum(["male", "female", "other"]).optional(),
           enrollmentDate: z.string(),
+          parentId: z.number(),
           roomId: z.number().optional(),
           allergies: z.string().optional(),
           medicalConditions: z.string().optional(),
@@ -184,6 +186,7 @@ export const appRouter = router({
 
         return await database.insert(children).values({
           nurseryId: ctx.user.nurseryId || 1,
+          parentId: input.parentId,
           firstName: input.firstName,
           lastName: input.lastName,
           dateOfBirth: new Date(input.dateOfBirth),
@@ -304,6 +307,27 @@ export const appRouter = router({
       return await db.getParentChildren(input.parentId);
     }),
 
+    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      // Check if parent has children
+      const parentChildren = await database
+        .select()
+        .from(parentChildRelationships)
+        .where(eq(parentChildRelationships.parentId, input.id));
+
+      if (parentChildren.length > 0) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: `Cannot delete parent with ${parentChildren.length} child(ren). Please unlink children first.`,
+        });
+      }
+
+      await database.delete(parents).where(eq(parents.id, input.id));
+      return { success: true };
+    }),
+
     linkChild: protectedProcedure
       .input(
         z.object({
@@ -388,6 +412,15 @@ export const appRouter = router({
     delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+
+      // Check if room has children
+      const childrenInRoom = await database.select().from(children).where(eq(children.roomId, input.id));
+      if (childrenInRoom.length > 0) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: `Cannot delete room with ${childrenInRoom.length} child(ren). Please reassign children to another room first.`,
+        });
+      }
 
       await database.delete(rooms).where(eq(rooms.id, input.id));
       return { success: true };

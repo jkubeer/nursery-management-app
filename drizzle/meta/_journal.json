@@ -50,6 +50,13 @@
       "when": 1779632576911,
       "tag": "0006_ancient_naoko",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1779958166585,
+      "tag": "0007_harsh_falcon",
+      "breakpoints": true
     }
   ]
 }

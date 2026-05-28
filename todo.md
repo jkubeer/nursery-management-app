@@ -269,3 +269,10 @@
 - [x] Assign existing data to Kuwait Sunshine Nursery
 - [x] Add delete room functionality
 - [x] Display admin details on View/Edit Nursery pages
+
+## Referential Integrity & Data Validation
+- [x] Prevent deletion of rooms that have children assigned
+- [x] Prevent deletion of parents that have children assigned
+- [x] Make parent mandatory for child registration
+- [x] Add parent dropdown/picker to Children form
+- [x] Add validation error messages for constraint violations
