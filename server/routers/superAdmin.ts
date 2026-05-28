@@ -50,7 +50,7 @@ export const superAdminRouter = router({
     return result;
   }),
 
-  // Get nursery by ID
+  // Get nursery by ID with admin details
   getNursery: superAdminProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
@@ -66,7 +66,22 @@ export const superAdminRouter = router({
         throw new TRPCError({ code: "NOT_FOUND", message: "Nursery not found" });
       }
 
-      return result[0];
+      const nursery = result[0];
+
+      // Get admin user details if adminId exists
+      let adminUser = null;
+      if (nursery.adminId) {
+        const adminResult = await database
+          .select()
+          .from(users)
+          .where(eq(users.id, nursery.adminId));
+        adminUser = adminResult[0] || null;
+      }
+
+      return {
+        ...nursery,
+        admin: adminUser,
+      };
     }),
 
   // Create a new nursery with admin user
@@ -178,7 +193,19 @@ export const superAdminRouter = router({
         .from(nurseries)
         .where(eq(nurseries.id, id));
 
-      return result[0];
+      const nursery = result[0];
+
+      // Get admin user details if adminId exists
+      let adminUser = null;
+      if (nursery && nursery.adminId) {
+        const adminResult = await database
+          .select()
+          .from(users)
+          .where(eq(users.id, nursery.adminId));
+        adminUser = adminResult[0] || null;
+      }
+
+      return nursery ? { ...nursery, admin: adminUser } : null;
     }),
 
   // Delete nursery (soft delete by setting status to inactive)

@@ -267,3 +267,5 @@
 - [x] Each nursery admin only sees their own nursery data
 - [x] Separate login routing (super_admin goes to super dashboard, nursery admin goes to nursery dashboard)
 - [x] Assign existing data to Kuwait Sunshine Nursery
+- [x] Add delete room functionality
+- [x] Display admin details on View/Edit Nursery pages

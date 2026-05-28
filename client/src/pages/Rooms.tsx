@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, Users } from "lucide-react";
+import { Plus, Edit2, Users, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -12,6 +12,7 @@ export default function Rooms() {
   const { data: childrenList } = trpc.children.list.useQuery();
   const createMutation = trpc.rooms.create.useMutation();
   const updateMutation = trpc.rooms.update.useMutation();
+  const deleteMutation = trpc.rooms.delete.useMutation();
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -53,6 +54,18 @@ export default function Rooms() {
       refetch();
     } catch (error) {
       toast.error("Failed to save room");
+    }
+  };
+
+  const handleDelete = async (roomId: number) => {
+    if (window.confirm("Are you sure you want to delete this room?")) {
+      try {
+        await deleteMutation.mutateAsync({ id: roomId });
+        toast.success("Room deleted successfully");
+        refetch();
+      } catch (error) {
+        toast.error("Failed to delete room");
+      }
     }
   };
 
@@ -226,6 +239,16 @@ export default function Rooms() {
                   >
                     <Edit2 size={16} />
                     Edit
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => handleDelete(room.id)}
+                    disabled={deleteMutation.isPending}
+                    className="gap-1"
+                  >
+                    <Trash2 size={16} />
+                    Delete
                   </Button>
                 </div>
               </div>

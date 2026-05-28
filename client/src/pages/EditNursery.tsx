@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Building2, MapPin, Save, Loader2 } from "lucide-react";
+import { ArrowLeft, Building2, MapPin, Save, Loader2, Shield, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 export default function EditNursery() {
@@ -200,6 +200,51 @@ export default function EditNursery() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Admin Information */}
+          {(nursery.data as any)?.admin && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-indigo-600" />
+                  Nursery Administrator
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Admin Name</p>
+                      <p className="font-medium text-gray-900">{(nursery.data as any).admin.name || "—"}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Admin Email</p>
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-gray-400" />
+                        <p className="font-medium text-gray-900">{(nursery.data as any).admin.email || "—"}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Role</p>
+                      <p className="font-medium text-gray-900 capitalize">{(nursery.data as any).admin.role || "—"}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Created At</p>
+                      <p className="font-medium text-gray-900">
+                        {(nursery.data as any).admin.createdAt ? new Date((nursery.data as any).admin.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        }) : "—"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Location */}
           <Card>

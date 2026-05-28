@@ -13,6 +13,7 @@ import {
   Loader2,
   Globe,
   Clock,
+  Shield,
 } from "lucide-react";
 
 export default function ViewNursery() {
@@ -182,6 +183,53 @@ export default function ViewNursery() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Admin Information */}
+        {(data as any).admin && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-indigo-600" />
+                Nursery Administrator
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Admin Name</p>
+                    <p className="font-medium text-gray-900">{(data as any).admin.name || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Admin Email</p>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-gray-400" />
+                      <p className="font-medium text-gray-900">{(data as any).admin.email || "—"}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Role</p>
+                    <p className="font-medium text-gray-900 capitalize">{(data as any).admin.role || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Last Signed In</p>
+                    <p className="font-medium text-gray-900">
+                      {(data as any).admin.lastSignedIn ? new Date((data as any).admin.lastSignedIn).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }) : "—"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Metadata */}
         <Card>

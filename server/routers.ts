@@ -384,6 +384,14 @@ export const appRouter = router({
 
         return await db.getRoomById(id);
       }),
+
+    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      await database.delete(rooms).where(eq(rooms.id, input.id));
+      return { success: true };
+    }),
   }),
 
   // Activities Management
