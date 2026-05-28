@@ -210,6 +210,7 @@ export const appRouter = router({
           id: z.number(),
           firstName: z.string().optional(),
           lastName: z.string().optional(),
+          parentId: z.number().optional(),
           roomId: z.number().optional(),
           allergies: z.string().optional(),
           medicalConditions: z.string().optional(),

@@ -276,3 +276,5 @@
 - [x] Make parent mandatory for child registration
 - [x] Add parent dropdown/picker to Children form
 - [x] Add validation error messages for constraint violations
+- [x] Fix dropdown placeholders (Gender, Parent, Room all start with Select)
+- [x] Add parentId to children update mutation

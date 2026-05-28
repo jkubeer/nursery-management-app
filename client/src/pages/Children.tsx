@@ -45,6 +45,7 @@ export default function Children() {
           id: editingId,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          parentId: formData.parentId ? parseInt(formData.parentId) : undefined,
           roomId: formData.roomId ? parseInt(formData.roomId) : undefined,
           allergies: formData.allergies,
           medicalConditions: formData.medicalConditions,
@@ -169,10 +170,11 @@ export default function Children() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Gender</label>
                 <select
-                  value={formData.gender || "male"}
+                  value={formData.gender || ""}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
                   className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full"
                 >
+                  <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
