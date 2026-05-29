@@ -35,7 +35,7 @@ export default function Children() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.parentId) {
+    if (!editingId && !formData.parentId) {
       toast.error("Please select a parent for this child");
       return;
     }
