@@ -281,3 +281,8 @@
 - [x] Add delete functionality to children, parents, staff, activities
 - [x] Add delete buttons to all entity pages with confirmation
 - [x] Fix children update form validation
+- [x] FIX: Children update now includes gender, dateOfBirth, enrollmentDate fields
+- [x] FIX: Children edit form properly formats dates for input fields
+- [x] FIX: Parents delete checks children.parentId instead of parentChildRelationships
+- [x] FIX: Parents delete button now visible and functional
+- [x] FIX: All update/delete mutations now have tenant scoping

@@ -299,6 +299,24 @@ export default function Parents() {
                     >
                       <Edit2 className="w-3 h-3" />
                     </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        if (confirm(`Delete ${parent.firstName} ${parent.lastName}?`)) {
+                          deleteMutation.mutateAsync({ id: parent.id }).then(() => {
+                            toast.success("Parent deleted successfully");
+                            refetch();
+                          }).catch((error: any) => {
+                            toast.error(error?.message || "Failed to delete parent");
+                          });
+                        }
+                      }}
+                      className="h-7 px-2 w-7 p-0 text-red-600 hover:text-red-700"
+                      title="Delete parent"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
                   </td>
                 </tr>
               ))

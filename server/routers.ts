@@ -211,6 +211,9 @@ export const appRouter = router({
           id: z.number(),
           firstName: z.string().optional(),
           lastName: z.string().optional(),
+          gender: z.enum(["male", "female", "other"]).optional(),
+          dateOfBirth: z.string().optional(),
+          enrollmentDate: z.string().optional(),
           parentId: z.number().optional(),
           roomId: z.number().optional(),
           allergies: z.string().optional(),
@@ -220,23 +223,33 @@ export const appRouter = router({
           status: z.enum(["active", "inactive", "graduated"]).optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
-        const { id, ...updateData } = input;
-        await database.update(children).set(updateData).where(eq(children.id, id));
+        const { id, dateOfBirth, enrollmentDate, ...updateData } = input;
+        
+        // Convert date strings to Date objects
+        const finalUpdateData: any = { ...updateData };
+        if (dateOfBirth) finalUpdateData.dateOfBirth = new Date(dateOfBirth);
+        if (enrollmentDate) finalUpdateData.enrollmentDate = new Date(enrollmentDate);
+
+        // Update with tenant scoping
+        await database.update(children)
+          .set(finalUpdateData)
+          .where(and(eq(children.id, id), eq(children.nurseryId, ctx.user.nurseryId || 1)));
 
         return await db.getChildrenById(id);
       }),
 
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
-        await database.delete(children).where(eq(children.id, input.id));
+        // Delete with tenant scoping
+        await database.delete(children).where(and(eq(children.id, input.id), eq(children.nurseryId, ctx.user.nurseryId || 1)));
         return { success: true };
       }),
   }),
@@ -305,12 +318,13 @@ export const appRouter = router({
           workPhone: z.string().optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
         const { id, ...updateData } = input;
-        await database.update(parents).set(updateData).where(eq(parents.id, id));
+        // Update with tenant scoping
+        await database.update(parents).set(updateData).where(and(eq(parents.id, id), eq(parents.nurseryId, ctx.user.nurseryId || 1)));
 
         return await db.getParentById(id);
       }),
@@ -319,24 +333,25 @@ export const appRouter = router({
       return await db.getParentChildren(input.parentId);
     }),
 
-    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input, ctx }) => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
 
-      // Check if parent has children
-      const parentChildren = await database
+      // Check if parent has children via children.parentId
+      const childrenWithParent = await database
         .select()
-        .from(parentChildRelationships)
-        .where(eq(parentChildRelationships.parentId, input.id));
+        .from(children)
+        .where(eq(children.parentId, input.id));
 
-      if (parentChildren.length > 0) {
+      if (childrenWithParent.length > 0) {
         throw new TRPCError({
           code: "CONFLICT",
-          message: `Cannot delete parent with ${parentChildren.length} child(ren). Please unlink children first.`,
+          message: `Cannot delete parent with ${childrenWithParent.length} child(ren). Please unlink children first.`,
         });
       }
 
-      await database.delete(parents).where(eq(parents.id, input.id));
+      // Delete with tenant scoping
+      await database.delete(parents).where(and(eq(parents.id, input.id), eq(parents.nurseryId, ctx.user.nurseryId || 1)));
       return { success: true };
     }),
 
@@ -411,17 +426,18 @@ export const appRouter = router({
           status: z.enum(["active", "inactive", "maintenance"]).optional(),
         })
       )
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
         const { id, ...updateData } = input;
-        await database.update(rooms).set(updateData).where(eq(rooms.id, id));
+        // Update with tenant scoping
+        await database.update(rooms).set(updateData).where(and(eq(rooms.id, id), eq(rooms.nurseryId, ctx.user.nurseryId || 1)));
 
         return await db.getRoomById(id);
       }),
 
-    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+    delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input, ctx }) => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
 
@@ -434,7 +450,8 @@ export const appRouter = router({
         });
       }
 
-      await database.delete(rooms).where(eq(rooms.id, input.id));
+      // Delete with tenant scoping
+      await database.delete(rooms).where(and(eq(rooms.id, input.id), eq(rooms.nurseryId, ctx.user.nurseryId || 1)));
       return { success: true };
     }),
   }),

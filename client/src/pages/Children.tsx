@@ -46,6 +46,9 @@ export default function Children() {
           id: editingId,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          gender: formData.gender as "male" | "female" | "other",
+          dateOfBirth: formData.dateOfBirth,
+          enrollmentDate: formData.enrollmentDate,
           parentId: formData.parentId ? parseInt(formData.parentId) : undefined,
           roomId: formData.roomId ? parseInt(formData.roomId) : undefined,
           allergies: formData.allergies,
@@ -92,12 +95,19 @@ export default function Children() {
   };
 
   const handleEdit = (child: any) => {
+    // Format dates to YYYY-MM-DD for input type="date"
+    const formatDate = (date: any) => {
+      if (!date) return "";
+      const d = new Date(date);
+      return d.toISOString().split('T')[0];
+    };
+
     setFormData({
       firstName: child.firstName,
       lastName: child.lastName,
-      dateOfBirth: child.dateOfBirth,
-      gender: child.gender,
-      enrollmentDate: child.enrollmentDate,
+      dateOfBirth: formatDate(child.dateOfBirth),
+      gender: child.gender || "male",
+      enrollmentDate: formatDate(child.enrollmentDate),
       roomId: child.roomId ? child.roomId.toString() : "",
       parentId: child.parentId ? child.parentId.toString() : "",
       allergies: child.allergies || "",
