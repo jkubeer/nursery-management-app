@@ -48,6 +48,7 @@ export const appRouter = router({
       return await db.getAllStaff(ctx.user?.nurseryId || undefined);
     }),
 
+
     getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
       return await db.getStaffById(input.id);
     }),
@@ -227,6 +228,16 @@ export const appRouter = router({
         await database.update(children).set(updateData).where(eq(children.id, id));
 
         return await db.getChildrenById(id);
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(children).where(eq(children.id, input.id));
+        return { success: true };
       }),
   }),
 
@@ -432,6 +443,14 @@ export const appRouter = router({
   activities: router({
     byRoom: protectedProcedure.input(z.object({ roomId: z.number() })).query(async ({ input, ctx }) => {
       return await db.getActivitiesByRoom(input.roomId);
+    }),
+
+        delete: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      await database.delete(activities).where(eq(activities.id, input.id));
+      return { success: true };
     }),
 
     byDate: protectedProcedure.input(z.object({ date: z.string() })).query(async ({ input, ctx }) => {

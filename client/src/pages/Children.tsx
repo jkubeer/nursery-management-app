@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Plus, Edit2, AlertCircle } from "lucide-react";
+import { Plus, Edit2, AlertCircle, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
@@ -12,6 +12,7 @@ export default function Children() {
   const { data: parentsList } = trpc.parents.list.useQuery();
   const createMutation = trpc.children.create.useMutation();
   const updateMutation = trpc.children.update.useMutation();
+  const deleteMutation = trpc.children.delete.useMutation();
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -345,7 +346,7 @@ export default function Children() {
                     <td className="px-4 py-2 text-xs text-muted-foreground truncate">
                       {child.medicalConditions || "-"}
                     </td>
-                    <td className="px-4 py-2 text-xs">
+                    <td className="px-4 py-2 text-xs flex gap-1">
                       <Button
                         size="sm"
                         variant="outline"
@@ -354,6 +355,24 @@ export default function Children() {
                         title="Edit child"
                       >
                         <Edit2 className="w-3 h-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          if (confirm(`Delete ${child.firstName} ${child.lastName}?`)) {
+                            deleteMutation.mutateAsync({ id: child.id }).then(() => {
+                              toast.success("Child deleted successfully");
+                              refetch();
+                            }).catch((error: any) => {
+                              toast.error(error?.message || "Failed to delete child");
+                            });
+                          }
+                        }}
+                        className="h-7 px-2 w-7 p-0 text-red-600 hover:text-red-700"
+                        title="Delete child"
+                      >
+                        <Trash2 className="w-3 h-3" />
                       </Button>
                     </td>
                   </tr>

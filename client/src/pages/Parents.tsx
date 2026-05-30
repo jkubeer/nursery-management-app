@@ -31,6 +31,7 @@ export default function Parents() {
   const { data: parentsList, isLoading, refetch } = trpc.parents.list.useQuery();
   const createMutation = trpc.parents.create.useMutation();
   const updateMutation = trpc.parents.update.useMutation();
+  const deleteMutation = trpc.parents.delete.useMutation();
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);

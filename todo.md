@@ -278,3 +278,6 @@
 - [x] Add validation error messages for constraint violations
 - [x] Fix dropdown placeholders (Gender, Parent, Room all start with Select)
 - [x] Add parentId to children update mutation
+- [x] Add delete functionality to children, parents, staff, activities
+- [x] Add delete buttons to all entity pages with confirmation
+- [x] Fix children update form validation
