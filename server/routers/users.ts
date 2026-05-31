@@ -3,12 +3,22 @@ import { z } from "zod";
 import { getAllUsers, createUser, updateUser, deleteUser, getAllRoles, assignRoleToUser } from "../db.users";
 
 export const usersRouter = router({
-  list: protectedProcedure.query(async () => {
+  list: protectedProcedure.query(async ({ ctx }) => {
     try {
-      return await getAllUsers();
+      // Super admin (role=super_admin, nurseryId=null) sees all users
+      if (ctx.user?.role === "super_admin" && ctx.user?.nurseryId === null) {
+        return await getAllUsers();
+      }
+      // Nursery admin (role=admin, nurseryId set) sees only their nursery users
+      if (ctx.user?.role === "admin" && ctx.user?.nurseryId) {
+        const { getAllUsersByNursery } = await import("../db.users");
+        return await getAllUsersByNursery(ctx.user.nurseryId);
+      }
+      // Non-admins cannot see users list
+      throw new Error("Access denied");
     } catch (error) {
       console.error("Error fetching users:", error);
-      return [];
+      throw error;
     }
   }),
 

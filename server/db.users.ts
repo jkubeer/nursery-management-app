@@ -28,6 +28,33 @@ export async function getAllUsers() {
   return usersWithRoles;
 }
 
+
+/**
+ * Get all users for a specific nursery
+ */
+export async function getAllUsersByNursery(nurseryId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const allUsers = await db.select().from(users).where(eq(users.nurseryId, nurseryId));
+  
+  const usersWithRoles = await Promise.all(
+    allUsers.map(async (user: typeof users.$inferSelect) => {
+      const userRolesList = await db
+        .select({ role: roles })
+        .from(userRoles)
+        .innerJoin(roles, eq(userRoles.roleId, roles.id))
+        .where(eq(userRoles.userId, user.id));
+      
+      return {
+        ...user,
+        roles: userRolesList.map((ur: any) => ur.role),
+      };
+    })
+  );
+  
+  return usersWithRoles;
+}
+
 /**
  * Get user by ID with roles
  */

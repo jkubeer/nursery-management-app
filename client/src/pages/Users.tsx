@@ -21,9 +21,15 @@ export default function Users() {
   const [isOpen, setIsOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedNurseryId, setSelectedNurseryId] = useState<number | null>(null);
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", password: "", role: "staff" });
 
-  const { data: users, isLoading, refetch } = trpc.users.list.useQuery();
+  // Access control: only super_admin and admin can view users
+  const canAccessUsers = user?.role === "super_admin" || user?.role === "admin";
+  
+  const { data: users, isLoading, refetch, error } = trpc.users.list.useQuery(undefined, {
+    enabled: canAccessUsers,
+  });
 
   const createMutation = trpc.users.create.useMutation({
     onSuccess: () => {
@@ -91,6 +97,23 @@ export default function Users() {
       }
     }
   };
+
+  if (!canAccessUsers) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">Users Management</h1>
+            <p className="text-muted-foreground mt-1">Manage system users and their roles</p>
+          </div>
+        </div>
+        <div className="card-elegant p-8 text-center">
+          <p className="text-red-600 font-semibold">Access Denied</p>
+          <p className="text-muted-foreground mt-2">You do not have permission to view users.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
