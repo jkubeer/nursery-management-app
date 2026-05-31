@@ -1,0 +1,52 @@
+{
+  "query": "SELECT id, firstName, roomId, nurseryId FROM children LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, firstName, roomId, nurseryId FROM children LIMIT 10;",
+  "rows": [
+    {
+      "id": "1",
+      "firstName": "Rula",
+      "roomId": "2",
+      "nurseryId": "1"
+    },
+    {
+      "id": "2",
+      "firstName": "Salma Ali",
+      "roomId": "2",
+      "nurseryId": "1"
+    },
+    {
+      "id": "3",
+      "firstName": "Mamdouh",
+      "roomId": "2",
+      "nurseryId": "1"
+    },
+    {
+      "id": "4",
+      "firstName": "Ahmed",
+      "roomId": "2",
+      "nurseryId": "1"
+    },
+    {
+      "id": "5",
+      "firstName": "Mona",
+      "roomId": "1",
+      "nurseryId": "1"
+    },
+    {
+      "id": "30001",
+      "firstName": "سالم ",
+      "roomId": "1",
+      "nurseryId": "1"
+    },
+    {
+      "id": "90002",
+      "firstName": "Emma",
+      "roomId": "NULL",
+      "nurseryId": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\troomId\tnurseryId\n1\tRula\t2\t1\n2\tSalma Ali\t2\t1\n3\tMamdouh\t2\t1\n4\tAhmed\t2\t1\n5\tMona\t1\t1\n30001\tسالم \t1\t1\n90002\tEmma\tNULL\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1698
+}

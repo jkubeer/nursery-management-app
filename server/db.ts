@@ -1,4 +1,4 @@
-import { eq, and, gte, lte, like, desc, asc, inArray, gt, count, sql } from "drizzle-orm";
+import { eq, and, gte, lte, like, desc, asc, inArray, gt, count, sql, getTableColumns } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -138,17 +138,34 @@ export async function getStaffSchedules(staffId: number) {
 export async function getChildrenById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(children).where(eq(children.id, id)).limit(1);
+  const result = await db
+    .select({
+      ...getTableColumns(children),
+      room: getTableColumns(rooms),
+    })
+    .from(children)
+    .leftJoin(rooms, eq(children.roomId, rooms.id))
+    .where(eq(children.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
 export async function getAllChildren(nurseryId?: number) {
   const db = await getDb();
   if (!db) return [];
+  const query = db
+    .select({
+      ...getTableColumns(children),
+      room: getTableColumns(rooms),
+    })
+    .from(children)
+    .leftJoin(rooms, eq(children.roomId, rooms.id))
+    .orderBy(asc(children.firstName));
+  
   if (nurseryId) {
-    return await db.select().from(children).where(eq(children.nurseryId, nurseryId)).orderBy(asc(children.firstName));
+    return await query.where(eq(children.nurseryId, nurseryId));
   }
-  return await db.select().from(children).orderBy(asc(children.firstName));
+  return await query;
 }
 
 export async function getChildrenByRoom(roomId: number) {
