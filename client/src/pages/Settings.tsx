@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Settings as SettingsIcon, Bell, Lock, User, Database } from "lucide-react";
+import { Settings as SettingsIcon, Bell, Lock, User, Database, Mail } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Settings() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<"general" | "notifications" | "security" | "account">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "notifications" | "security" | "account" | "email">("general");
   const [formData, setFormData] = useState({
     nurseryName: "NurseCare Daycare",
     email: user?.email || "",
@@ -46,6 +46,7 @@ export default function Settings() {
     { id: "notifications", label: "Notifications", icon: Bell },
     { id: "security", label: "Security", icon: Lock },
     { id: "account", label: "Account", icon: User },
+    { id: "email", label: "Email", icon: Mail },
   ];
 
   return (
@@ -246,6 +247,70 @@ export default function Settings() {
             <Button onClick={handleSaveAccount} className="w-full">
               Save Account Settings
             </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Email Settings */}
+      {activeTab === "email" && (
+        <Card className="p-6 card-elegant">
+          <h2 className="text-xl font-bold text-foreground mb-6">Email Configuration</h2>
+          <div className="space-y-6">
+            <div>
+              <Label htmlFor="smtpHost" className="text-foreground font-medium">SMTP Host</Label>
+              <Input
+                id="smtpHost"
+                type="text"
+                placeholder="smtp.gmail.com"
+                className="mt-2"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="smtpPort" className="text-foreground font-medium">SMTP Port</Label>
+              <Input
+                id="smtpPort"
+                type="number"
+                placeholder="587"
+                className="mt-2"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="smtpUser" className="text-foreground font-medium">SMTP Username</Label>
+              <Input
+                id="smtpUser"
+                type="text"
+                placeholder="your-email@gmail.com"
+                className="mt-2"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="smtpPassword" className="text-foreground font-medium">SMTP Password</Label>
+              <Input
+                id="smtpPassword"
+                type="password"
+                placeholder="••••••••"
+                className="mt-2"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="fromEmail" className="text-foreground font-medium">From Email Address</Label>
+              <Input
+                id="fromEmail"
+                type="email"
+                placeholder="noreply@nursery.com"
+                className="mt-2"
+              />
+            </div>
+
+            <div className="border-t border-border pt-6">
+              <Button onClick={handleSaveNotifications} className="w-full">
+                Save Email Settings
+              </Button>
+            </div>
           </div>
         </Card>
       )}

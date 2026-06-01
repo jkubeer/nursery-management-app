@@ -113,7 +113,7 @@ export const authRouter = router({
         email: z.string().email("Invalid email address"),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const user = await db.getUserByEmail(input.email);
       if (!user || !user.passwordHash) {
         return {
@@ -125,6 +125,16 @@ export const authRouter = router({
       const token = await db.createPasswordResetToken(input.email);
       if (!token) {
         throw new Error("Failed to generate password reset token");
+      }
+
+      // Send password reset email
+      try {
+        const { sendPasswordResetEmail } = await import("../_core/emailService");
+        const resetUrl = `${ctx.req.headers.origin || "http://localhost:3000"}/reset-password`;
+        await sendPasswordResetEmail(input.email, token, resetUrl);
+      } catch (error) {
+        console.error("Failed to send password reset email:", error);
+        // Don't fail the mutation if email sending fails - user can still use the token
       }
 
       return {

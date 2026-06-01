@@ -610,3 +610,27 @@ export const userPrivileges = mysqlTable(
 
 export type UserPrivilege = typeof userPrivileges.$inferSelect;
 export type InsertUserPrivilege = typeof userPrivileges.$inferInsert;
+
+/**
+ * Email settings table - stores SMTP configuration for sending emails
+ */
+export const emailSettings = mysqlTable(
+  "email_settings",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    nurseryId: int("nurseryId").notNull(),
+    smtpHost: varchar("smtpHost", { length: 255 }).notNull(),
+    smtpPort: int("smtpPort").notNull(),
+    smtpUser: varchar("smtpUser", { length: 255 }).notNull(),
+    smtpPassword: text("smtpPassword").notNull(),
+    fromEmail: varchar("fromEmail", { length: 320 }).notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => ({
+    nurseryIdIdx: index("email_settings_nurseryId_idx").on(table.nurseryId),
+  })
+);
+
+export type EmailSettings = typeof emailSettings.$inferSelect;
+export type InsertEmailSettings = typeof emailSettings.$inferInsert;
