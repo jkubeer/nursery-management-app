@@ -63,8 +63,28 @@ export default function Users() {
       setFormData({ name: "", email: "", password: "", role: "staff" });
     }
     setShowPassword(false);
+    setPasswordErrors([]);
     setIsOpen(true);
   };
+
+  const validatePassword = (password: string): string[] => {
+    const errors: string[] = [];
+    if (!password || password.length < 8) {
+      errors.push("Password must be at least 8 characters long");
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push("Password must contain at least one uppercase letter");
+    }
+    if (!/[a-z]/.test(password)) {
+      errors.push("Password must contain at least one lowercase letter");
+    }
+    if (!/[0-9]/.test(password)) {
+      errors.push("Password must contain at least one number");
+    }
+    return errors;
+  };
+
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
 
   const handleSave = async () => {
     if (!formData.name || !formData.email) {
@@ -77,14 +97,24 @@ export default function Users() {
       return;
     }
 
+    if (!editingId && formData.password) {
+      const errors = validatePassword(formData.password);
+      if (errors.length > 0) {
+        setPasswordErrors(errors);
+        return;
+      }
+    }
+
     try {
       if (editingId) {
         await updateMutation.mutateAsync({ id: editingId, ...formData });
       } else {
         await createMutation.mutateAsync({ openId: `user_${Date.now()}`, ...formData });
       }
+      setPasswordErrors([]);
     } catch (error) {
-      alert("Failed to save user");
+      const errorMessage = error instanceof Error ? error.message : "Failed to save user";
+      alert(errorMessage);
     }
   };
 
@@ -232,10 +262,22 @@ export default function Users() {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-              {!editingId && formData.password && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Password must be 8+ characters with uppercase, lowercase, and number
-                </p>
+              {!editingId && (
+                <>
+                  {passwordErrors.length > 0 ? (
+                    <div className="mt-2 space-y-1">
+                      {passwordErrors.map((error, idx) => (
+                        <p key={idx} className="text-xs text-red-500">{error}</p>
+                      ))}
+                    </div>
+                  ) : formData.password ? (
+                    <p className="text-xs text-green-600 mt-1">✓ Password meets all requirements</p>
+                  ) : (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Password must be 8+ characters with uppercase, lowercase, and number
+                    </p>
+                  )}
+                </>
               )}
             </div>
             <div>
