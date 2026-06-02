@@ -45,7 +45,7 @@ export const usersRouter = router({
         role: z.enum(["admin", "staff", "parent"]).optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
         if (input.password && input.email) {
           const { hashPassword, validatePassword } = await import("../passwordAuth");
@@ -65,9 +65,13 @@ export const usersRouter = router({
             passwordHash,
             loginMethod: "password",
             role: input.role,
+            nurseryId: ctx.user?.nurseryId || undefined,
           });
         } else {
-          await createUser(input);
+          await createUser({
+            ...input,
+            nurseryId: ctx.user?.nurseryId || undefined,
+          });
         }
         return { success: true };
       } catch (error) {

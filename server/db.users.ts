@@ -87,6 +87,7 @@ export async function createUser(data: {
   passwordHash?: string;
   loginMethod?: string;
   role?: "admin" | "staff" | "parent";
+  nurseryId?: number;
 }) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
