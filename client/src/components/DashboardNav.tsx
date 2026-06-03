@@ -44,7 +44,16 @@ export default function DashboardNav() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { t, i18n } = useTranslation();
 
-  const navigationItems = navigationItemsConfig.map((item) => ({
+  // Filter navigation items based on user role
+  const filteredConfig = navigationItemsConfig.filter((item) => {
+    // Hide Settings, Users, Privileges from non-admin users
+    if (['/settings', '/users', '/privileges'].includes(item.href)) {
+      return user?.role === 'admin' || user?.role === 'super_admin';
+    }
+    return true;
+  });
+
+  const navigationItems = filteredConfig.map((item) => ({
     ...item,
     label: t(item.labelKey),
   }));

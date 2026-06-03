@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Mail, Phone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { usePrivileges } from '@/hooks/usePrivileges';
 
 function ParentChildrenBadges({ parentId }: { parentId: number }) {
   const { data: parentChildren } = trpc.parents.getChildren.useQuery({ parentId });
@@ -28,6 +29,7 @@ function ParentChildrenBadges({ parentId }: { parentId: number }) {
 }
 
 export default function Parents() {
+  const privileges = usePrivileges();
   const { data: parentsList, isLoading, refetch } = trpc.parents.list.useQuery();
   const createMutation = trpc.parents.create.useMutation();
   const updateMutation = trpc.parents.update.useMutation();

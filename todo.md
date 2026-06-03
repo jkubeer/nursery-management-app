@@ -286,3 +286,18 @@
 - [x] FIX: Parents delete checks children.parentId instead of parentChildRelationships
 - [x] FIX: Parents delete button now visible and functional
 - [x] FIX: All update/delete mutations now have tenant scoping
+
+
+## Role-Based Access Control (RBAC) & Privilege Enforcement
+- [x] Hide Settings, Users, Privileges from non-admin users in sidebar
+- [x] Create privilege checking utilities and hooks
+- [x] Implement privilege checks on Staff page (view/manage/delete)
+- [x] Implement privilege checks on Children page (view/manage/delete)
+- [x] Implement privilege checks on Parents page (view/manage/delete)
+- [x] Implement privilege checks on Rooms page (view/manage/delete)
+- [x] Implement privilege checks on Activities page (view/manage/delete)
+- [x] Disable/hide create buttons based on manage privilege
+- [x] Disable/hide edit buttons based on manage privilege
+- [x] Disable/hide delete buttons based on delete privilege
+- [ ] Show "No Permission" message when user lacks privileges
+- [ ] Fix Privileges system - staff with only view privilege can't edit/create/delete

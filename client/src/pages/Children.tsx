@@ -5,8 +5,10 @@ import { useState } from "react";
 import { Plus, Edit2, AlertCircle, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { usePrivileges } from '@/hooks/usePrivileges';
 
 export default function Children() {
+  const privileges = usePrivileges();
   const { data: childrenList, isLoading, refetch } = trpc.children.list.useQuery();
   const { data: roomsList } = trpc.rooms.list.useQuery();
   const { data: parentsList } = trpc.parents.list.useQuery();

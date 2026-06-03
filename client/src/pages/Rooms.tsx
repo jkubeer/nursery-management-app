@@ -6,8 +6,10 @@ import { useState } from "react";
 import { Plus, Edit2, Users, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { usePrivileges } from '@/hooks/usePrivileges';
 
 export default function Rooms() {
+  const privileges = usePrivileges();
   const { data: roomsList, isLoading, refetch } = trpc.rooms.list.useQuery();
   const { data: childrenList } = trpc.children.list.useQuery();
   const createMutation = trpc.rooms.create.useMutation();

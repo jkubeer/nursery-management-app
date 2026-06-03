@@ -5,8 +5,10 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Phone, Mail } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { usePrivileges } from '@/hooks/usePrivileges';
 
 export default function Staff() {
+  const privileges = usePrivileges();
   const { data: staffList, isLoading, refetch } = trpc.staff.list.useQuery();
   const createMutation = trpc.staff.create.useMutation();
   const updateMutation = trpc.staff.update.useMutation();

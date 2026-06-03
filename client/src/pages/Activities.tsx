@@ -6,8 +6,10 @@ import { useState } from "react";
 import { Plus, Edit2, Calendar } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { usePrivileges } from '@/hooks/usePrivileges';
 
 export default function Activities() {
+  const privileges = usePrivileges();
   const { data: roomsList } = trpc.rooms.list.useQuery();
   const { data: staffList } = trpc.staff.list.useQuery();
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
