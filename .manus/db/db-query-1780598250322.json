@@ -1,0 +1,19 @@
+{
+  "query": "SELECT COUNT(*) as user_roles_count FROM user_roles; SELECT COUNT(*) as role_permissions_count FROM role_permissions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT COUNT(*) as user_roles_count FROM user_roles; SELECT COUNT(*) as role_permissions_count FROM role_permissions;",
+  "rows": [
+    {
+      "user_roles_count": "2"
+    },
+    {
+      "user_roles_count": "role_permissions_count"
+    },
+    {
+      "user_roles_count": "136"
+    }
+  ],
+  "messages": [],
+  "stdout": "user_roles_count\n2\nrole_permissions_count\n136\n",
+  "stderr": "",
+  "execution_time_ms": 2138
+}

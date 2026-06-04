@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE users SET nurseryId = 1 WHERE role = 'admin' AND nurseryId IS NULL; UPDATE users SET passwordHash = '$2b$10$aFL0tHMlNm7.EJ2MVTvGD.qMMWojU3rYWmSL/ZKg/H1XhpJWBtC4y' WHERE role != 'super_admin';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute UPDATE users SET nurseryId = 1 WHERE role = 'admin' AND nurseryId IS NULL; UPDATE users SET passwordHash = '$2b$10$aFL0tHMlNm7.EJ2MVTvGD.qMMWojU3rYWmSL/ZKg/H1XhpJWBtC4y' WHERE role != 'super_admin';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2573
+}

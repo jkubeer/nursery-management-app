@@ -1,0 +1,9 @@
+{
+  "query": "-- Clear existing user_roles\nDELETE FROM user_roles;\n\n-- Assign admin users to Admin role (roleId=1)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 1 FROM users WHERE role = 'admin';\n\n-- Assign staff users to Staff role (roleId=2)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 2 FROM users WHERE role = 'staff';\n\n-- Assign parent users to Parent role (roleId=3)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 3 FROM users WHERE role = 'parent';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute -- Clear existing user_roles\nDELETE FROM user_roles;\n\n-- Assign admin users to Admin role (roleId=1)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 1 FROM users WHERE role = 'admin';\n\n-- Assign staff users to Staff role (roleId=2)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 2 FROM users WHERE role = 'staff';\n\n-- Assign parent users to Parent role (roleId=3)\nINSERT INTO user_roles (userId, roleId) \nSELECT id, 3 FROM users WHERE role = 'parent';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2500
+}

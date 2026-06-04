@@ -1,0 +1,87 @@
+{
+  "query": "SELECT id, name, email, role, nurseryId FROM users ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name, email, role, nurseryId FROM users ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Jamal Kubeer",
+      "email": "j.kubeer@e.net.kw",
+      "role": "admin",
+      "nurseryId": "1"
+    },
+    {
+      "id": "1440016",
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "role": "staff",
+      "nurseryId": "1"
+    },
+    {
+      "id": "1830008",
+      "name": "Admin User",
+      "email": "admin@nursery.com",
+      "role": "admin",
+      "nurseryId": "1"
+    },
+    {
+      "id": "1830020",
+      "name": "Mark Thompson",
+      "email": "parent1@example.com",
+      "role": "parent",
+      "nurseryId": "1"
+    },
+    {
+      "id": "1830021",
+      "name": "Susan Harris",
+      "email": "parent2@example.com",
+      "role": "parent",
+      "nurseryId": "1"
+    },
+    {
+      "id": "1830022",
+      "name": "James Martin",
+      "email": "parent3@example.com",
+      "role": "parent",
+      "nurseryId": "1"
+    },
+    {
+      "id": "2340048",
+      "name": "Super Admin",
+      "email": "superadmin@nursecare.com",
+      "role": "super_admin",
+      "nurseryId": "NULL"
+    },
+    {
+      "id": "2550001",
+      "name": "Samia Husain",
+      "email": "samhus@nurserycare.com",
+      "role": "admin",
+      "nurseryId": "30001"
+    },
+    {
+      "id": "2850004",
+      "name": "Danah Al Humoud",
+      "email": "dana.alhumoud@e.net.kw",
+      "role": "admin",
+      "nurseryId": "1"
+    },
+    {
+      "id": "3030006",
+      "name": "Lulua Hamad",
+      "email": "lhamad@ssnursery.com",
+      "role": "staff",
+      "nurseryId": "1"
+    },
+    {
+      "id": "3090001",
+      "name": "Salma Al-Ali",
+      "email": "s.alali@nurserycare.com",
+      "role": "admin",
+      "nurseryId": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tnurseryId\n1\tJamal Kubeer\tj.kubeer@e.net.kw\tadmin\t1\n1440016\tTest User\ttestuser@example.com\tstaff\t1\n1830008\tAdmin User\tadmin@nursery.com\tadmin\t1\n1830020\tMark Thompson\tparent1@example.com\tparent\t1\n1830021\tSusan Harris\tparent2@example.com\tparent\t1\n1830022\tJames Martin\tparent3@example.com\tparent\t1\n2340048\tSuper Admin\tsuperadmin@nursecare.com\tsuper_admin\tNULL\n2550001\tSamia Husain\tsamhus@nurserycare.com\tadmin\t30001\n2850004\tDanah Al Humoud\tdana.alhumoud@e.net.kw\tadmin\t1\n3030006\tLulua Hamad\tlhamad@ssnursery.com\tstaff\t1\n3090001\tSalma Al-Ali\ts.alali@nurserycare.com\tadmin\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1763
+}
