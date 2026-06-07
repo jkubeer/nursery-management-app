@@ -35,7 +35,6 @@ const navigationItemsConfig = [
   { labelKey: "navigation.payments", href: "/payments", icon: CreditCard },
   { labelKey: "navigation.settings", href: "/settings", icon: Settings },
   { labelKey: "navigation.users", href: "/users", icon: Users },
-  { labelKey: "navigation.privileges", href: "/privileges", icon: Lock },
 ];
 
 export default function DashboardNav() {
@@ -46,9 +45,9 @@ export default function DashboardNav() {
 
   // Filter navigation items based on user role
   const filteredConfig = navigationItemsConfig.filter((item) => {
-    // Hide Settings, Users, Privileges from non-admin users
-    if (['/settings', '/users', '/privileges'].includes(item.href)) {
-      return user?.role === 'admin' || user?.role === 'super_admin';
+    // Hide Settings, Users from non-admin users
+    if (['/settings', '/users'].includes(item.href)) {
+      return user?.role === 'admin';
     }
     return true;
   });
