@@ -1,0 +1,90 @@
+{
+  "query": "SELECT r.name as role, p.name as permission FROM user_roles ur JOIN roles r ON ur.roleId = r.id JOIN role_permissions rp ON r.id = rp.roleId JOIN permissions p ON rp.permissionId = p.id WHERE ur.userId IN (SELECT id FROM users WHERE role = 'staff') LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT r.name as role, p.name as permission FROM user_roles ur JOIN roles r ON ur.roleId = r.id JOIN role_permissions rp ON r.id = rp.roleId JOIN permissions p ON rp.permissionId = p.id WHERE ur.userId IN (SELECT id FROM users WHERE role = 'staff') LIMIT 20;",
+  "rows": [
+    {
+      "role": "director",
+      "permission": "view_staff"
+    },
+    {
+      "role": "director",
+      "permission": "view_staff"
+    },
+    {
+      "role": "director",
+      "permission": "create_staff"
+    },
+    {
+      "role": "director",
+      "permission": "create_staff"
+    },
+    {
+      "role": "director",
+      "permission": "edit_staff"
+    },
+    {
+      "role": "director",
+      "permission": "edit_staff"
+    },
+    {
+      "role": "director",
+      "permission": "delete_staff"
+    },
+    {
+      "role": "director",
+      "permission": "delete_staff"
+    },
+    {
+      "role": "director",
+      "permission": "manage_staff_schedules"
+    },
+    {
+      "role": "director",
+      "permission": "manage_staff_schedules"
+    },
+    {
+      "role": "director",
+      "permission": "view_children"
+    },
+    {
+      "role": "director",
+      "permission": "view_children"
+    },
+    {
+      "role": "director",
+      "permission": "create_children"
+    },
+    {
+      "role": "director",
+      "permission": "create_children"
+    },
+    {
+      "role": "director",
+      "permission": "edit_children"
+    },
+    {
+      "role": "director",
+      "permission": "edit_children"
+    },
+    {
+      "role": "director",
+      "permission": "delete_children"
+    },
+    {
+      "role": "director",
+      "permission": "delete_children"
+    },
+    {
+      "role": "director",
+      "permission": "view_child_medical"
+    },
+    {
+      "role": "director",
+      "permission": "view_child_medical"
+    }
+  ],
+  "messages": [],
+  "stdout": "role\tpermission\ndirector\tview_staff\ndirector\tview_staff\ndirector\tcreate_staff\ndirector\tcreate_staff\ndirector\tedit_staff\ndirector\tedit_staff\ndirector\tdelete_staff\ndirector\tdelete_staff\ndirector\tmanage_staff_schedules\ndirector\tmanage_staff_schedules\ndirector\tview_children\ndirector\tview_children\ndirector\tcreate_children\ndirector\tcreate_children\ndirector\tedit_children\ndirector\tedit_children\ndirector\tdelete_children\ndirector\tdelete_children\ndirector\tview_child_medical\ndirector\tview_child_medical\n",
+  "stderr": "",
+  "execution_time_ms": 1797
+}

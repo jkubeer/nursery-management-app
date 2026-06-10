@@ -1,0 +1,8 @@
+{
+  "query": "SELECT r.name as role, p.name as permission, p.action FROM user_roles ur JOIN roles r ON ur.roleId = r.id JOIN role_permissions rp ON r.id = rp.roleId JOIN permissions p ON rp.permissionId = p.id WHERE ur.userId IN (SELECT id FROM users WHERE role = 'staff') LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT r.name as role, p.name as permission, p.action FROM user_roles ur JOIN roles r ON ur.roleId = r.id JOIN role_permissions rp ON r.id = rp.roleId JOIN permissions p ON rp.permissionId = p.id WHERE ur.userId IN (SELECT id FROM users WHERE role = 'staff') LIMIT 20;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'p.action' in 'field list'"
+  ]
+}

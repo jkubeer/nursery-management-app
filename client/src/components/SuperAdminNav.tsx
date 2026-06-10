@@ -13,9 +13,12 @@ export default function SuperAdminNav() {
     { label: "Users", href: "/super-admin/users", icon: Users },
   ];
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = "/";
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      window.location.href = "/";
+    }
   };
 
   return (
