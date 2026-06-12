@@ -26,26 +26,17 @@ export default function ParentPayments() {
   const [selectedInvoice, setSelectedInvoice] = useState<number | null>(null);
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
 
-  // Get parent info by user ID
-  const { data: parentData, isLoading: parentLoading } = trpc.parents.getByUserId.useQuery(
-    { userId: user?.id || 0 },
-    { enabled: !!user?.id }
-  );
+  // Get current parent's profile
+  const { data: parentData, isLoading: parentLoading } = trpc.parent.me.useQuery();
 
   // Get parent's payments
-  const { data: payments = [], isLoading: paymentsLoading, refetch: refetchPayments } = trpc.payments.byParent.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: payments = [], isLoading: paymentsLoading, refetch: refetchPayments } = trpc.parent.payments.useQuery();
 
   // Get parent's invoices
-  const { data: invoices = [], isLoading: invoicesLoading, refetch: refetchInvoices } = trpc.invoices.byParent.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: invoices = [], isLoading: invoicesLoading, refetch: refetchInvoices } = trpc.parent.invoices.useQuery();
 
   // Create payment mutation
-  const createPaymentMutation = trpc.payments.create.useMutation({
+  const createPaymentMutation = trpc.parent.recordPayment.useMutation({
     onSuccess: () => {
       toast.success("Payment recorded successfully!");
       setPaymentAmount("");
@@ -73,10 +64,15 @@ export default function ParentPayments() {
       return;
     }
 
+    const invoice = invoices.find((inv) => inv.id === selectedInvoice);
+    if (!invoice) {
+      toast.error("Invoice not found");
+      return;
+    }
+
     await createPaymentMutation.mutateAsync({
-      parentId,
-      childId: invoices.find((inv) => inv.id === selectedInvoice)?.childId || 0,
-      feeId: undefined,
+      invoiceId: selectedInvoice,
+      childId: invoice.childId,
       amount: paymentAmount,
       paymentMethod: selectedPaymentMethod as "stripe" | "bank_transfer" | "cash" | "check",
       notes: `Payment for invoice #${selectedInvoice}`,

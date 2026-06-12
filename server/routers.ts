@@ -9,6 +9,7 @@ import { reportsRouter } from "./routers/reports";
 import { usersRouter } from "./routers/users";
 import { authRouter } from "./routers/auth";
 import { superAdminRouter } from "./routers/superAdmin";
+import { parentRouter } from "./routers/parent";
 import {
   staff,
   children,
@@ -34,6 +35,7 @@ export const appRouter = router({
   system: systemRouter,
   auth: authRouter,
   superAdmin: superAdminRouter,
+  parent: parentRouter,
 
   // Dashboard
   dashboard: router({

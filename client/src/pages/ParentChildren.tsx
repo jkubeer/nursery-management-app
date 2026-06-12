@@ -9,17 +9,11 @@ export default function ParentChildren() {
   const { user } = useAuth();
   const [parentId, setParentId] = useState<number | null>(null);
 
-  // Get parent info by user ID
-  const { data: parentData, isLoading: parentLoading } = trpc.parents.getByUserId.useQuery(
-    { userId: user?.id || 0 },
-    { enabled: !!user?.id }
-  );
+  // Get current parent's profile
+  const { data: parentData, isLoading: parentLoading } = trpc.parent.me.useQuery();
 
   // Get parent's children
-  const { data: children = [], isLoading: childrenLoading } = trpc.parents.getChildren.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: children = [], isLoading: childrenLoading } = trpc.parent.children.useQuery();
 
   useEffect(() => {
     if (parentData?.id) {

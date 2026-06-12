@@ -18,6 +18,7 @@ import {
   Lock,
 } from "lucide-react";
 import { useState } from "react";
+import React from "react";
 import { trpc } from "@/lib/trpc";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
@@ -42,12 +43,24 @@ export default function DashboardNav() {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { t, i18n } = useTranslation();
+  
+  // Redirect parents to their portal
+  React.useEffect(() => {
+    if (user?.role === 'parent' && !location.startsWith('/parent')) {
+      window.location.href = '/parent-dashboard';
+    }
+  }, [user?.role, location]);
 
   // Filter navigation items based on user role
   const filteredConfig = navigationItemsConfig.filter((item) => {
     // Hide Settings, Users from non-admin users
     if (['/settings', '/users'].includes(item.href)) {
       return user?.role === 'admin';
+    }
+    // Hide nursery-wide sections from parent users
+    if (user?.role === 'parent') {
+      // Parents should only see dashboard, their children, and payments
+      return ['/dashboard', '/photos'].includes(item.href);
     }
     return true;
   });

@@ -322,11 +322,11 @@
 
 
 ## Parent Portal Backend Security (CRITICAL)
-- [ ] Create parent-specific tRPC procedures (parent.me, parent.children, parent.payments, parent.invoices) with ownership checks
-- [ ] Add ownership validation to all parent-accessible procedures to prevent accessing other parents' data
-- [ ] Block parents from accessing shared nursery routes (/staff, /children, /parents, /rooms, /activities, /reports)
-- [ ] Update DashboardNav to hide nursery-wide sections from parent users
+- [x] Create parent-specific tRPC procedures (parent.me, parent.children, parent.payments, parent.invoices) with ownership checks
+- [x] Add ownership validation to all parent-accessible procedures to prevent accessing other parents' data
+- [x] Block parents from accessing shared nursery routes (/staff, /children, /parents, /rooms, /activities, /reports)
+- [x] Update DashboardNav to hide nursery-wide sections from parent users
 - [ ] Implement real payment processing with Stripe integration
 - [ ] Add invoice status update when payment is recorded
-- [ ] Add backend tests for parent access control violations
-- [ ] Verify parents cannot call admin-only procedures
+- [x] Add backend tests for parent access control violations
+- [x] Verify parents cannot call admin-only procedures

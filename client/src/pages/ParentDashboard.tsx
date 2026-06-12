@@ -9,29 +9,17 @@ export default function ParentDashboard() {
   const { user } = useAuth();
   const [parentId, setParentId] = useState<number | null>(null);
 
-  // Get parent info by user ID
-  const { data: parentData, isLoading: parentLoading } = trpc.parents.getByUserId.useQuery(
-    { userId: user?.id || 0 },
-    { enabled: !!user?.id }
-  );
+  // Get current parent's profile
+  const { data: parentData, isLoading: parentLoading } = trpc.parent.me.useQuery();
 
   // Get parent's children
-  const { data: children = [], isLoading: childrenLoading } = trpc.parents.getChildren.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: children = [], isLoading: childrenLoading } = trpc.parent.children.useQuery();
 
   // Get parent's payments
-  const { data: payments = [], isLoading: paymentsLoading } = trpc.payments.byParent.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: payments = [], isLoading: paymentsLoading } = trpc.parent.payments.useQuery();
 
   // Get parent's invoices
-  const { data: invoices = [], isLoading: invoicesLoading } = trpc.invoices.byParent.useQuery(
-    { parentId: parentId || 0 },
-    { enabled: !!parentId }
-  );
+  const { data: invoices = [], isLoading: invoicesLoading } = trpc.parent.invoices.useQuery();
 
   useEffect(() => {
     if (parentData?.id) {

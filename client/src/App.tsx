@@ -127,6 +127,12 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
     return null;
   }
 
+  // Redirect parent users to their portal
+  if (user?.role === "parent") {
+    window.location.href = "/parent-dashboard";
+    return null;
+  }
+
   return (
     <DashboardLayout>
       <Component />
