@@ -301,3 +301,32 @@
 - [x] Disable/hide delete buttons based on delete privilege
 - [ ] Show "No Permission" message when user lacks privileges
 - [ ] Fix Privileges system - staff with only view privilege can't edit/create/delete
+
+
+## Parent Portal Implementation
+- [x] Create ParentDashboard page with children list and payment summary
+- [x] Create ParentLayout component (separate from DashboardLayout)
+- [x] Create parent-only routes in App.tsx (/parent-dashboard, /parent-children, /parent-payments)
+- [x] Add ParentProtectedRoute component for parent-only access control
+- [x] Update Home.tsx login redirect to route parents to /parent-dashboard
+- [x] Create parent-specific tRPC procedures for children/payments (with ownership checks)
+- [x] Create ParentChildren page showing only their children
+- [x] Create ParentPayments page showing only their payments
+- [x] Implement parent data isolation - prevent parents from accessing other parents' data
+- [x] Add payment form for parents to make payments
+- [ ] Add daily reports view for parents (read-only)
+- [ ] Add photos gallery for parents (only their children's photos)
+- [x] Create ParentNav component with limited menu items
+- [x] Test parent portal access controls
+- [x] Verify parents cannot access admin/staff/nursery-wide data
+
+
+## Parent Portal Backend Security (CRITICAL)
+- [ ] Create parent-specific tRPC procedures (parent.me, parent.children, parent.payments, parent.invoices) with ownership checks
+- [ ] Add ownership validation to all parent-accessible procedures to prevent accessing other parents' data
+- [ ] Block parents from accessing shared nursery routes (/staff, /children, /parents, /rooms, /activities, /reports)
+- [ ] Update DashboardNav to hide nursery-wide sections from parent users
+- [ ] Implement real payment processing with Stripe integration
+- [ ] Add invoice status update when payment is recorded
+- [ ] Add backend tests for parent access control violations
+- [ ] Verify parents cannot call admin-only procedures

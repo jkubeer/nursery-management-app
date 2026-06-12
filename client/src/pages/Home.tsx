@@ -1,9 +1,9 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { useEffect, useState } from "react";
 import { Loader2, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Home() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -44,6 +44,8 @@ export default function Home() {
       const meData = await utils.auth.me.fetch();
       if (meData?.role === "super_admin") {
         setLocation("/super-admin");
+      } else if (meData?.role === "parent") {
+        setLocation("/parent-dashboard");
       } else {
         setLocation("/dashboard");
       }
@@ -59,6 +61,8 @@ export default function Home() {
     if (isAuthenticated && user) {
       if (user.role === "super_admin") {
         setLocation("/super-admin");
+      } else if (user.role === "parent") {
+        setLocation("/parent-dashboard");
       } else {
         setLocation("/dashboard");
       }

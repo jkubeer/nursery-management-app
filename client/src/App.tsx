@@ -1,5 +1,5 @@
-import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "sonner";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -29,6 +29,10 @@ import EditNursery from "./pages/EditNursery";
 import ViewNursery from "./pages/ViewNursery";
 import SuperAdminPrivileges from "./pages/SuperAdminPrivileges";
 import SuperAdminUsers from "./pages/SuperAdminUsers";
+import ParentDashboard from "./pages/ParentDashboard";
+import ParentChildren from "./pages/ParentChildren";
+import ParentPayments from "./pages/ParentPayments";
+import ParentLayout from "./components/ParentLayout";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
@@ -130,6 +134,37 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   );
 }
 
+function ParentProtectedRoute({ component: Component }: { component: React.ComponentType }) {
+  const { user, loading, isAuthenticated } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="animate-spin text-primary" size={40} />
+          <p className="text-foreground font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    window.location.href = "/";
+    return null;
+  }
+
+  if (user?.role !== "parent") {
+    window.location.href = "/dashboard";
+    return null;
+  }
+
+  return (
+    <ParentLayout>
+      <Component />
+    </ParentLayout>
+  );
+}
+
 function Router() {
   return (
     <Switch>
@@ -144,6 +179,9 @@ function Router() {
       <Route path={"/super-admin/nursery/:id"} component={() => <SuperAdminProtectedRoute component={ViewNursery} />} />
       <Route path={"/super-admin/privileges"} component={() => <SuperAdminProtectedRoute component={SuperAdminPrivileges} />} />
       <Route path={"/super-admin/users"} component={() => <SuperAdminProtectedRoute component={SuperAdminUsers} />} />
+      <Route path={"/parent-dashboard"} component={() => <ParentProtectedRoute component={ParentDashboard} />} />
+      <Route path={"/parent-children"} component={() => <ParentProtectedRoute component={ParentChildren} />} />
+      <Route path={"/parent-payments"} component={() => <ParentProtectedRoute component={ParentPayments} />} />
       <Route path={"/dashboard"} component={() => <ProtectedRoute component={Dashboard} />} />
       <Route path={"/staff"} component={() => <ProtectedRoute component={Staff} />} />
       <Route path={"/children"} component={() => <ProtectedRoute component={Children} />} />
