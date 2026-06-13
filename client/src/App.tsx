@@ -128,7 +128,7 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   }
 
   // Redirect parent users to their portal
-  if (user?.role === "parent") {
+  if (user?.userType === "parent") {
     window.location.href = "/parent-dashboard";
     return null;
   }
@@ -159,7 +159,7 @@ function ParentProtectedRoute({ component: Component }: { component: React.Compo
     return null;
   }
 
-  if (user?.role !== "parent") {
+  if (user?.userType !== "parent") {
     window.location.href = "/dashboard";
     return null;
   }

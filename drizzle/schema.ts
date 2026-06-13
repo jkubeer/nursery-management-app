@@ -50,7 +50,7 @@ export const users = mysqlTable("users", {
   name: text("name"),
   passwordHash: varchar("passwordHash", { length: 255 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["super_admin", "admin", "staff", "parent"]).default("parent").notNull(),
+  role: mysqlEnum("role", ["super_admin", "admin", "staff", "teacher"]).default("staff").notNull(),
   userType: mysqlEnum("userType", ["staff", "parent"]).default("parent").notNull(), // Login type: Staff or Parent
   nurseryId: int("nurseryId"), // null for super_admin
   passwordResetToken: varchar("passwordResetToken", { length: 255 }),

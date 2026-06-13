@@ -7,13 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2, Edit2, Plus, Eye, EyeOff } from "lucide-react";
 
-type UserRole = "admin" | "staff" | "parent";
+type UserRole = "admin" | "staff" | "teacher";
+type UserType = "staff" | "parent";
 
 interface FormData {
   name: string;
   email: string;
   password?: string;
-  role: UserRole;
+  userType: UserType;
+  role?: UserRole;
 }
 
 export default function Users() {
@@ -22,7 +24,7 @@ export default function Users() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [selectedNurseryId, setSelectedNurseryId] = useState<number | null>(null);
-  const [formData, setFormData] = useState<FormData>({ name: "", email: "", password: "", role: "staff" });
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "", password: "", userType: "staff", role: "staff" });
 
   // Access control: only super_admin and admin can view users
   const canAccessUsers = user?.role === "super_admin" || user?.role === "admin";
@@ -57,10 +59,16 @@ export default function Users() {
   const handleOpenDialog = (userData?: any) => {
     if (userData) {
       setEditingId(userData.id);
-      setFormData({ name: userData.name || "", email: userData.email || "", password: "", role: userData.role || "staff" });
+      setFormData({ 
+        name: userData.name || "", 
+        email: userData.email || "", 
+        password: "", 
+        userType: userData.userType || "staff",
+        role: userData.role || "staff" 
+      });
     } else {
       setEditingId(null);
-      setFormData({ name: "", email: "", password: "", role: "staff" });
+      setFormData({ name: "", email: "", password: "", userType: "staff", role: "staff" });
     }
     setShowPassword(false);
     setPasswordErrors([]);
@@ -89,6 +97,11 @@ export default function Users() {
   const handleSave = async () => {
     if (!formData.name || !formData.email) {
       alert("Name and email are required");
+      return;
+    }
+
+    if (formData.userType === "staff" && !formData.role) {
+      alert("Role is required for staff users");
       return;
     }
 
@@ -281,18 +294,39 @@ export default function Users() {
               )}
             </div>
             <div>
-              <label className="text-sm font-medium text-foreground">Role</label>
-              <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value as UserRole })}>
+              <label className="text-sm font-medium text-foreground">User Type</label>
+              <Select value={formData.userType} onValueChange={(value) => {
+                setFormData({ 
+                  ...formData, 
+                  userType: value as UserType,
+                  role: value === "parent" ? undefined : formData.role || "staff"
+                });
+              }}>
                 <SelectTrigger className="mt-1">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="admin">Admin</SelectItem>
                   <SelectItem value="staff">Staff</SelectItem>
                   <SelectItem value="parent">Parent</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+            
+            {formData.userType === "staff" && (
+              <div>
+                <label className="text-sm font-medium text-foreground">Role <span className="text-red-500">*</span></label>
+                <Select value={formData.role || "staff"} onValueChange={(value) => setFormData({ ...formData, role: value as UserRole })}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="staff">Staff</SelectItem>
+                    <SelectItem value="teacher">Teacher</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="flex gap-3 justify-end pt-4">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel

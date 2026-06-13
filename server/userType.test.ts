@@ -39,7 +39,7 @@ describe("User Type Authentication", () => {
       email,
       "Parent User",
       "hashedPassword123",
-      "parent",
+      undefined, // Parents don't have a role
       "parent"
     );
     expect(result).toBeDefined();
@@ -63,7 +63,7 @@ describe("User Type Authentication", () => {
       email,
       "Default User",
       "hashedPassword123",
-      "parent"
+      undefined // Parents don't have a role
     );
     expect(result).toBeDefined();
   });
@@ -72,7 +72,7 @@ describe("User Type Authentication", () => {
     const parentContext = {
       user: {
         id: parentUserId,
-        role: "parent",
+        role: "staff",
         userType: "parent",
         email: "parent@test.com",
         nurseryId: 1,
@@ -116,7 +116,7 @@ describe("User Type Authentication", () => {
     const parentContext = {
       user: {
         id: parentUserId,
-        role: "parent",
+        role: "staff",
         userType: "parent",
         email: "parent@test.com",
         nurseryId: 1,

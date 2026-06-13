@@ -345,3 +345,19 @@
 - [x] Test staff user access to dashboard
 - [x] Test parent user access to parent portal
 - [x] Test OAuth login sets userType correctly
+
+
+## Conditional Role Selection (userType-based)
+- [x] Update schema to make role enum exclude 'parent' (only staff, admin, teacher)
+- [x] Update user management dialog to show/hide role based on userType selection
+- [x] Show role dropdown only when userType='staff'
+- [x] Hide role field when userType='parent'
+- [x] Update backend to validate role is required for staff, not required for parents
+- [x] Update user creation procedure to handle nullable role for parents
+- [x] Update database migration to change role enum values
+- [x] Test user creation with parent (no role)
+- [x] Test user creation with staff (with role)
+- [x] Update all role comparisons to use userType for parent checks
+- [x] Update parent router procedures to check userType instead of role
+- [x] Update App.tsx ProtectedRoute to check userType for parent routing
+- [x] Update DashboardNav to check userType for parent filtering

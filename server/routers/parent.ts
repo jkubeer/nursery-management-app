@@ -12,7 +12,7 @@ import { eq, and } from "drizzle-orm";
 export const parentRouter = router({
   // Get current parent's profile
   me: protectedProcedure.query(async ({ ctx }) => {
-    if (ctx.user?.role !== "parent") {
+    if (ctx.user?.userType !== "parent") {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Only parent users can access this endpoint",
@@ -40,7 +40,7 @@ export const parentRouter = router({
 
   // Get current parent's children only
   children: protectedProcedure.query(async ({ ctx }) => {
-    if (ctx.user?.role !== "parent") {
+    if (ctx.user?.userType !== "parent") {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Only parent users can access this endpoint",
@@ -72,7 +72,7 @@ export const parentRouter = router({
 
   // Get current parent's payments only
   payments: protectedProcedure.query(async ({ ctx }) => {
-    if (ctx.user?.role !== "parent") {
+    if (ctx.user?.userType !== "parent") {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Only parent users can access this endpoint",
@@ -105,7 +105,7 @@ export const parentRouter = router({
 
   // Get current parent's invoices only
   invoices: protectedProcedure.query(async ({ ctx }) => {
-    if (ctx.user?.role !== "parent") {
+    if (ctx.user?.userType !== "parent") {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Only parent users can access this endpoint",
@@ -148,7 +148,7 @@ export const parentRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (ctx.user?.role !== "parent") {
+      if (ctx.user?.userType !== "parent") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only parent users can access this endpoint",
@@ -230,7 +230,7 @@ export const parentRouter = router({
   getChild: protectedProcedure
     .input(z.object({ childId: z.number() }))
     .query(async ({ input, ctx }) => {
-      if (ctx.user?.role !== "parent") {
+      if (ctx.user?.userType !== "parent") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only parent users can access this endpoint",

@@ -86,7 +86,8 @@ export async function createUser(data: {
   email?: string;
   passwordHash?: string;
   loginMethod?: string;
-  role?: "admin" | "staff" | "parent";
+  userType?: "staff" | "parent";
+  role?: "admin" | "staff" | "teacher";
   nurseryId?: number;
 }) {
   const db = await getDb();
@@ -101,7 +102,8 @@ export async function createUser(data: {
 export async function updateUser(userId: number, data: Partial<{
   name: string;
   email: string;
-  role: "admin" | "staff" | "parent";
+  userType: "staff" | "parent";
+  role: "admin" | "staff" | "teacher";
 }>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

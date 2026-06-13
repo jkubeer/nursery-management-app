@@ -54,8 +54,10 @@ export const authRouter = router({
       // Hash password
       const passwordHash = await hashPassword(input.password);
 
-      // Create user with appropriate userType
-      await db.createPasswordUser(input.email, input.name, passwordHash, "parent", input.userType);
+      // Create user with appropriate userType and role
+      // Parents don't have a specific role, staff users get 'staff' role
+      const role = input.userType === "parent" ? undefined : "staff";
+      await db.createPasswordUser(input.email, input.name, passwordHash, role, input.userType);
 
       return {
         success: true,

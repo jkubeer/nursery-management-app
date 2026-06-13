@@ -46,19 +46,19 @@ export default function DashboardNav() {
   
   // Redirect parents to their portal
   React.useEffect(() => {
-    if (user?.role === 'parent' && !location.startsWith('/parent')) {
+    if (user?.userType === 'parent' && !location.startsWith('/parent')) {
       window.location.href = '/parent-dashboard';
     }
-  }, [user?.role, location]);
+  }, [user?.userType, location]);
 
-  // Filter navigation items based on user role
+  // Filter navigation items based on user type
   const filteredConfig = navigationItemsConfig.filter((item) => {
     // Hide Settings, Users from non-admin users
     if (['/settings', '/users'].includes(item.href)) {
       return user?.role === 'admin';
     }
     // Hide nursery-wide sections from parent users
-    if (user?.role === 'parent') {
+    if (user?.userType === 'parent') {
       // Parents should only see dashboard, their children, and payments
       return ['/dashboard', '/photos'].includes(item.href);
     }

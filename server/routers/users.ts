@@ -1,4 +1,4 @@
-import { router, publicProcedure, protectedProcedure, adminProcedure } from "../_core/trpc";
+import { router, protectedProcedure, adminProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { getAllUsers, createUser, updateUser, deleteUser, getAllRoles, assignRoleToUser } from "../db.users";
 
@@ -42,11 +42,21 @@ export const usersRouter = router({
         email: z.string().email().optional(),
         password: z.string().optional(),
         loginMethod: z.string().optional(),
-        role: z.enum(["admin", "staff", "parent"]).optional(),
+        userType: z.enum(["staff", "parent"]).optional(),
+        role: z.enum(["admin", "staff", "teacher"]).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
       try {
+        // Validate: if userType is staff, role is required
+        if (input.userType === "staff" && !input.role) {
+          throw new Error("Role is required for staff users");
+        }
+        // Parents should not have a role
+        if (input.userType === "parent" && input.role) {
+          throw new Error("Parent users should not have a role");
+        }
+
         if (input.password && input.email) {
           const { hashPassword, validatePassword } = await import("../passwordAuth");
           const passwordValidation = validatePassword(input.password);
@@ -64,12 +74,18 @@ export const usersRouter = router({
             email: input.email,
             passwordHash,
             loginMethod: "password",
+            userType: input.userType || "staff",
             role: input.role,
             nurseryId: ctx.user?.nurseryId || undefined,
           });
         } else {
           await createUser({
-            ...input,
+            name: input.name,
+            email: input.email,
+            openId: input.openId,
+            loginMethod: input.loginMethod,
+            userType: input.userType || "staff",
+            role: input.role,
             nurseryId: ctx.user?.nurseryId || undefined,
           });
         }
@@ -86,17 +102,28 @@ export const usersRouter = router({
         id: z.number(),
         name: z.string().optional(),
         email: z.string().email().optional(),
-        role: z.enum(["admin", "staff", "parent"]).optional(),
+        userType: z.enum(["staff", "parent"]).optional(),
+        role: z.enum(["admin", "staff", "teacher"]).optional(),
       })
     )
     .mutation(async ({ input }) => {
       try {
         const { id, ...data } = input;
+        
+        // Validate: if userType is staff, role is required
+        if (data.userType === "staff" && !data.role) {
+          throw new Error("Role is required for staff users");
+        }
+        // Parents should not have a role
+        if (data.userType === "parent" && data.role) {
+          throw new Error("Parent users should not have a role");
+        }
+        
         await updateUser(id, data);
         return { success: true };
       } catch (error) {
         console.error("Error updating user:", error);
-        throw new Error("Failed to update user");
+        throw new Error(error instanceof Error ? error.message : "Failed to update user");
       }
     }),
 
@@ -117,17 +144,12 @@ export const usersRouter = router({
       return await getAllRoles();
     } catch (error) {
       console.error("Error fetching roles:", error);
-      return [];
+      throw error;
     }
   }),
 
   assignRole: adminProcedure
-    .input(
-      z.object({
-        userId: z.number(),
-        roleId: z.number(),
-      })
-    )
+    .input(z.object({ userId: z.number(), roleId: z.number() }))
     .mutation(async ({ input }) => {
       try {
         await assignRoleToUser(input.userId, input.roleId);

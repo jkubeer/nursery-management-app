@@ -574,7 +574,7 @@ export async function createPasswordUser(
   email: string,
   name: string,
   passwordHash: string,
-  role: "admin" | "staff" | "parent" = "parent",
+  role: "admin" | "staff" | "teacher" = "staff",
   userType: "staff" | "parent" = "parent"
 ) {
   const db = await getDb();
