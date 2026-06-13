@@ -22,15 +22,15 @@ const ParentNav = () => {
   ];
 
   return (
-    <div className="w-64 bg-gradient-to-b from-blue-600 to-blue-700 text-white flex flex-col h-screen shadow-lg">
+    <div className="w-64 bg-gradient-to-b from-blue-600 to-blue-700 flex flex-col h-screen shadow-lg">
       {/* Logo/Header */}
-      <div className="p-6 border-b border-blue-500">
+      <div className="p-6 border-b border-blue-400">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
             <span className="font-bold text-blue-600">NC</span>
           </div>
           <div>
-            <h1 className="font-bold text-lg">NurseCare</h1>
+            <h1 className="font-bold text-lg text-white">NurseCare</h1>
             <p className="text-xs text-blue-100">Parent Portal</p>
           </div>
         </div>
@@ -44,7 +44,7 @@ const ParentNav = () => {
             <a
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-500 transition-colors"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-blue-500 hover:text-white transition-colors"
             >
               <Icon size={20} />
               <span className="font-medium">{item.label}</span>
@@ -54,10 +54,10 @@ const ParentNav = () => {
       </nav>
 
       {/* User Profile & Logout */}
-      <div className="p-4 border-t border-blue-500 space-y-4">
+      <div className="p-4 border-t border-blue-400 space-y-4">
         <div className="px-4 py-3 bg-blue-500 rounded-lg">
-          <p className="text-xs text-blue-100">Logged in as</p>
-          <p className="font-semibold truncate">{user?.name || user?.email}</p>
+          <p className="text-xs text-white">Logged in as</p>
+          <p className="font-semibold truncate text-white">{user?.name || user?.email}</p>
         </div>
         <Button
           onClick={handleLogout}
