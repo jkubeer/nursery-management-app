@@ -25,6 +25,7 @@ export const authRouter = router({
         name: z.string().min(2, "Name must be at least 2 characters"),
         password: z.string().min(8, "Password must be at least 8 characters"),
         confirmPassword: z.string(),
+        userType: z.enum(["staff", "parent"]).default("parent"),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -53,8 +54,8 @@ export const authRouter = router({
       // Hash password
       const passwordHash = await hashPassword(input.password);
 
-      // Create user
-      await db.createPasswordUser(input.email, input.name, passwordHash, "parent");
+      // Create user with appropriate userType
+      await db.createPasswordUser(input.email, input.name, passwordHash, "parent", input.userType);
 
       return {
         success: true,

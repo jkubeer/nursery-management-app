@@ -77,6 +77,16 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.role = "admin";
       updateSet.role = "admin";
     }
+    
+    if (user.userType !== undefined) {
+      values.userType = user.userType;
+      updateSet.userType = user.userType;
+    } else {
+      // Default userType based on role
+      const defaultUserType = (user.role === "staff" || user.role === "admin") ? "staff" : "parent";
+      values.userType = defaultUserType;
+      updateSet.userType = defaultUserType;
+    }
 
     if (!values.lastSignedIn) {
       values.lastSignedIn = new Date();
@@ -560,7 +570,13 @@ export async function getUserByEmail(email: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function createPasswordUser(email: string, name: string, passwordHash: string, role: "admin" | "staff" | "parent" = "parent") {
+export async function createPasswordUser(
+  email: string,
+  name: string,
+  passwordHash: string,
+  role: "admin" | "staff" | "parent" = "parent",
+  userType: "staff" | "parent" = "parent"
+) {
   const db = await getDb();
   if (!db) {
     console.error("[Database] Cannot create user: database not available");
@@ -573,6 +589,7 @@ export async function createPasswordUser(email: string, name: string, passwordHa
       name,
       passwordHash,
       role,
+      userType,
       loginMethod: "password",
       lastSignedIn: new Date(),
     });

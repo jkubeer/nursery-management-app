@@ -330,3 +330,18 @@
 - [ ] Add invoice status update when payment is recorded
 - [x] Add backend tests for parent access control violations
 - [x] Verify parents cannot call admin-only procedures
+
+
+## User Type Implementation (Staff vs Parent Login)
+- [x] Add userType field to users table schema (values: 'staff' or 'parent')
+- [x] Add userType column to database via SQL migration
+- [x] Update createPasswordUser function to accept and set userType parameter
+- [x] Update upsertUser function to set userType based on role during OAuth login
+- [x] Update auth.register to accept userType parameter from frontend
+- [x] Update Home.tsx login page to support registration with userType selection
+- [x] Update Home.tsx to redirect users based on userType (staff → /dashboard, parent → /parent-dashboard)
+- [x] Create userType authentication tests (12/12 tests passing)
+- [x] Verify userType is independent from role field
+- [x] Test staff user access to dashboard
+- [x] Test parent user access to parent portal
+- [x] Test OAuth login sets userType correctly

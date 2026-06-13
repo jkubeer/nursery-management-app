@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `userType` enum('staff','parent') DEFAULT 'parent' NOT NULL;
