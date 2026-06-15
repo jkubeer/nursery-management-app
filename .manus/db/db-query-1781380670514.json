@@ -1,0 +1,620 @@
+{
+  "query": "SELECT id, name, email, role, userType, loginMethod, createdAt, lastSignedIn FROM users ORDER BY createdAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name, email, role, userType, loginMethod, createdAt, lastSignedIn FROM users ORDER BY createdAt DESC;",
+  "rows": [
+    {
+      "id": "3450024",
+      "name": "OAuth Staff User",
+      "email": "oauth-staff-1781344571448@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:56:11",
+      "lastSignedIn": "2026-06-13 09:56:11"
+    },
+    {
+      "id": "3450023",
+      "name": "Staff Register User",
+      "email": "staff-register-1781344570900@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:11",
+      "lastSignedIn": "2026-06-13 09:56:11"
+    },
+    {
+      "id": "3450022",
+      "name": "Register Test User",
+      "email": "register-test-1781344570334@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:10",
+      "lastSignedIn": "2026-06-13 09:56:11"
+    },
+    {
+      "id": "3450021",
+      "name": "Staff",
+      "email": "staff-dist-1781344568447@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:08",
+      "lastSignedIn": "2026-06-13 09:56:09"
+    },
+    {
+      "id": "3450020",
+      "name": "Parent",
+      "email": "parent-dist-1781344568447@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:08",
+      "lastSignedIn": "2026-06-13 09:56:08"
+    },
+    {
+      "id": "3450019",
+      "name": "Teacher User",
+      "email": "teacher-test-1781344568217@test.com",
+      "role": "teacher",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:08",
+      "lastSignedIn": "2026-06-13 09:56:08"
+    },
+    {
+      "id": "3450018",
+      "name": "Admin User",
+      "email": "admin-test-1781344567987@test.com",
+      "role": "admin",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:08",
+      "lastSignedIn": "2026-06-13 09:56:08"
+    },
+    {
+      "id": "3450017",
+      "name": "Staff User",
+      "email": "staff-test-1781344567756@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:07",
+      "lastSignedIn": "2026-06-13 09:56:08"
+    },
+    {
+      "id": "3450016",
+      "name": "Parent User",
+      "email": "parent-test-1781344566124@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:07",
+      "lastSignedIn": "2026-06-13 09:56:06"
+    },
+    {
+      "id": "3450015",
+      "name": "Default User",
+      "email": "default-test-1781344567122@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:07",
+      "lastSignedIn": "2026-06-13 09:56:07"
+    },
+    {
+      "id": "3450014",
+      "name": "Staff User",
+      "email": "staff-test-1781344566890@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:07",
+      "lastSignedIn": "2026-06-13 09:56:07"
+    },
+    {
+      "id": "3450013",
+      "name": "Parent User",
+      "email": "parent-test-1781344566653@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:56:06",
+      "lastSignedIn": "2026-06-13 09:56:07"
+    },
+    {
+      "id": "3450011",
+      "name": "Staff Register User",
+      "email": "staff-register-1781344521954@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:22",
+      "lastSignedIn": "2026-06-13 09:55:22"
+    },
+    {
+      "id": "3450012",
+      "name": "OAuth Staff User",
+      "email": "oauth-staff-1781344522485@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:55:22",
+      "lastSignedIn": "2026-06-13 09:55:22"
+    },
+    {
+      "id": "3450010",
+      "name": "Register Test User",
+      "email": "register-test-1781344521398@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:21",
+      "lastSignedIn": "2026-06-13 09:55:22"
+    },
+    {
+      "id": "3450009",
+      "name": "Staff",
+      "email": "staff-dist-1781344519691@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:20",
+      "lastSignedIn": "2026-06-13 09:55:20"
+    },
+    {
+      "id": "3450006",
+      "name": "Admin User",
+      "email": "admin-test-1781344519249@test.com",
+      "role": "admin",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:19",
+      "lastSignedIn": "2026-06-13 09:55:19"
+    },
+    {
+      "id": "3450008",
+      "name": "Parent",
+      "email": "parent-dist-1781344519691@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:19",
+      "lastSignedIn": "2026-06-13 09:55:20"
+    },
+    {
+      "id": "3450007",
+      "name": "Teacher User",
+      "email": "teacher-test-1781344519470@test.com",
+      "role": "teacher",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:19",
+      "lastSignedIn": "2026-06-13 09:55:19"
+    },
+    {
+      "id": "3450005",
+      "name": "Staff User",
+      "email": "staff-test-1781344519027@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:19",
+      "lastSignedIn": "2026-06-13 09:55:19"
+    },
+    {
+      "id": "3450004",
+      "name": "Parent User",
+      "email": "parent-test-1781344517438@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:18",
+      "lastSignedIn": "2026-06-13 09:55:17"
+    },
+    {
+      "id": "3450003",
+      "name": "Staff User",
+      "email": "staff-test-1781344518112@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:55:18",
+      "lastSignedIn": "2026-06-13 09:55:18"
+    },
+    {
+      "id": "3420031",
+      "name": "OAuth Parent User",
+      "email": "oauth-parent-1781341939725@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:12:19",
+      "lastSignedIn": "2026-06-13 09:12:20"
+    },
+    {
+      "id": "3420030",
+      "name": "OAuth Staff User",
+      "email": "oauth-staff-1781341939288@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:12:19",
+      "lastSignedIn": "2026-06-13 09:12:19"
+    },
+    {
+      "id": "3420029",
+      "name": "Staff Register User",
+      "email": "staff-register-1781341938766@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:19",
+      "lastSignedIn": "2026-06-13 09:12:19"
+    },
+    {
+      "id": "3420028",
+      "name": "Register Test User",
+      "email": "register-test-1781341938216@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:18",
+      "lastSignedIn": "2026-06-13 09:12:19"
+    },
+    {
+      "id": "3420026",
+      "name": "Staff User",
+      "email": "staff-test-1781341934963@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:15",
+      "lastSignedIn": "2026-06-13 09:12:15"
+    },
+    {
+      "id": "3420027",
+      "name": "Default User",
+      "email": "default-test-1781341935182@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:15",
+      "lastSignedIn": "2026-06-13 09:12:15"
+    },
+    {
+      "id": "3420024",
+      "name": "Test Staff",
+      "email": "staff-1781341934520@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:14",
+      "lastSignedIn": "2026-06-13 09:12:15"
+    },
+    {
+      "id": "3420023",
+      "name": "Test Parent",
+      "email": "parent-1781341932947@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:14",
+      "lastSignedIn": "2026-06-13 09:12:13"
+    },
+    {
+      "id": "3420025",
+      "name": "Parent User",
+      "email": "parent-test-1781341934740@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:14",
+      "lastSignedIn": "2026-06-13 09:12:15"
+    },
+    {
+      "id": "3420020",
+      "name": "Staff Register User",
+      "email": "staff-register-1781341923623@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:04",
+      "lastSignedIn": "2026-06-13 09:12:04"
+    },
+    {
+      "id": "3420022",
+      "name": "OAuth Parent User",
+      "email": "oauth-parent-1781341924625@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:12:04",
+      "lastSignedIn": "2026-06-13 09:12:05"
+    },
+    {
+      "id": "3420021",
+      "name": "OAuth Staff User",
+      "email": "oauth-staff-1781341924164@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:12:04",
+      "lastSignedIn": "2026-06-13 09:12:04"
+    },
+    {
+      "id": "3420019",
+      "name": "Register Test User",
+      "email": "register-test-1781341923053@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:12:03",
+      "lastSignedIn": "2026-06-13 09:12:03"
+    },
+    {
+      "id": "3420018",
+      "name": "Default User",
+      "email": "default-test-1781341919847@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:59",
+      "lastSignedIn": "2026-06-13 09:12:00"
+    },
+    {
+      "id": "3420017",
+      "name": "Staff User",
+      "email": "staff-test-1781341919617@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:59",
+      "lastSignedIn": "2026-06-13 09:12:00"
+    },
+    {
+      "id": "3420016",
+      "name": "Parent User",
+      "email": "parent-test-1781341919387@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:59",
+      "lastSignedIn": "2026-06-13 09:11:59"
+    },
+    {
+      "id": "3420015",
+      "name": "Test Staff",
+      "email": "staff-1781341919157@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:59",
+      "lastSignedIn": "2026-06-13 09:11:59"
+    },
+    {
+      "id": "3420014",
+      "name": "Test Parent",
+      "email": "parent-1781341917522@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:59",
+      "lastSignedIn": "2026-06-13 09:11:58"
+    },
+    {
+      "id": "3420013",
+      "name": "OAuth Parent User",
+      "email": "oauth-parent-1781341908591@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:11:48",
+      "lastSignedIn": "2026-06-13 09:11:49"
+    },
+    {
+      "id": "3420012",
+      "name": "OAuth Staff User",
+      "email": "oauth-staff-1781341908153@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "NULL",
+      "createdAt": "2026-06-13 09:11:48",
+      "lastSignedIn": "2026-06-13 09:11:48"
+    },
+    {
+      "id": "3420011",
+      "name": "Staff Register User",
+      "email": "staff-register-1781341907624@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:48",
+      "lastSignedIn": "2026-06-13 09:11:48"
+    },
+    {
+      "id": "3420010",
+      "name": "Register Test User",
+      "email": "register-test-1781341907072@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:47",
+      "lastSignedIn": "2026-06-13 09:11:47"
+    },
+    {
+      "id": "3420009",
+      "name": "Default User",
+      "email": "default-test-1781341904022@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:44",
+      "lastSignedIn": "2026-06-13 09:11:44"
+    },
+    {
+      "id": "3420008",
+      "name": "Staff User",
+      "email": "staff-test-1781341903803@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:43",
+      "lastSignedIn": "2026-06-13 09:11:44"
+    },
+    {
+      "id": "3420007",
+      "name": "Parent User",
+      "email": "parent-test-1781341903582@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:43",
+      "lastSignedIn": "2026-06-13 09:11:44"
+    },
+    {
+      "id": "3420006",
+      "name": "Test Staff",
+      "email": "staff-1781341903360@test.com",
+      "role": "staff",
+      "userType": "staff",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:43",
+      "lastSignedIn": "2026-06-13 09:11:43"
+    },
+    {
+      "id": "3420005",
+      "name": "Test Parent",
+      "email": "parent-1781341901781@test.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-13 09:11:43",
+      "lastSignedIn": "2026-06-13 09:11:42"
+    },
+    {
+      "id": "3150007",
+      "name": "Jasem Mohammed",
+      "email": "jm@nursecare.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-03 21:32:18",
+      "lastSignedIn": "2026-06-12 22:09:06"
+    },
+    {
+      "id": "3090001",
+      "name": "Salma Al-Ali",
+      "email": "s.alali@nurserycare.com",
+      "role": "admin",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-02 08:32:55",
+      "lastSignedIn": "2026-06-07 10:42:32"
+    },
+    {
+      "id": "3030006",
+      "name": "Lulua Hamad",
+      "email": "lhamad@ssnursery.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-02 07:48:56",
+      "lastSignedIn": "2026-06-02 08:18:44"
+    },
+    {
+      "id": "2850004",
+      "name": "Danah Al Humoud",
+      "email": "dana.alhumoud@e.net.kw",
+      "role": "admin",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-06-01 07:46:39",
+      "lastSignedIn": "2026-06-02 08:15:57"
+    },
+    {
+      "id": "2550001",
+      "name": "Samia Husain",
+      "email": "samhus@nurserycare.com",
+      "role": "admin",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-25 08:28:21",
+      "lastSignedIn": "2026-06-13 19:56:40"
+    },
+    {
+      "id": "2340048",
+      "name": "Super Admin",
+      "email": "superadmin@nursecare.com",
+      "role": "super_admin",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-24 14:29:42",
+      "lastSignedIn": "2026-06-13 12:08:58"
+    },
+    {
+      "id": "1830022",
+      "name": "James Martin",
+      "email": "parent3@example.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-24 09:59:56",
+      "lastSignedIn": "2026-05-24 09:59:56"
+    },
+    {
+      "id": "1830021",
+      "name": "Susan Harris",
+      "email": "parent2@example.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-24 09:59:56",
+      "lastSignedIn": "2026-05-24 09:59:56"
+    },
+    {
+      "id": "1830020",
+      "name": "Mark Thompson",
+      "email": "parent1@example.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-24 09:59:56",
+      "lastSignedIn": "2026-06-12 22:09:58"
+    },
+    {
+      "id": "1830008",
+      "name": "Admin User",
+      "email": "admin@nursery.com",
+      "role": "admin",
+      "userType": "parent",
+      "loginMethod": "password",
+      "createdAt": "2026-05-24 09:59:56",
+      "lastSignedIn": "2026-05-24 14:30:06"
+    },
+    {
+      "id": "1440016",
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "role": "staff",
+      "userType": "parent",
+      "loginMethod": "NULL",
+      "createdAt": "2026-05-14 11:41:59",
+      "lastSignedIn": "2026-05-17 10:15:59"
+    },
+    {
+      "id": "1",
+      "name": "Jamal Kubeer",
+      "email": "j.kubeer@e.net.kw",
+      "role": "admin",
+      "userType": "parent",
+      "loginMethod": "google",
+      "createdAt": "2026-02-16 13:36:24",
+      "lastSignedIn": "2026-06-13 12:11:18"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tuserType\tloginMethod\tcreatedAt\tlastSignedIn\n3450024\tOAuth Staff User\toauth-staff-1781344571448@test.com\tstaff\tstaff\tNULL\t2026-06-13 09:56:11\t2026-06-13 09:56:11\n3450023\tStaff Register User\tstaff-register-1781344570900@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:56:11\t2026-06-13 09:56:11\n3450022\tRegister Test User\tregister-test-1781344570334@test.com\tstaff\tparent\tpassword\t2026-06-13 09:56:10\t2026-06-13 09:56:11\n3450021\tStaff\tstaff-dist-1781344568447@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:56:08\t2026-06-13 09:56:09\n3450020\tParent\tparent-dist-1781344568447@test.com\tstaff\tparent\tpassword\t2026-06-13 09:56:08\t2026-06-13 09:56:08\n3450019\tTeacher User\tteacher-test-1781344568217@test.com\tteacher\tstaff\tpassword\t2026-06-13 09:56:08\t2026-06-13 09:56:08\n3450018\tAdmin User\tadmin-test-1781344567987@test.com\tadmin\tstaff\tpassword\t2026-06-13 09:56:08\t2026-06-13 09:56:08\n3450017\tStaff User\tstaff-test-1781344567756@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:56:07\t2026-06-13 09:56:08\n3450016\tParent User\tparent-test-1781344566124@test.com\tstaff\tparent\tpassword\t2026-06-13 09:56:07\t2026-06-13 09:56:06\n3450015\tDefault User\tdefault-test-1781344567122@test.com\tstaff\tparent\tpassword\t2026-06-13 09:56:07\t2026-06-13 09:56:07\n3450014\tStaff User\tstaff-test-1781344566890@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:56:07\t2026-06-13 09:56:07\n3450013\tParent User\tparent-test-1781344566653@test.com\tstaff\tparent\tpassword\t2026-06-13 09:56:06\t2026-06-13 09:56:07\n3450011\tStaff Register User\tstaff-register-1781344521954@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:55:22\t2026-06-13 09:55:22\n3450012\tOAuth Staff User\toauth-staff-1781344522485@test.com\tstaff\tstaff\tNULL\t2026-06-13 09:55:22\t2026-06-13 09:55:22\n3450010\tRegister Test User\tregister-test-1781344521398@test.com\tstaff\tparent\tpassword\t2026-06-13 09:55:21\t2026-06-13 09:55:22\n3450009\tStaff\tstaff-dist-1781344519691@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:55:20\t2026-06-13 09:55:20\n3450006\tAdmin User\tadmin-test-1781344519249@test.com\tadmin\tstaff\tpassword\t2026-06-13 09:55:19\t2026-06-13 09:55:19\n3450008\tParent\tparent-dist-1781344519691@test.com\tstaff\tparent\tpassword\t2026-06-13 09:55:19\t2026-06-13 09:55:20\n3450007\tTeacher User\tteacher-test-1781344519470@test.com\tteacher\tstaff\tpassword\t2026-06-13 09:55:19\t2026-06-13 09:55:19\n3450005\tStaff User\tstaff-test-1781344519027@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:55:19\t2026-06-13 09:55:19\n3450004\tParent User\tparent-test-1781344517438@test.com\tstaff\tparent\tpassword\t2026-06-13 09:55:18\t2026-06-13 09:55:17\n3450003\tStaff User\tstaff-test-1781344518112@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:55:18\t2026-06-13 09:55:18\n3420031\tOAuth Parent User\toauth-parent-1781341939725@test.com\tstaff\tparent\tNULL\t2026-06-13 09:12:19\t2026-06-13 09:12:20\n3420030\tOAuth Staff User\toauth-staff-1781341939288@test.com\tstaff\tstaff\tNULL\t2026-06-13 09:12:19\t2026-06-13 09:12:19\n3420029\tStaff Register User\tstaff-register-1781341938766@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:12:19\t2026-06-13 09:12:19\n3420028\tRegister Test User\tregister-test-1781341938216@test.com\tstaff\tparent\tpassword\t2026-06-13 09:12:18\t2026-06-13 09:12:19\n3420026\tStaff User\tstaff-test-1781341934963@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:12:15\t2026-06-13 09:12:15\n3420027\tDefault User\tdefault-test-1781341935182@test.com\tstaff\tparent\tpassword\t2026-06-13 09:12:15\t2026-06-13 09:12:15\n3420024\tTest Staff\tstaff-1781341934520@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:12:14\t2026-06-13 09:12:15\n3420023\tTest Parent\tparent-1781341932947@test.com\tstaff\tparent\tpassword\t2026-06-13 09:12:14\t2026-06-13 09:12:13\n3420025\tParent User\tparent-test-1781341934740@test.com\tstaff\tparent\tpassword\t2026-06-13 09:12:14\t2026-06-13 09:12:15\n3420020\tStaff Register User\tstaff-register-1781341923623@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:12:04\t2026-06-13 09:12:04\n3420022\tOAuth Parent User\toauth-parent-1781341924625@test.com\tstaff\tparent\tNULL\t2026-06-13 09:12:04\t2026-06-13 09:12:05\n3420021\tOAuth Staff User\toauth-staff-1781341924164@test.com\tstaff\tstaff\tNULL\t2026-06-13 09:12:04\t2026-06-13 09:12:04\n3420019\tRegister Test User\tregister-test-1781341923053@test.com\tstaff\tparent\tpassword\t2026-06-13 09:12:03\t2026-06-13 09:12:03\n3420018\tDefault User\tdefault-test-1781341919847@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:59\t2026-06-13 09:12:00\n3420017\tStaff User\tstaff-test-1781341919617@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:11:59\t2026-06-13 09:12:00\n3420016\tParent User\tparent-test-1781341919387@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:59\t2026-06-13 09:11:59\n3420015\tTest Staff\tstaff-1781341919157@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:11:59\t2026-06-13 09:11:59\n3420014\tTest Parent\tparent-1781341917522@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:59\t2026-06-13 09:11:58\n3420013\tOAuth Parent User\toauth-parent-1781341908591@test.com\tstaff\tparent\tNULL\t2026-06-13 09:11:48\t2026-06-13 09:11:49\n3420012\tOAuth Staff User\toauth-staff-1781341908153@test.com\tstaff\tstaff\tNULL\t2026-06-13 09:11:48\t2026-06-13 09:11:48\n3420011\tStaff Register User\tstaff-register-1781341907624@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:11:48\t2026-06-13 09:11:48\n3420010\tRegister Test User\tregister-test-1781341907072@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:47\t2026-06-13 09:11:47\n3420009\tDefault User\tdefault-test-1781341904022@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:44\t2026-06-13 09:11:44\n3420008\tStaff User\tstaff-test-1781341903803@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:11:43\t2026-06-13 09:11:44\n3420007\tParent User\tparent-test-1781341903582@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:43\t2026-06-13 09:11:44\n3420006\tTest Staff\tstaff-1781341903360@test.com\tstaff\tstaff\tpassword\t2026-06-13 09:11:43\t2026-06-13 09:11:43\n3420005\tTest Parent\tparent-1781341901781@test.com\tstaff\tparent\tpassword\t2026-06-13 09:11:43\t2026-06-13 09:11:42\n3150007\tJasem Mohammed\tjm@nursecare.com\tstaff\tparent\tpassword\t2026-06-03 21:32:18\t2026-06-12 22:09:06\n3090001\tSalma Al-Ali\ts.alali@nurserycare.com\tadmin\tparent\tpassword\t2026-06-02 08:32:55\t2026-06-07 10:42:32\n3030006\tLulua Hamad\tlhamad@ssnursery.com\tstaff\tparent\tpassword\t2026-06-02 07:48:56\t2026-06-02 08:18:44\n2850004\tDanah Al Humoud\tdana.alhumoud@e.net.kw\tadmin\tparent\tpassword\t2026-06-01 07:46:39\t2026-06-02 08:15:57\n2550001\tSamia Husain\tsamhus@nurserycare.com\tadmin\tparent\tpassword\t2026-05-25 08:28:21\t2026-06-13 19:56:40\n2340048\tSuper Admin\tsuperadmin@nursecare.com\tsuper_admin\tparent\tpassword\t2026-05-24 14:29:42\t2026-06-13 12:08:58\n1830022\tJames Martin\tparent3@example.com\tstaff\tparent\tpassword\t2026-05-24 09:59:56\t2026-05-24 09:59:56\n1830021\tSusan Harris\tparent2@example.com\tstaff\tparent\tpassword\t2026-05-24 09:59:56\t2026-05-24 09:59:56\n1830020\tMark Thompson\tparent1@example.com\tstaff\tparent\tpassword\t2026-05-24 09:59:56\t2026-06-12 22:09:58\n1830008\tAdmin User\tadmin@nursery.com\tadmin\tparent\tpassword\t2026-05-24 09:59:56\t2026-05-24 14:30:06\n1440016\tTest User\ttestuser@example.com\tstaff\tparent\tNULL\t2026-05-14 11:41:59\t2026-05-17 10:15:59\n1\tJamal Kubeer\tj.kubeer@e.net.kw\tadmin\tparent\tgoogle\t2026-02-16 13:36:24\t2026-06-13 12:11:18\n",
+  "stderr": "",
+  "execution_time_ms": 1894
+}

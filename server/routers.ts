@@ -27,6 +27,7 @@ import {
   photos,
   recurringBillings,
   emailNotifications,
+  users,
 } from "../drizzle/schema";
 import * as db from "./db";
 import { eq, and, desc } from "drizzle-orm";
@@ -288,8 +289,10 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
+        const bcrypt = await import("bcryptjs");
 
-        return await database.insert(parents).values({
+        // Create parent record first
+        await database.insert(parents).values({
           nurseryId: ctx.user.nurseryId || 1,
           userId: ctx.user.id,
           firstName: input.firstName,
@@ -303,6 +306,35 @@ export const appRouter = router({
           zipCode: input.zipCode,
           workPhone: input.workPhone,
         });
+
+        // Query to get the newly created parent ID
+        const createdParent = await database.select().from(parents).where(eq(parents.email, input.email)).limit(1);
+        const parentId = createdParent.length > 0 ? createdParent[0].id : null;
+
+        // Hash the default password
+        const defaultPassword = "Password123";
+        const passwordHash = await bcrypt.hash(defaultPassword, 10);
+
+        // Create corresponding user record with parentId
+        if (parentId) {
+          try {
+            await database.insert(users).values({
+              email: input.email,
+              name: `${input.firstName} ${input.lastName}`,
+              passwordHash,
+              loginMethod: "password",
+              role: "staff",
+              userType: "parent",
+              nurseryId: ctx.user.nurseryId || 1,
+              parentId: Number(parentId),
+            });
+          } catch (error) {
+            console.warn("[Parents] Failed to create user for parent:", error);
+            // Don't fail the parent creation if user creation fails
+          }
+        }
+
+        return createdParent[0] || { id: parentId };
       }),
 
     update: protectedProcedure

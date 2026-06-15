@@ -19,13 +19,20 @@ export const parentRouter = router({
       });
     }
 
+    if (!ctx.user.parentId) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Parent profile not linked to user",
+      });
+    }
+
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
     const parentRecord = await db
       .select()
       .from(parents)
-      .where(eq(parents.userId, ctx.user.id))
+      .where(eq(parents.id, ctx.user.parentId))
       .limit(1);
 
     if (parentRecord.length === 0) {
@@ -47,27 +54,18 @@ export const parentRouter = router({
       });
     }
 
-    const db = await getDb();
-    if (!db) return [];
-
-    // Get parent record for this user
-    const parentRecord = await db
-      .select()
-      .from(parents)
-      .where(eq(parents.userId, ctx.user.id))
-      .limit(1);
-
-    if (parentRecord.length === 0) {
+    if (!ctx.user.parentId) {
       return [];
     }
 
-    const parentId = parentRecord[0].id;
+    const db = await getDb();
+    if (!db) return [];
 
-    // Get all children for this parent
+    // Get all children for this parent using parentId from users table
     return await db
       .select()
       .from(children)
-      .where(eq(children.parentId, parentId));
+      .where(eq(children.parentId, ctx.user.parentId));
   }),
 
   // Get current parent's payments only
@@ -79,21 +77,14 @@ export const parentRouter = router({
       });
     }
 
-    const db = await getDb();
-    if (!db) return [];
-
-    // Get parent record for this user
-    const parentRecord = await db
-      .select()
-      .from(parents)
-      .where(eq(parents.userId, ctx.user.id))
-      .limit(1);
-
-    if (parentRecord.length === 0) {
+    if (!ctx.user.parentId) {
       return [];
     }
 
-    const parentId = parentRecord[0].id;
+    const db = await getDb();
+    if (!db) return [];
+
+    const parentId = ctx.user.parentId;
 
     // Get all payments for this parent
     return await db
@@ -112,21 +103,14 @@ export const parentRouter = router({
       });
     }
 
-    const db = await getDb();
-    if (!db) return [];
-
-    // Get parent record for this user
-    const parentRecord = await db
-      .select()
-      .from(parents)
-      .where(eq(parents.userId, ctx.user.id))
-      .limit(1);
-
-    if (parentRecord.length === 0) {
+    if (!ctx.user.parentId) {
       return [];
     }
 
-    const parentId = parentRecord[0].id;
+    const db = await getDb();
+    if (!db) return [];
+
+    const parentId = ctx.user.parentId;
 
     // Get all invoices for this parent
     return await db
@@ -155,24 +139,17 @@ export const parentRouter = router({
         });
       }
 
-      const db = await getDb();
-      if (!db) throw new Error("Database not available");
-
-      // Get parent record for this user
-      const parentRecord = await db
-        .select()
-        .from(parents)
-        .where(eq(parents.userId, ctx.user.id))
-        .limit(1);
-
-      if (parentRecord.length === 0) {
+      if (!ctx.user.parentId) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Parent profile not found",
+          message: "Parent profile not linked to user",
         });
       }
 
-      const parentId = parentRecord[0].id;
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
+
+      const parentId = ctx.user.parentId;
 
       // Verify invoice belongs to this parent
       const invoiceRecord = await db

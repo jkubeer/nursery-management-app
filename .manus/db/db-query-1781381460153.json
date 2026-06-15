@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, name, email, role, userType, nurseryId FROM users WHERE email = 'abdSaad@nursecare.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name, email, role, userType, nurseryId FROM users WHERE email = 'abdSaad@nursecare.com';",
+  "rows": [
+    {
+      "id": "3510003",
+      "name": "Abdullah",
+      "email": "abdSaad@nursecare.com",
+      "role": "staff",
+      "userType": "parent",
+      "nurseryId": "30001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tuserType\tnurseryId\n3510003\tAbdullah\tabdSaad@nursecare.com\tstaff\tparent\t30001\n",
+  "stderr": "",
+  "execution_time_ms": 1792
+}

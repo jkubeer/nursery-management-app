@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, firstName, lastName, parentId FROM children WHERE parentId = 300001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, firstName, lastName, parentId FROM children WHERE parentId = 300001;",
+  "rows": [
+    {
+      "id": "180001",
+      "firstName": "Nada",
+      "lastName": "Al Saad",
+      "parentId": "300001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\tlastName\tparentId\n180001\tNada\tAl Saad\t300001\n",
+  "stderr": "",
+  "execution_time_ms": 1802
+}

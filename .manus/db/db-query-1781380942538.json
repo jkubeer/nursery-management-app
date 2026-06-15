@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, name FROM nurseries ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name FROM nurseries ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Kuwait Sunshine Nursery"
+    },
+    {
+      "id": "30001",
+      "name": "Kuwait Reggio Center"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\n1\tKuwait Sunshine Nursery\n30001\tKuwait Reggio Center\n",
+  "stderr": "",
+  "execution_time_ms": 1794
+}

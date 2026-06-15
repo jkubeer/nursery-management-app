@@ -53,6 +53,7 @@ export const users = mysqlTable("users", {
   role: mysqlEnum("role", ["super_admin", "admin", "staff", "teacher"]).default("staff").notNull(),
   userType: mysqlEnum("userType", ["staff", "parent"]).default("parent").notNull(), // Login type: Staff or Parent
   nurseryId: int("nurseryId"), // null for super_admin
+  parentId: int("parentId"), // For parent users: direct reference to parent record
   passwordResetToken: varchar("passwordResetToken", { length: 255 }),
   passwordResetExpiry: timestamp("passwordResetExpiry"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

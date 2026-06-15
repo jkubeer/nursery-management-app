@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, name, email, role, userType, nurseryId FROM users WHERE id = 2550001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user UwMDafioa6m393H.2a345b4f057b --database iGKDS7QDaKgyWXUmAPU3aB --execute SELECT id, name, email, role, userType, nurseryId FROM users WHERE id = 2550001;",
+  "rows": [
+    {
+      "id": "2550001",
+      "name": "Samia Husain",
+      "email": "samhus@nurserycare.com",
+      "role": "admin",
+      "userType": "staff",
+      "nurseryId": "30001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\tuserType\tnurseryId\n2550001\tSamia Husain\tsamhus@nurserycare.com\tadmin\tstaff\t30001\n",
+  "stderr": "",
+  "execution_time_ms": 1797
+}
